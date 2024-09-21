@@ -160,7 +160,7 @@ Contributions to **PSFML** are welcome! If you’d like to contribute to this pr
 </a>
 
 ------------
-</br></br>
+</br>
 <p align="center">
 <img src="media/delphi.png" alt="Delphi">
 </p>
