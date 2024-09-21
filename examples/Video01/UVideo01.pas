@@ -66,6 +66,7 @@ var
   LEvent: sfEvent;
   LFont: array[0..0] of PsfFont;
   LText: array[0..0] of PsfText;
+  LHudPos: sfVector2f;
 begin
   LMode.size.x := 1920 div 2;
   LMode.size.y := 1080 div 2;
@@ -89,14 +90,28 @@ begin
   LText[0] := sfText_Create(LFont[0]);
   sfText_SetCharacterSizeDPI(LWindow, LText[0], 12);
 
-  sfVideo_PlayFromZipFile(CZipFilename, 'res\videos\psfml.mpg', 1.0, False);
+  sfVideo_PlayFromZipFile(CZipFilename, 'res\videos\psfml.mpg', 1.0, True);
 
   while sfRenderWindow_isOpen(LWindow) do
   begin
     while sfRenderWindow_pollEvent(LWindow, @LEvent) do
     begin
-      if LEvent.&type = sfEvtClosed then
-        sfRenderWindow_close(LWindow);
+      case LEvent.&type of
+        sfEvtClosed:
+        begin
+          sfRenderWindow_close(LWindow);
+        end;
+
+        sfEvtKeyReleased:
+        begin
+          case LEvent.key.code of
+            sfKeyEscape:
+            begin
+              sfRenderWindow_close(LWindow);
+            end;
+          end;
+        end;
+      end;
     end;
 
     sfRenderWindow_ScaleOnDPIChange(LWindow);
@@ -107,7 +122,9 @@ begin
 
     sfVideo_Render(LWindow, 0, 0, 0.5);
 
-    sfRenderWindow_DrawTextEx(LWindow, LText[0], 3, 3, WHITE, Format('%d fps', [sfRenderWindow_GetFrameRate(LWindow)]));
+    LHudPos := sfVector2f_Create(3, 3);
+    sfRenderWindow_DrawTextXVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, WHITE, '%d fps', [sfRenderWindow_GetFrameRate(LWindow)]);
+    sfRenderWindow_DrawTextXVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'ESC - Quit', []);
 
     sfRenderWindow_Display(LWindow);
   end;

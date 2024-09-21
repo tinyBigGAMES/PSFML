@@ -47,6 +47,10 @@ This product uses the following open-source libraries:
 
 unit PSFML;
 
+{$IFDEF FPC}
+  {$MODE DELPHIUNICODE}
+{$ENDIF}
+
 interface
 
 const
@@ -1279,6 +1283,7 @@ const
   TRANSPARENT         : sfColor = (r:255; g:255; b:255; a:0);
 {$ENDREGION}
 
+//=== MUSIC =================================================================
 var
   sfListener_SetGlobalVolume: procedure(volume: Single); cdecl;
   sfListener_GetGlobalVolume: function(): Single; cdecl;
@@ -1323,6 +1328,9 @@ var
   sfMusic_IsRelativeToListener: function(const music: PsfMusic): Boolean; cdecl;
   sfMusic_GetMinDistance: function(const music: PsfMusic): Single; cdecl;
   sfMusic_GetAttenuation: function(const music: PsfMusic): Single; cdecl;
+
+//=== SOUND =================================================================
+var
   sfSound_Create: function(const buffer: PsfSoundBuffer): PsfSound; cdecl;
   sfSound_Copy: function(const sound: PsfSound): PsfSound; cdecl;
   sfSound_Destroy: procedure(const sound: PsfSound); cdecl;
@@ -1348,6 +1356,9 @@ var
   sfSound_GetMinDistance: function(const sound: PsfSound): Single; cdecl;
   sfSound_GetAttenuation: function(const sound: PsfSound): Single; cdecl;
   sfSound_GetPlayingOffset: function(const sound: PsfSound): sfTime; cdecl;
+
+//=== SOUNDBUFFER ===========================================================
+var
   sfSoundBuffer_CreateFromFile: function(const filename: PUTF8Char): PsfSoundBuffer; cdecl;
   sfSoundBuffer_CreateFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt): PsfSoundBuffer; cdecl;
   sfSoundBuffer_CreateFromStream: function(stream: PsfInputStream): PsfSoundBuffer; cdecl;
@@ -1370,6 +1381,8 @@ var
   sfSoundBufferRecorder_GetDevice: function(soundBufferRecorder: PsfSoundBufferRecorder): PUTF8Char; cdecl;
   sfSoundBufferRecorder_SetChannelCount: procedure(soundBufferRecorder: PsfSoundBufferRecorder; channelCount: Cardinal); cdecl;
   sfSoundBufferRecorder_GetChannelCount: function(const soundBufferRecorder: PsfSoundBufferRecorder): Cardinal; cdecl;
+
+//=== SOUNDRECORDER =========================================================
   sfSoundRecorder_Create: function(onStart: sfSoundRecorderStartCallback; onProcess: sfSoundRecorderProcessCallback; onStop: sfSoundRecorderStopCallback; userData: Pointer): PsfSoundRecorder; cdecl;
   sfSoundRecorder_Destroy: procedure(const soundRecorder: PsfSoundRecorder); cdecl;
   sfSoundRecorder_Start: function(soundRecorder: PsfSoundRecorder; sampleRate: Cardinal): Boolean; cdecl;
@@ -1382,6 +1395,9 @@ var
   sfSoundRecorder_GetDevice: function(soundRecorder: PsfSoundRecorder): PUTF8Char; cdecl;
   sfSoundRecorder_SetChannelCount: procedure(soundRecorder: PsfSoundRecorder; channelCount: Cardinal); cdecl;
   sfSoundRecorder_GetChannelCount: function(const soundRecorder: PsfSoundRecorder): Cardinal; cdecl;
+  
+//=== SOUNDSTREAM ===========================================================
+var  
   sfSoundStream_Create: function(onGetData: sfSoundStreamGetDataCallback; onSeek: sfSoundStreamSeekCallback; channelCount: Cardinal; sampleRate: Cardinal; channelMapData: PsfSoundChannel; channelMapSize: NativeUInt; userData: Pointer): PsfSoundStream; cdecl;
   sfSoundStream_Destroy: procedure(const soundStream: PsfSoundStream); cdecl;
   sfSoundStream_Play: procedure(soundStream: PsfSoundStream); cdecl;
@@ -1406,16 +1422,25 @@ var
   sfSoundStream_GetAttenuation: function(const soundStream: PsfSoundStream): Single; cdecl;
   sfSoundStream_IsLooping: function(const soundStream: PsfSoundStream): Boolean; cdecl;
   sfSoundStream_GetPlayingOffset: function(const soundStream: PsfSoundStream): sfTime; cdecl;
+  
+//=== SOUNDBUFFER ===========================================================
+var
   sfBuffer_Create: function(): PsfBuffer; cdecl;
   sfBuffer_Destroy: procedure(const buffer: PsfBuffer); cdecl;
   sfBuffer_GetSize: function(const buffer: PsfBuffer): NativeUInt; cdecl;
   sfBuffer_GetData: function(const buffer: PsfBuffer): PUInt8; cdecl;
+
+//=== CLOCK =================================================================
+var
   sfClock_Create: function(): PsfClock; cdecl;
   sfClock_Copy: function(const clock: PsfClock): PsfClock; cdecl;
   sfClock_Destroy: procedure(const clock: PsfClock); cdecl;
   sfClock_GetElapsedTime: function(const clock: PsfClock): sfTime; cdecl;
   sfClock_Restart: function(clock: PsfClock): sfTime; cdecl;
   sfSleep: procedure(duration: sfTime); cdecl;
+  
+//=== COLOR =================================================================
+var
   sfColor_FromRGB: function(red: UInt8; green: UInt8; blue: UInt8): sfColor; cdecl;
   sfColor_FromRGBA: function(red: UInt8; green: UInt8; blue: UInt8; alpha: UInt8): sfColor; cdecl;
   sfColor_FromInteger: function(color: UInt32): sfColor; cdecl;
@@ -1423,10 +1448,16 @@ var
   sfColor_Add: function(color1: sfColor; color2: sfColor): sfColor; cdecl;
   sfColor_Subtract: function(color1: sfColor; color2: sfColor): sfColor; cdecl;
   sfColor_Modulate: function(color1: sfColor; color2: sfColor): sfColor; cdecl;
+
+//=== RECT ==================================================================
+var
   sfFloatRect_Contains: function(const rect: PsfFloatRect; point: sfVector2f): Boolean; cdecl;
   sfIntRect_Contains: function(const rect: PsfIntRect; point: sfVector2i): Boolean; cdecl;
   sfFloatRect_Intersects: function(const rect1: PsfFloatRect; const rect2: PsfFloatRect; intersection: PsfFloatRect): Boolean; cdecl;
   sfIntRect_Intersects: function(const rect1: PsfIntRect; const rect2: PsfIntRect; intersection: PsfIntRect): Boolean; cdecl;
+  
+//=== TRANSFORM =============================================================
+var
   sfTransform_FromMatrix: function(a00: Single; a01: Single; a02: Single; a10: Single; a11: Single; a12: Single; a20: Single; a21: Single; a22: Single): sfTransform; cdecl;
   sfTransform_GetMatrix: procedure(const transform: PsfTransform; matrix: PSingle); cdecl;
   sfTransform_GetInverse: function(const transform: PsfTransform): sfTransform; cdecl;
@@ -1439,6 +1470,9 @@ var
   sfTransform_Scale: procedure(transform: PsfTransform; scale: sfVector2f); cdecl;
   sfTransform_ScaleWithCenter: procedure(transform: PsfTransform; scale: sfVector2f; center: sfVector2f); cdecl;
   sfTransform_Equal: function(left: PsfTransform; right: PsfTransform): Boolean; cdecl;
+
+//=== CIRCLESHAPE ===========================================================
+var
   sfCircleShape_Create: function(): PsfCircleShape; cdecl;
   sfCircleShape_Copy: function(const shape: PsfCircleShape): PsfCircleShape; cdecl;
   sfCircleShape_Destroy: procedure(const shape: PsfCircleShape); cdecl;
@@ -1472,6 +1506,9 @@ var
   sfCircleShape_SetPointCount: procedure(shape: PsfCircleShape; count: NativeUInt); cdecl;
   sfCircleShape_GetLocalBounds: function(const shape: PsfCircleShape): sfFloatRect; cdecl;
   sfCircleShape_GetGlobalBounds: function(const shape: PsfCircleShape): sfFloatRect; cdecl;
+  
+//=== CONVEXSHAPE ===========================================================
+var
   sfConvexShape_Create: function(): PsfConvexShape; cdecl;
   sfConvexShape_Copy: function(const shape: PsfConvexShape): PsfConvexShape; cdecl;
   sfConvexShape_Destroy: procedure(const shape: PsfConvexShape); cdecl;
@@ -1505,6 +1542,9 @@ var
   sfConvexShape_GetLocalBounds: function(const shape: PsfConvexShape): sfFloatRect; cdecl;
   sfConvexShape_GetGlobalBounds: function(const shape: PsfConvexShape): sfFloatRect; cdecl;
   sfFont_CreateFromFile: function(const filename: PUTF8Char): PsfFont; cdecl;
+
+//=== FONT ==================================================================
+var
   sfFont_CreateFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt): PsfFont; cdecl;
   sfFont_CreateFromStream: function(stream: PsfInputStream): PsfFont; cdecl;
   sfFont_Copy: function(const font: PsfFont): PsfFont; cdecl;
@@ -1520,6 +1560,9 @@ var
   sfFont_SetSmooth: procedure(font: PsfFont; smooth: Boolean); cdecl;
   sfFont_IsSmooth: function(const font: PsfFont): Boolean; cdecl;
   sfFont_GetInfo: function(const font: PsfFont): sfFontInfo; cdecl;
+  
+//=== IMAGE =================================================================
+var
   sfImage_Create: function(size: sfVector2u): PsfImage; cdecl;
   sfImage_CreateFromColor: function(size: sfVector2u; color: sfColor): PsfImage; cdecl;
   sfImage_CreateFromPixels: function(size: sfVector2u; const pixels: PUInt8): PsfImage; cdecl;
@@ -1538,6 +1581,9 @@ var
   sfImage_GetPixelsPtr: function(const image: PsfImage): PUInt8; cdecl;
   sfImage_FlipHorizontally: procedure(image: PsfImage); cdecl;
   sfImage_FlipVertically: procedure(image: PsfImage); cdecl;
+
+//=== RECTANGLESHAPE ========================================================
+var
   sfRectangleShape_Create: function(): PsfRectangleShape; cdecl;
   sfRectangleShape_Copy: function(const shape: PsfRectangleShape): PsfRectangleShape; cdecl;
   sfRectangleShape_Destroy: procedure(const shape: PsfRectangleShape); cdecl;
@@ -1570,7 +1616,13 @@ var
   sfRectangleShape_GetSize: function(const shape: PsfRectangleShape): sfVector2f; cdecl;
   sfRectangleShape_GetLocalBounds: function(const shape: PsfRectangleShape): sfFloatRect; cdecl;
   sfRectangleShape_GetGlobalBounds: function(const shape: PsfRectangleShape): sfFloatRect; cdecl;
+  
+//=== RENDERSTATES ==========================================================
+var
   sfRenderStates_Default: function(): sfRenderStates; cdecl;
+  
+//=== JOYSTICK ==============================================================
+var
   sfJoystick_IsConnected: function(joystick: Cardinal): Boolean; cdecl;
   sfJoystick_GetButtonCount: function(joystick: Cardinal): Cardinal; cdecl;
   sfJoystick_HasAxis: function(joystick: Cardinal; axis: sfJoystickAxis): Boolean; cdecl;
@@ -1578,531 +1630,635 @@ var
   sfJoystick_GetAxisPosition: function(joystick: Cardinal; axis: sfJoystickAxis): Single; cdecl;
   sfJoystick_GetIdentification: function(joystick: Cardinal): sfJoystickIdentification; cdecl;
   sfJoystick_Update: procedure(); cdecl;
+  
+//=== KEYBOARD ==============================================================
+var
   sfKeyboard_IsKeyPressed: function(key: sfKeyCode): Boolean; cdecl;
   sfKeyboard_IsScancodePressed: function(code: sfScancode): Boolean; cdecl;
   sfKeyboard_Localize: function(code: sfScancode): sfKeyCode; cdecl;
   sfKeyboard_Delocalize: function(key: sfKeyCode): sfScancode; cdecl;
   sfKeyboard_GetDescription: function(code: sfScancode): PUTF8Char; cdecl;
   sfKeyboard_SetVirtualKeyboardVisible: procedure(visible: Boolean); cdecl;
+  
+//=== MOUSE =================================================================
+var
   sfMouse_IsButtonPressed: function(button: sfMouseButton): Boolean; cdecl;
   sfMouse_GetPosition: function(const relativeTo: PsfWindow): sfVector2i; cdecl;
   sfMouse_SetPosition: procedure(position: sfVector2i; const relativeTo: PsfWindow); cdecl;
   sfMouse_GetPositionWindowBase: function(const relativeTo: PsfWindowBase): sfVector2i; cdecl;
   sfMouse_SetPositionWindowBase: procedure(position: sfVector2i; const relativeTo: PsfWindowBase); cdecl;
+  sfMouse_getPositionRenderWindow: function(const relativeTo: PsfRenderWindow): sfVector2i; cdecl;
+  sfMouse_setPositionRenderWindow: procedure(position: sfVector2i; const relativeTo: PsfRenderWindow); cdecl;  
+
+//=== SENSOR ================================================================
+var
   sfSensor_IsAvailable: function(sensor: sfSensorType): Boolean; cdecl;
   sfSensor_SetEnabled: procedure(sensor: sfSensorType; enabled: Boolean); cdecl;
   sfSensor_GetValue: function(sensor: sfSensorType): sfVector3f; cdecl;
+  
+//=== VIDEOMODE =============================================================
+var
   sfVideoMode_GetDesktopMode: function(): sfVideoMode; cdecl;
   sfVideoMode_GetFullscreenModes: function(count: PNativeUInt): PsfVideoMode; cdecl;
   sfVideoMode_IsValid: function(mode: sfVideoMode): Boolean; cdecl;
+
+//=== VULKAN ================================================================
+var
   sfVulkan_isAvailable: function(requireGraphics: Boolean): Boolean; cdecl;
   sfVulkan_getFunction: function(const name: PUTF8Char): sfVulkanFunctionPointer; cdecl;
   sfVulkan_getGraphicsRequiredInstanceExtensions: function(count: PNativeUInt): PPUTF8Char; cdecl;
-  sfWindowBase_create: function(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState): PsfWindowBase; cdecl;
-  sfWindowBase_createUnicode: function(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState): PsfWindowBase; cdecl;
-  sfWindowBase_createFromHandle: function(handle: sfWindowHandle): PsfWindowBase; cdecl;
-  sfWindowBase_destroy: procedure(const windowBase: PsfWindowBase); cdecl;
-  sfWindowBase_close: procedure(windowBase: PsfWindowBase); cdecl;
-  sfWindowBase_isOpen: function(const windowBase: PsfWindowBase): Boolean; cdecl;
-  sfWindowBase_pollEvent: function(windowBase: PsfWindowBase; event: PsfEvent): Boolean; cdecl;
-  sfWindowBase_waitEvent: function(windowBase: PsfWindowBase; event: PsfEvent): Boolean; cdecl;
-  sfWindowBase_getPosition: function(const windowBase: PsfWindowBase): sfVector2i; cdecl;
-  sfWindowBase_setPosition: procedure(windowBase: PsfWindowBase; position: sfVector2i); cdecl;
-  sfWindowBase_getSize: function(const windowBase: PsfWindowBase): sfVector2u; cdecl;
-  sfWindowBase_setSize: procedure(windowBase: PsfWindowBase; size: sfVector2u); cdecl;
-  sfWindowBase_setTitle: procedure(windowBase: PsfWindowBase; const title: PUTF8Char); cdecl;
-  sfWindowBase_setUnicodeTitle: procedure(windowBase: PsfWindowBase; const title: PsfChar32); cdecl;
-  sfWindowBase_setIcon: procedure(windowBase: PsfWindowBase; size: sfVector2u; const pixels: PUInt8); cdecl;
-  sfWindowBase_setVisible: procedure(windowBase: PsfWindowBase; visible: Boolean); cdecl;
-  sfWindowBase_setMouseCursorVisible: procedure(windowBase: PsfWindowBase; visible: Boolean); cdecl;
-  sfWindowBase_setMouseCursorGrabbed: procedure(windowBase: PsfWindowBase; grabbed: Boolean); cdecl;
-  sfWindowBase_setMouseCursor: procedure(windowBase: PsfWindowBase; const cursor: PsfCursor); cdecl;
-  sfWindowBase_setKeyRepeatEnabled: procedure(windowBase: PsfWindowBase; enabled: Boolean); cdecl;
-  sfWindowBase_setJoystickThreshold: procedure(windowBase: PsfWindowBase; threshold: Single); cdecl;
-  sfWindowBase_requestFocus: procedure(windowBase: PsfWindowBase); cdecl;
-  sfWindowBase_hasFocus: function(const windowBase: PsfWindowBase): Boolean; cdecl;
-  sfWindowBase_getNativeHandle: function(const windowBase: PsfWindowBase): sfWindowHandle; cdecl;
-  sfWindowBase_createVulkanSurface: function(windowBase: PsfWindowBase; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
-  sfWindow_create: function(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfWindow; cdecl;
-  sfWindow_createUnicode: function(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfWindow; cdecl;
-  sfWindow_createFromHandle: function(handle: sfWindowHandle; const settings: PsfContextSettings): PsfWindow; cdecl;
-  sfWindow_destroy: procedure(const window: PsfWindow); cdecl;
-  sfWindow_close: procedure(window: PsfWindow); cdecl;
-  sfWindow_isOpen: function(const window: PsfWindow): Boolean; cdecl;
-  sfWindow_getSettings: function(const window: PsfWindow): sfContextSettings; cdecl;
-  sfWindow_pollEvent: function(window: PsfWindow; event: PsfEvent): Boolean; cdecl;
-  sfWindow_waitEvent: function(window: PsfWindow; event: PsfEvent): Boolean; cdecl;
-  sfWindow_getPosition: function(const window: PsfWindow): sfVector2i; cdecl;
-  sfWindow_setPosition: procedure(window: PsfWindow; position: sfVector2i); cdecl;
-  sfWindow_getSize: function(const window: PsfWindow): sfVector2u; cdecl;
-  sfWindow_setSize: procedure(window: PsfWindow; size: sfVector2u); cdecl;
-  sfWindow_setTitle: procedure(window: PsfWindow; const title: PUTF8Char); cdecl;
-  sfWindow_setUnicodeTitle: procedure(window: PsfWindow; const title: PsfChar32); cdecl;
-  sfWindow_setIcon: procedure(window: PsfWindow; size: sfVector2u; const pixels: PUInt8); cdecl;
-  sfWindow_setVisible: procedure(window: PsfWindow; visible: Boolean); cdecl;
-  sfWindow_setVerticalSyncEnabled: procedure(window: PsfWindow; enabled: Boolean); cdecl;
-  sfWindow_setMouseCursorVisible: procedure(window: PsfWindow; visible: Boolean); cdecl;
-  sfWindow_setMouseCursorGrabbed: procedure(window: PsfWindow; grabbed: Boolean); cdecl;
-  sfWindow_setMouseCursor: procedure(window: PsfWindow; const cursor: PsfCursor); cdecl;
-  sfWindow_setKeyRepeatEnabled: procedure(window: PsfWindow; enabled: Boolean); cdecl;
-  sfWindow_setFramerateLimit: procedure(window: PsfWindow; limit: Cardinal); cdecl;
-  sfWindow_setJoystickThreshold: procedure(window: PsfWindow; threshold: Single); cdecl;
-  sfWindow_setActive: function(window: PsfWindow; active: Boolean): Boolean; cdecl;
-  sfWindow_requestFocus: procedure(window: PsfWindow); cdecl;
-  sfWindow_hasFocus: function(const window: PsfWindow): Boolean; cdecl;
-  sfWindow_display: procedure(window: PsfWindow); cdecl;
-  sfWindow_getNativeHandle: function(const window: PsfWindow): sfWindowHandle; cdecl;
-  sfWindow_createVulkanSurface: function(window: PsfWindow; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
-  sfRenderTexture_create: function(size: sfVector2u; const settings: PsfContextSettings): PsfRenderTexture; cdecl;
-  sfRenderTexture_destroy: procedure(const renderTexture: PsfRenderTexture); cdecl;
-  sfRenderTexture_getSize: function(const renderTexture: PsfRenderTexture): sfVector2u; cdecl;
-  sfRenderTexture_isSrgb: function(const renderTexture: PsfRenderTexture): Boolean; cdecl;
-  sfRenderTexture_setActive: function(renderTexture: PsfRenderTexture; active: Boolean): Boolean; cdecl;
-  sfRenderTexture_display: procedure(renderTexture: PsfRenderTexture); cdecl;
-  sfRenderTexture_clear: procedure(renderTexture: PsfRenderTexture; color: sfColor); cdecl;
-  sfRenderTexture_setView: procedure(renderTexture: PsfRenderTexture; const view: PsfView); cdecl;
-  sfRenderTexture_getView: function(const renderTexture: PsfRenderTexture): PsfView; cdecl;
-  sfRenderTexture_getDefaultView: function(const renderTexture: PsfRenderTexture): PsfView; cdecl;
-  sfRenderTexture_getViewport: function(const renderTexture: PsfRenderTexture; const view: PsfView): sfIntRect; cdecl;
-  sfRenderTexture_mapPixelToCoords: function(const renderTexture: PsfRenderTexture; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
-  sfRenderTexture_mapCoordsToPixel: function(const renderTexture: PsfRenderTexture; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
-  sfRenderTexture_drawSprite: procedure(renderTexture: PsfRenderTexture; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_drawText: procedure(renderTexture: PsfRenderTexture; const &object: PsfText; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_drawShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfShape; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_drawCircleShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfCircleShape; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_drawConvexShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfConvexShape; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_drawRectangleShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfRectangleShape; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_drawVertexArray: procedure(renderTexture: PsfRenderTexture; const &object: PsfVertexArray; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_drawVertexBuffer: procedure(renderTexture: PsfRenderTexture; const &object: PsfVertexBuffer; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_drawVertexBufferRange: procedure(renderTexture: PsfRenderTexture; const &object: PsfVertexBuffer; firstVertex: NativeUInt; vertexCount: NativeUInt; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_drawPrimitives: procedure(renderTexture: PsfRenderTexture; const vertices: PsfVertex; vertexCount: NativeUInt; &type: sfPrimitiveType; const states: PsfRenderStates); cdecl;
-  sfRenderTexture_pushGLStates: procedure(renderTexture: PsfRenderTexture); cdecl;
-  sfRenderTexture_popGLStates: procedure(renderTexture: PsfRenderTexture); cdecl;
-  sfRenderTexture_resetGLStates: procedure(renderTexture: PsfRenderTexture); cdecl;
-  sfRenderTexture_getTexture: function(const renderTexture: PsfRenderTexture): PsfTexture; cdecl;
-  sfRenderTexture_getMaximumAntiAliasingLevel: function(): Cardinal; cdecl;
-  sfRenderTexture_setSmooth: procedure(renderTexture: PsfRenderTexture; smooth: Boolean); cdecl;
-  sfRenderTexture_isSmooth: function(const renderTexture: PsfRenderTexture): Boolean; cdecl;
-  sfRenderTexture_setRepeated: procedure(renderTexture: PsfRenderTexture; repeated: Boolean); cdecl;
-  sfRenderTexture_isRepeated: function(const renderTexture: PsfRenderTexture): Boolean; cdecl;
-  sfRenderTexture_generateMipmap: function(renderTexture: PsfRenderTexture): Boolean; cdecl;
-  sfRenderWindow_create: function(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
-  sfRenderWindow_createUnicode: function(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
-  sfRenderWindow_createFromHandle: function(handle: sfWindowHandle; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
-  sfRenderWindow_destroy: procedure(var renderWindow: PsfRenderWindow); cdecl;
-  sfRenderWindow_close: procedure(renderWindow: PsfRenderWindow); cdecl;
-  sfRenderWindow_isOpen: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
-  sfRenderWindow_getSettings: function(const renderWindow: PsfRenderWindow): sfContextSettings; cdecl;
-  sfRenderWindow_pollEvent: function(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
-  sfRenderWindow_waitEvent: function(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
-  sfRenderWindow_getPosition: function(const renderWindow: PsfRenderWindow): sfVector2i; cdecl;
-  sfRenderWindow_setPosition: procedure(renderWindow: PsfRenderWindow; position: sfVector2i); cdecl;
-  sfRenderWindow_getSize: function(const renderWindow: PsfRenderWindow): sfVector2u; cdecl;
-  sfRenderWindow_isSrgb: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
-  sfRenderWindow_setSize: procedure(renderWindow: PsfRenderWindow; size: sfVector2u); cdecl;
-  sfRenderWindow_setTitle: procedure(renderWindow: PsfRenderWindow; const title: PUTF8Char); cdecl;
-  sfRenderWindow_setUnicodeTitle: procedure(renderWindow: PsfRenderWindow; const title: PsfChar32); cdecl;
-  sfRenderWindow_setIcon: procedure(renderWindow: PsfRenderWindow; size: sfVector2u; const pixels: PUInt8); cdecl;
-  sfRenderWindow_setVisible: procedure(renderWindow: PsfRenderWindow; visible: Boolean); cdecl;
-  sfRenderWindow_setVerticalSyncEnabled: procedure(renderWindow: PsfRenderWindow; enabled: Boolean); cdecl;
-  sfRenderWindow_setMouseCursorVisible: procedure(renderWindow: PsfRenderWindow; show: Boolean); cdecl;
-  sfRenderWindow_setMouseCursorGrabbed: procedure(renderWindow: PsfRenderWindow; grabbed: Boolean); cdecl;
-  sfRenderWindow_setMouseCursor: procedure(renderWindow: PsfRenderWindow; const cursor: PsfCursor); cdecl;
-  sfRenderWindow_setKeyRepeatEnabled: procedure(renderWindow: PsfRenderWindow; enabled: Boolean); cdecl;
-  sfRenderWindow_setFramerateLimit: procedure(renderWindow: PsfRenderWindow; limit: Cardinal); cdecl;
-  sfRenderWindow_setJoystickThreshold: procedure(renderWindow: PsfRenderWindow; threshold: Single); cdecl;
-  sfRenderWindow_setActive: function(renderWindow: PsfRenderWindow; active: Boolean): Boolean; cdecl;
-  sfRenderWindow_requestFocus: procedure(renderWindow: PsfRenderWindow); cdecl;
-  sfRenderWindow_hasFocus: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
-  sfRenderWindow_display: procedure(renderWindow: PsfRenderWindow); cdecl;
-  sfRenderWindow_getNativeHandle: function(const renderWindow: PsfRenderWindow): sfWindowHandle; cdecl;
-  sfRenderWindow_clear: procedure(renderWindow: PsfRenderWindow; color: sfColor); cdecl;
-  sfRenderWindow_setView: procedure(renderWindow: PsfRenderWindow; const view: PsfView); cdecl;
-  sfRenderWindow_getView: function(const renderWindow: PsfRenderWindow): PsfView; cdecl;
-  sfRenderWindow_getDefaultView: function(const renderWindow: PsfRenderWindow): PsfView; cdecl;
-  sfRenderWindow_getViewport: function(const renderWindow: PsfRenderWindow; const view: PsfView): sfIntRect; cdecl;
-  sfRenderWindow_mapPixelToCoords: function(const renderWindow: PsfRenderWindow; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
-  sfRenderWindow_mapCoordsToPixel: function(const renderWindow: PsfRenderWindow; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
-  sfRenderWindow_drawSprite: procedure(renderWindow: PsfRenderWindow; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_drawText: procedure(renderWindow: PsfRenderWindow; const &object: PsfText; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_drawShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfShape; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_drawCircleShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfCircleShape; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_drawConvexShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfConvexShape; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_drawRectangleShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfRectangleShape; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_drawVertexArray: procedure(renderWindow: PsfRenderWindow; const &object: PsfVertexArray; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_drawVertexBuffer: procedure(renderWindow: PsfRenderWindow; const &object: PsfVertexBuffer; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_drawVertexBufferRange: procedure(renderWindow: PsfRenderWindow; const &object: PsfVertexBuffer; firstVertex: NativeUInt; vertexCount: NativeUInt; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_drawPrimitives: procedure(renderWindow: PsfRenderWindow; const vertices: PsfVertex; vertexCount: NativeUInt; &type: sfPrimitiveType; const states: PsfRenderStates); cdecl;
-  sfRenderWindow_pushGLStates: procedure(renderWindow: PsfRenderWindow); cdecl;
-  sfRenderWindow_popGLStates: procedure(renderWindow: PsfRenderWindow); cdecl;
-  sfRenderWindow_resetGLStates: procedure(renderWindow: PsfRenderWindow); cdecl;
-  sfMouse_getPositionRenderWindow: function(const relativeTo: PsfRenderWindow): sfVector2i; cdecl;
-  sfMouse_setPositionRenderWindow: procedure(position: sfVector2i; const relativeTo: PsfRenderWindow); cdecl;
-  sfTouch_getPositionRenderWindow: function(finger: Cardinal; const relativeTo: PsfRenderWindow): sfVector2i; cdecl;
-  sfRenderWindow_createVulkanSurface: function(renderWindow: PsfRenderWindow; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
-  sfShader_createFromFile: function(const vertexShaderFilename: PUTF8Char; const geometryShaderFilename: PUTF8Char; const fragmentShaderFilename: PUTF8Char): PsfShader; cdecl;
-  sfShader_createFromMemory: function(const vertexShader: PUTF8Char; const geometryShader: PUTF8Char; const fragmentShader: PUTF8Char): PsfShader; cdecl;
-  sfShader_createFromStream: function(vertexShaderStream: PsfInputStream; geometryShaderStream: PsfInputStream; fragmentShaderStream: PsfInputStream): PsfShader; cdecl;
-  sfShader_destroy: procedure(const shader: PsfShader); cdecl;
-  sfShader_setFloatUniform: procedure(shader: PsfShader; const name: PUTF8Char; x: Single); cdecl;
-  sfShader_setVec2Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec2); cdecl;
-  sfShader_setVec3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec3); cdecl;
-  sfShader_setVec4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec4); cdecl;
-  sfShader_setColorUniform: procedure(shader: PsfShader; const name: PUTF8Char; color: sfColor); cdecl;
-  sfShader_setIntUniform: procedure(shader: PsfShader; const name: PUTF8Char; x: Integer); cdecl;
-  sfShader_setIvec2Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec2); cdecl;
-  sfShader_setIvec3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec3); cdecl;
-  sfShader_setIvec4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec4); cdecl;
-  sfShader_setIntColorUniform: procedure(shader: PsfShader; const name: PUTF8Char; color: sfColor); cdecl;
-  sfShader_setBoolUniform: procedure(shader: PsfShader; const name: PUTF8Char; x: Boolean); cdecl;
-  sfShader_setBvec2Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec2); cdecl;
-  sfShader_setBvec3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec3); cdecl;
-  sfShader_setBvec4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec4); cdecl;
-  sfShader_setMat3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; const matrix: PsfGlslMat3); cdecl;
-  sfShader_setMat4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; const matrix: PsfGlslMat4); cdecl;
-  sfShader_setTextureUniform: procedure(shader: PsfShader; const name: PUTF8Char; const texture: PsfTexture); cdecl;
-  sfShader_setCurrentTextureUniform: procedure(shader: PsfShader; const name: PUTF8Char); cdecl;
-  sfShader_setFloatUniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const scalarArray: PSingle; length: NativeUInt); cdecl;
-  sfShader_setVec2UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec2; length: NativeUInt); cdecl;
-  sfShader_setVec3UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec3; length: NativeUInt); cdecl;
-  sfShader_setVec4UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec4; length: NativeUInt); cdecl;
-  sfShader_setMat3UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const matrixArray: PsfGlslMat3; length: NativeUInt); cdecl;
-  sfShader_setMat4UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const matrixArray: PsfGlslMat4; length: NativeUInt); cdecl;
-  sfShader_getNativeHandle: function(const shader: PsfShader): Cardinal; cdecl;
-  sfShader_bind: procedure(const shader: PsfShader); cdecl;
-  sfShader_isAvailable: function(): Boolean; cdecl;
-  sfShader_isGeometryAvailable: function(): Boolean; cdecl;
-  sfShape_create: function(getPointCount: sfShapeGetPointCountCallback; getPoint: sfShapeGetPointCallback; userData: Pointer): PsfShape; cdecl;
-  sfShape_destroy: procedure(const shape: PsfShape); cdecl;
-  sfShape_setPosition: procedure(shape: PsfShape; position: sfVector2f); cdecl;
-  sfShape_setRotation: procedure(shape: PsfShape; angle: Single); cdecl;
-  sfShape_setScale: procedure(shape: PsfShape; scale: sfVector2f); cdecl;
-  sfShape_setOrigin: procedure(shape: PsfShape; origin: sfVector2f); cdecl;
-  sfShape_getPosition: function(const shape: PsfShape): sfVector2f; cdecl;
-  sfShape_getRotation: function(const shape: PsfShape): Single; cdecl;
-  sfShape_getScale: function(const shape: PsfShape): sfVector2f; cdecl;
-  sfShape_getOrigin: function(const shape: PsfShape): sfVector2f; cdecl;
-  sfShape_move: procedure(shape: PsfShape; offset: sfVector2f); cdecl;
-  sfShape_rotate: procedure(shape: PsfShape; angle: Single); cdecl;
-  sfShape_scale: procedure(shape: PsfShape; factors: sfVector2f); cdecl;
-  sfShape_getTransform: function(const shape: PsfShape): sfTransform; cdecl;
-  sfShape_getInverseTransform: function(const shape: PsfShape): sfTransform; cdecl;
-  sfShape_setTexture: procedure(shape: PsfShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
-  sfShape_setTextureRect: procedure(shape: PsfShape; rect: sfIntRect); cdecl;
-  sfShape_setFillColor: procedure(shape: PsfShape; color: sfColor); cdecl;
-  sfShape_setOutlineColor: procedure(shape: PsfShape; color: sfColor); cdecl;
-  sfShape_setOutlineThickness: procedure(shape: PsfShape; thickness: Single); cdecl;
-  sfShape_getTexture: function(const shape: PsfShape): PsfTexture; cdecl;
-  sfShape_getTextureRect: function(const shape: PsfShape): sfIntRect; cdecl;
-  sfShape_getFillColor: function(const shape: PsfShape): sfColor; cdecl;
-  sfShape_getOutlineColor: function(const shape: PsfShape): sfColor; cdecl;
-  sfShape_getOutlineThickness: function(const shape: PsfShape): Single; cdecl;
-  sfShape_getPointCount: function(const shape: PsfShape): NativeUInt; cdecl;
-  sfShape_getPoint: function(const shape: PsfShape; index: NativeUInt): sfVector2f; cdecl;
-  sfShape_getLocalBounds: function(const shape: PsfShape): sfFloatRect; cdecl;
-  sfShape_getGlobalBounds: function(const shape: PsfShape): sfFloatRect; cdecl;
-  sfShape_update: procedure(shape: PsfShape); cdecl;
-  sfSprite_create: function(const texture: PsfTexture): PsfSprite; cdecl;
-  sfSprite_copy: function(const sprite: PsfSprite): PsfSprite; cdecl;
-  sfSprite_destroy: procedure(const sprite: PsfSprite); cdecl;
-  sfSprite_setPosition: procedure(sprite: PsfSprite; position: sfVector2f); cdecl;
-  sfSprite_setRotation: procedure(sprite: PsfSprite; angle: Single); cdecl;
-  sfSprite_setScale: procedure(sprite: PsfSprite; scale: sfVector2f); cdecl;
-  sfSprite_setOrigin: procedure(sprite: PsfSprite; origin: sfVector2f); cdecl;
-  sfSprite_getPosition: function(const sprite: PsfSprite): sfVector2f; cdecl;
-  sfSprite_getRotation: function(const sprite: PsfSprite): Single; cdecl;
-  sfSprite_getScale: function(const sprite: PsfSprite): sfVector2f; cdecl;
-  sfSprite_getOrigin: function(const sprite: PsfSprite): sfVector2f; cdecl;
-  sfSprite_move: procedure(sprite: PsfSprite; offset: sfVector2f); cdecl;
-  sfSprite_rotate: procedure(sprite: PsfSprite; angle: Single); cdecl;
-  sfSprite_scale: procedure(sprite: PsfSprite; factors: sfVector2f); cdecl;
-  sfSprite_getTransform: function(const sprite: PsfSprite): sfTransform; cdecl;
-  sfSprite_getInverseTransform: function(const sprite: PsfSprite): sfTransform; cdecl;
-  sfSprite_setTexture: procedure(sprite: PsfSprite; const texture: PsfTexture; resetRect: Boolean); cdecl;
-  sfSprite_setTextureRect: procedure(sprite: PsfSprite; rectangle: sfIntRect); cdecl;
-  sfSprite_setColor: procedure(sprite: PsfSprite; color: sfColor); cdecl;
-  sfSprite_getTexture: function(const sprite: PsfSprite): PsfTexture; cdecl;
-  sfSprite_getTextureRect: function(const sprite: PsfSprite): sfIntRect; cdecl;
-  sfSprite_getColor: function(const sprite: PsfSprite): sfColor; cdecl;
-  sfSprite_getLocalBounds: function(const sprite: PsfSprite): sfFloatRect; cdecl;
-  sfSprite_getGlobalBounds: function(const sprite: PsfSprite): sfFloatRect; cdecl;
-  sfText_create: function(const font: PsfFont): PsfText; cdecl;
-  sfText_copy: function(const text: PsfText): PsfText; cdecl;
-  sfText_destroy: procedure(const text: PsfText); cdecl;
-  sfText_setPosition: procedure(text: PsfText; position: sfVector2f); cdecl;
-  sfText_setRotation: procedure(text: PsfText; angle: Single); cdecl;
-  sfText_setScale: procedure(text: PsfText; scale: sfVector2f); cdecl;
-  sfText_setOrigin: procedure(text: PsfText; origin: sfVector2f); cdecl;
-  sfText_getPosition: function(const text: PsfText): sfVector2f; cdecl;
-  sfText_getRotation: function(const text: PsfText): Single; cdecl;
-  sfText_getScale: function(const text: PsfText): sfVector2f; cdecl;
-  sfText_getOrigin: function(const text: PsfText): sfVector2f; cdecl;
-  sfText_move: procedure(text: PsfText; offset: sfVector2f); cdecl;
-  sfText_rotate: procedure(text: PsfText; angle: Single); cdecl;
-  sfText_scale: procedure(text: PsfText; factors: sfVector2f); cdecl;
-  sfText_getTransform: function(const text: PsfText): sfTransform; cdecl;
-  sfText_getInverseTransform: function(const text: PsfText): sfTransform; cdecl;
-  sfText_setString: procedure(text: PsfText; const &string: PUTF8Char); cdecl;
-  sfText_setUnicodeString: procedure(text: PsfText; const &string: PsfChar32); cdecl;
-  sfText_setFont: procedure(text: PsfText; const font: PsfFont); cdecl;
-  sfText_setCharacterSize: procedure(text: PsfText; size: Cardinal); cdecl;
-  sfText_setLineSpacing: procedure(text: PsfText; spacingFactor: Single); cdecl;
-  sfText_setLetterSpacing: procedure(text: PsfText; spacingFactor: Single); cdecl;
-  sfText_setStyle: procedure(text: PsfText; style: UInt32); cdecl;
-  sfText_setFillColor: procedure(text: PsfText; color: sfColor); cdecl;
-  sfText_setOutlineColor: procedure(text: PsfText; color: sfColor); cdecl;
-  sfText_setOutlineThickness: procedure(text: PsfText; thickness: Single); cdecl;
-  sfText_getString: function(const text: PsfText): PUTF8Char; cdecl;
-  sfText_getUnicodeString: function(const text: PsfText): PsfChar32; cdecl;
-  sfText_getFont: function(const text: PsfText): PsfFont; cdecl;
-  sfText_getCharacterSize: function(const text: PsfText): Cardinal; cdecl;
-  sfText_getLetterSpacing: function(const text: PsfText): Single; cdecl;
-  sfText_getLineSpacing: function(const text: PsfText): Single; cdecl;
-  sfText_getStyle: function(const text: PsfText): UInt32; cdecl;
-  sfText_getFillColor: function(const text: PsfText): sfColor; cdecl;
-  sfText_getOutlineColor: function(const text: PsfText): sfColor; cdecl;
-  sfText_getOutlineThickness: function(const text: PsfText): Single; cdecl;
-  sfText_findCharacterPos: function(const text: PsfText; index: NativeUInt): sfVector2f; cdecl;
-  sfText_getLocalBounds: function(const text: PsfText): sfFloatRect; cdecl;
-  sfText_getGlobalBounds: function(const text: PsfText): sfFloatRect; cdecl;
-  sfTexture_create: function(size: sfVector2u): PsfTexture; cdecl;
-  sfTexture_createFromFile: function(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
-  sfTexture_createSrgbFromFile: function(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
-  sfTexture_createFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt; const area: PsfIntRect): PsfTexture; cdecl;
-  sfTexture_createSrgbFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt; const area: PsfIntRect): PsfTexture; cdecl;
-  sfTexture_createFromStream: function(stream: PsfInputStream; const area: PsfIntRect): PsfTexture; cdecl;
-  sfTexture_createSrgbFromStream: function(stream: PsfInputStream; const area: PsfIntRect): PsfTexture; cdecl;
-  sfTexture_createFromImage: function(const image: PsfImage; const area: PsfIntRect): PsfTexture; cdecl;
-  sfTexture_createSrgbFromImage: function(const image: PsfImage; const area: PsfIntRect): PsfTexture; cdecl;
-  sfTexture_copy: function(const texture: PsfTexture): PsfTexture; cdecl;
-  sfTexture_destroy: procedure(const texture: PsfTexture); cdecl;
-  sfTexture_getSize: function(const texture: PsfTexture): sfVector2u; cdecl;
-  sfTexture_copyToImage: function(const texture: PsfTexture): PsfImage; cdecl;
-  sfTexture_updateFromPixels: procedure(texture: PsfTexture; const pixels: PUInt8; size: sfVector2u; offset: sfVector2u); cdecl;
-  sfTexture_updateFromTexture: procedure(destination: PsfTexture; const source: PsfTexture; offset: sfVector2u); cdecl;
-  sfTexture_updateFromImage: procedure(texture: PsfTexture; const image: PsfImage; offset: sfVector2u); cdecl;
-  sfTexture_updateFromWindow: procedure(texture: PsfTexture; const window: PsfWindow; offset: sfVector2u); cdecl;
-  sfTexture_updateFromRenderWindow: procedure(texture: PsfTexture; const renderWindow: PsfRenderWindow; offset: sfVector2u); cdecl;
-  sfTexture_setSmooth: procedure(texture: PsfTexture; smooth: Boolean); cdecl;
-  sfTexture_isSmooth: function(const texture: PsfTexture): Boolean; cdecl;
-  sfTexture_isSrgb: function(const texture: PsfTexture): Boolean; cdecl;
-  sfTexture_setRepeated: procedure(texture: PsfTexture; repeated: Boolean); cdecl;
-  sfTexture_isRepeated: function(const texture: PsfTexture): Boolean; cdecl;
-  sfTexture_generateMipmap: function(texture: PsfTexture): Boolean; cdecl;
-  sfTexture_swap: procedure(left: PsfTexture; right: PsfTexture); cdecl;
-  sfTexture_getNativeHandle: function(const texture: PsfTexture): Cardinal; cdecl;
-  sfTexture_bind: procedure(const texture: PsfTexture; &type: sfTextureCoordinateType); cdecl;
-  sfTexture_getMaximumSize: function(): Cardinal; cdecl;
-  sfTransformable_create: function(): PsfTransformable; cdecl;
-  sfTransformable_copy: function(const transformable: PsfTransformable): PsfTransformable; cdecl;
-  sfTransformable_destroy: procedure(const transformable: PsfTransformable); cdecl;
-  sfTransformable_setPosition: procedure(transformable: PsfTransformable; position: sfVector2f); cdecl;
-  sfTransformable_setRotation: procedure(transformable: PsfTransformable; angle: Single); cdecl;
-  sfTransformable_setScale: procedure(transformable: PsfTransformable; scale: sfVector2f); cdecl;
-  sfTransformable_setOrigin: procedure(transformable: PsfTransformable; origin: sfVector2f); cdecl;
-  sfTransformable_getPosition: function(const transformable: PsfTransformable): sfVector2f; cdecl;
-  sfTransformable_getRotation: function(const transformable: PsfTransformable): Single; cdecl;
-  sfTransformable_getScale: function(const transformable: PsfTransformable): sfVector2f; cdecl;
-  sfTransformable_getOrigin: function(const transformable: PsfTransformable): sfVector2f; cdecl;
-  sfTransformable_move: procedure(transformable: PsfTransformable; offset: sfVector2f); cdecl;
-  sfTransformable_rotate: procedure(transformable: PsfTransformable; angle: Single); cdecl;
-  sfTransformable_scale: procedure(transformable: PsfTransformable; factors: sfVector2f); cdecl;
-  sfTransformable_getTransform: function(const transformable: PsfTransformable): sfTransform; cdecl;
-  sfTransformable_getInverseTransform: function(const transformable: PsfTransformable): sfTransform; cdecl;
-  sfVertexArray_create: function(): PsfVertexArray; cdecl;
-  sfVertexArray_copy: function(const vertexArray: PsfVertexArray): PsfVertexArray; cdecl;
-  sfVertexArray_destroy: procedure(const vertexArray: PsfVertexArray); cdecl;
-  sfVertexArray_getVertexCount: function(const vertexArray: PsfVertexArray): NativeUInt; cdecl;
-  sfVertexArray_getVertex: function(vertexArray: PsfVertexArray; index: NativeUInt): PsfVertex; cdecl;
-  sfVertexArray_clear: procedure(vertexArray: PsfVertexArray); cdecl;
-  sfVertexArray_resize: procedure(vertexArray: PsfVertexArray; vertexCount: NativeUInt); cdecl;
-  sfVertexArray_append: procedure(vertexArray: PsfVertexArray; vertex: sfVertex); cdecl;
-  sfVertexArray_setPrimitiveType: procedure(vertexArray: PsfVertexArray; &type: sfPrimitiveType); cdecl;
-  sfVertexArray_getPrimitiveType: function(vertexArray: PsfVertexArray): sfPrimitiveType; cdecl;
-  sfVertexArray_getBounds: function(vertexArray: PsfVertexArray): sfFloatRect; cdecl;
-  sfVertexBuffer_create: function(vertexCount: Cardinal; &type: sfPrimitiveType; usage: sfVertexBufferUsage): PsfVertexBuffer; cdecl;
-  sfVertexBuffer_copy: function(const vertexBuffer: PsfVertexBuffer): PsfVertexBuffer; cdecl;
-  sfVertexBuffer_destroy: procedure(const vertexBuffer: PsfVertexBuffer); cdecl;
-  sfVertexBuffer_getVertexCount: function(const vertexBuffer: PsfVertexBuffer): NativeUInt; cdecl;
-  sfVertexBuffer_update: function(vertexBuffer: PsfVertexBuffer; const vertices: PsfVertex; vertexCount: Cardinal; offset: Cardinal): Boolean; cdecl;
-  sfVertexBuffer_updateFromVertexBuffer: function(vertexBuffer: PsfVertexBuffer; const other: PsfVertexBuffer): Boolean; cdecl;
-  sfVertexBuffer_swap: procedure(left: PsfVertexBuffer; right: PsfVertexBuffer); cdecl;
-  sfVertexBuffer_getNativeHandle: function(vertexBuffer: PsfVertexBuffer): Cardinal; cdecl;
-  sfVertexBuffer_setPrimitiveType: procedure(vertexBuffer: PsfVertexBuffer; &type: sfPrimitiveType); cdecl;
-  sfVertexBuffer_getPrimitiveType: function(const vertexBuffer: PsfVertexBuffer): sfPrimitiveType; cdecl;
-  sfVertexBuffer_setUsage: procedure(vertexBuffer: PsfVertexBuffer; usage: sfVertexBufferUsage); cdecl;
-  sfVertexBuffer_getUsage: function(const vertexBuffer: PsfVertexBuffer): sfVertexBufferUsage; cdecl;
-  sfVertexBuffer_bind: procedure(const vertexBuffer: PsfVertexBuffer); cdecl;
-  sfVertexBuffer_isAvailable: function(): Boolean; cdecl;
-  sfView_create: function(): PsfView; cdecl;
-  sfView_createFromRect: function(rectangle: sfFloatRect): PsfView; cdecl;
-  sfView_copy: function(const view: PsfView): PsfView; cdecl;
-  sfView_destroy: procedure(const view: PsfView); cdecl;
-  sfView_setCenter: procedure(view: PsfView; center: sfVector2f); cdecl;
-  sfView_setSize: procedure(view: PsfView; size: sfVector2f); cdecl;
-  sfView_setRotation: procedure(view: PsfView; angle: Single); cdecl;
-  sfView_setViewport: procedure(view: PsfView; viewport: sfFloatRect); cdecl;
-  sfView_getCenter: function(const view: PsfView): sfVector2f; cdecl;
-  sfView_getSize: function(const view: PsfView): sfVector2f; cdecl;
-  sfView_getRotation: function(const view: PsfView): Single; cdecl;
-  sfView_getViewport: function(const view: PsfView): sfFloatRect; cdecl;
-  sfView_move: procedure(view: PsfView; offset: sfVector2f); cdecl;
-  sfView_rotate: procedure(view: PsfView; angle: Single); cdecl;
-  sfView_zoom: procedure(view: PsfView; factor: Single); cdecl;
-  sfClipboard_getString: function(): PUTF8Char; cdecl;
-  sfClipboard_getUnicodeString: function(): PsfChar32; cdecl;
-  sfClipboard_setString: procedure(const text: PUTF8Char); cdecl;
-  sfClipboard_setUnicodeString: procedure(const text: PsfChar32); cdecl;
-  sfContext_create: function(): PsfContext; cdecl;
-  sfContext_destroy: procedure(const context: PsfContext); cdecl;
-  sfContext_isExtensionAvailable: function(const name: PUTF8Char): Boolean; cdecl;
-  sfContext_setActive: function(context: PsfContext; active: Boolean): Boolean; cdecl;
-  sfContext_getFunction: function(const name: PUTF8Char): sfGlFunctionPointer; cdecl;
-  sfContext_getSettings: function(const context: PsfContext): sfContextSettings; cdecl;
-  sfContext_getActiveContextId: function(): UInt64; cdecl;
-  sfCursor_createFromPixels: function(const pixels: PUInt8; size: sfVector2u; hotspot: sfVector2u): PsfCursor; cdecl;
-  sfCursor_createFromSystem: function(&type: sfCursorType): PsfCursor; cdecl;
-  sfCursor_destroy: procedure(const cursor: PsfCursor); cdecl;
-  sfTouch_isDown: function(finger: Cardinal): Boolean; cdecl;
-  sfTouch_getPosition: function(finger: Cardinal; const relativeTo: PsfWindow): sfVector2i; cdecl;
-  sfTouch_getPositionWindowBase: function(finger: Cardinal; const relativeTo: PsfWindowBase): sfVector2i; cdecl;
-  sfIpAddress_fromString: function(const address: PUTF8Char): sfIpAddress; cdecl;
-  sfIpAddress_fromBytes: function(byte0: UInt8; byte1: UInt8; byte2: UInt8; byte3: UInt8): sfIpAddress; cdecl;
-  sfIpAddress_fromInteger: function(address: UInt32): sfIpAddress; cdecl;
-  sfIpAddress_toString: procedure(address: sfIpAddress; &string: PUTF8Char); cdecl;
-  sfIpAddress_toInteger: function(address: sfIpAddress): UInt32; cdecl;
-  sfIpAddress_getLocalAddress: function(): sfIpAddress; cdecl;
-  sfIpAddress_getPublicAddress: function(timeout: sfTime): sfIpAddress; cdecl;
-  sfFtpListingResponse_destroy: procedure(const ftpListingResponse: PsfFtpListingResponse); cdecl;
-  sfFtpListingResponse_isOk: function(const ftpListingResponse: PsfFtpListingResponse): Boolean; cdecl;
-  sfFtpListingResponse_getStatus: function(const ftpListingResponse: PsfFtpListingResponse): sfFtpStatus; cdecl;
-  sfFtpListingResponse_getMessage: function(const ftpListingResponse: PsfFtpListingResponse): PUTF8Char; cdecl;
-  sfFtpListingResponse_getCount: function(const ftpListingResponse: PsfFtpListingResponse): NativeUInt; cdecl;
-  sfFtpListingResponse_getName: function(const ftpListingResponse: PsfFtpListingResponse; index: NativeUInt): PUTF8Char; cdecl;
-  sfFtpDirectoryResponse_destroy: procedure(const ftpDirectoryResponse: PsfFtpDirectoryResponse); cdecl;
-  sfFtpDirectoryResponse_isOk: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): Boolean; cdecl;
-  sfFtpDirectoryResponse_getStatus: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): sfFtpStatus; cdecl;
-  sfFtpDirectoryResponse_getMessage: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PUTF8Char; cdecl;
-  sfFtpDirectoryResponse_getDirectory: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PUTF8Char; cdecl;
-  sfFtpDirectoryResponse_getDirectoryUnicode: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PsfChar32; cdecl;
-  sfFtpResponse_destroy: procedure(const ftpResponse: PsfFtpResponse); cdecl;
-  sfFtpResponse_isOk: function(const ftpResponse: PsfFtpResponse): Boolean; cdecl;
-  sfFtpResponse_getStatus: function(const ftpResponse: PsfFtpResponse): sfFtpStatus; cdecl;
-  sfFtpResponse_getMessage: function(const ftpResponse: PsfFtpResponse): PUTF8Char; cdecl;
-  sfFtp_create: function(): PsfFtp; cdecl;
-  sfFtp_destroy: procedure(const ftp: PsfFtp); cdecl;
-  sfFtp_connect: function(ftp: PsfFtp; server: sfIpAddress; port: Word; timeout: sfTime): PsfFtpResponse; cdecl;
-  sfFtp_loginAnonymous: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
-  sfFtp_login: function(ftp: PsfFtp; const name: PUTF8Char; const password: PUTF8Char): PsfFtpResponse; cdecl;
-  sfFtp_disconnect: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
-  sfFtp_keepAlive: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
-  sfFtp_getWorkingDirectory: function(ftp: PsfFtp): PsfFtpDirectoryResponse; cdecl;
-  sfFtp_getDirectoryListing: function(ftp: PsfFtp; const directory: PUTF8Char): PsfFtpListingResponse; cdecl;
-  sfFtp_changeDirectory: function(ftp: PsfFtp; const directory: PUTF8Char): PsfFtpResponse; cdecl;
-  sfFtp_parentDirectory: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
-  sfFtp_createDirectory: function(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
-  sfFtp_deleteDirectory: function(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
-  sfFtp_renameFile: function(ftp: PsfFtp; const &file: PUTF8Char; const newName: PUTF8Char): PsfFtpResponse; cdecl;
-  sfFtp_deleteFile: function(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
-  sfFtp_download: function(ftp: PsfFtp; const remoteFile: PUTF8Char; const localPath: PUTF8Char; mode: sfFtpTransferMode): PsfFtpResponse; cdecl;
-  sfFtp_upload: function(ftp: PsfFtp; const localFile: PUTF8Char; const remotePath: PUTF8Char; mode: sfFtpTransferMode; append: Boolean): PsfFtpResponse; cdecl;
-  sfFtp_sendCommand: function(ftp: PsfFtp; const command: PUTF8Char; const parameter: PUTF8Char): PsfFtpResponse; cdecl;
-  sfHttpRequest_create: function(): PsfHttpRequest; cdecl;
-  sfHttpRequest_destroy: procedure(const httpRequest: PsfHttpRequest); cdecl;
-  sfHttpRequest_setField: procedure(httpRequest: PsfHttpRequest; const field: PUTF8Char; const value: PUTF8Char); cdecl;
-  sfHttpRequest_setMethod: procedure(httpRequest: PsfHttpRequest; method: sfHttpMethod); cdecl;
-  sfHttpRequest_setUri: procedure(httpRequest: PsfHttpRequest; const uri: PUTF8Char); cdecl;
-  sfHttpRequest_setHttpVersion: procedure(httpRequest: PsfHttpRequest; major: Cardinal; minor: Cardinal); cdecl;
-  sfHttpRequest_setBody: procedure(httpRequest: PsfHttpRequest; const body: PUTF8Char); cdecl;
-  sfHttpResponse_destroy: procedure(const httpResponse: PsfHttpResponse); cdecl;
-  sfHttpResponse_getField: function(const httpResponse: PsfHttpResponse; const field: PUTF8Char): PUTF8Char; cdecl;
-  sfHttpResponse_getStatus: function(const httpResponse: PsfHttpResponse): sfHttpStatus; cdecl;
-  sfHttpResponse_getMajorVersion: function(const httpResponse: PsfHttpResponse): Cardinal; cdecl;
-  sfHttpResponse_getMinorVersion: function(const httpResponse: PsfHttpResponse): Cardinal; cdecl;
-  sfHttpResponse_getBody: function(const httpResponse: PsfHttpResponse): PUTF8Char; cdecl;
-  sfHttp_create: function(): PsfHttp; cdecl;
-  sfHttp_destroy: procedure(const http: PsfHttp); cdecl;
-  sfHttp_setHost: procedure(http: PsfHttp; const host: PUTF8Char; port: Word); cdecl;
-  sfHttp_sendRequest: function(http: PsfHttp; const request: PsfHttpRequest; timeout: sfTime): PsfHttpResponse; cdecl;
-  sfPacket_create: function(): PsfPacket; cdecl;
-  sfPacket_copy: function(const packet: PsfPacket): PsfPacket; cdecl;
-  sfPacket_destroy: procedure(const packet: PsfPacket); cdecl;
-  sfPacket_append: procedure(packet: PsfPacket; const data: Pointer; sizeInBytes: NativeUInt); cdecl;
-  sfPacket_getReadPosition: function(const packet: PsfPacket): NativeUInt; cdecl;
-  sfPacket_clear: procedure(packet: PsfPacket); cdecl;
-  sfPacket_getData: function(const packet: PsfPacket): Pointer; cdecl;
-  sfPacket_getDataSize: function(const packet: PsfPacket): NativeUInt; cdecl;
-  sfPacket_endOfPacket: function(const packet: PsfPacket): Boolean; cdecl;
-  sfPacket_canRead: function(const packet: PsfPacket): Boolean; cdecl;
-  sfPacket_readBool: function(packet: PsfPacket): Boolean; cdecl;
-  sfPacket_readInt8: function(packet: PsfPacket): Int8; cdecl;
-  sfPacket_readUint8: function(packet: PsfPacket): UInt8; cdecl;
-  sfPacket_readInt16: function(packet: PsfPacket): Int16; cdecl;
-  sfPacket_readUint16: function(packet: PsfPacket): UInt16; cdecl;
-  sfPacket_readInt32: function(packet: PsfPacket): Int32; cdecl;
-  sfPacket_readUint32: function(packet: PsfPacket): UInt32; cdecl;
-  sfPacket_readFloat: function(packet: PsfPacket): Single; cdecl;
-  sfPacket_readDouble: function(packet: PsfPacket): Double; cdecl;
-  sfPacket_readString: procedure(packet: PsfPacket; &string: PUTF8Char); cdecl;
-  sfPacket_readWideString: procedure(packet: PsfPacket; &string: PWideChar); cdecl;
-  sfPacket_writeBool: procedure(packet: PsfPacket; p2: Boolean); cdecl;
-  sfPacket_writeInt8: procedure(packet: PsfPacket; p2: Int8); cdecl;
-  sfPacket_writeUint8: procedure(packet: PsfPacket; p2: UInt8); cdecl;
-  sfPacket_writeInt16: procedure(packet: PsfPacket; p2: Int16); cdecl;
-  sfPacket_writeUint16: procedure(packet: PsfPacket; p2: UInt16); cdecl;
-  sfPacket_writeInt32: procedure(packet: PsfPacket; p2: Int32); cdecl;
-  sfPacket_writeUint32: procedure(packet: PsfPacket; p2: UInt32); cdecl;
-  sfPacket_writeFloat: procedure(packet: PsfPacket; p2: Single); cdecl;
-  sfPacket_writeDouble: procedure(packet: PsfPacket; p2: Double); cdecl;
-  sfPacket_writeString: procedure(packet: PsfPacket; const &string: PUTF8Char); cdecl;
-  sfPacket_writeWideString: procedure(packet: PsfPacket; const &string: PWideChar); cdecl;
-  sfSocketSelector_create: function(): PsfSocketSelector; cdecl;
-  sfSocketSelector_copy: function(const selector: PsfSocketSelector): PsfSocketSelector; cdecl;
-  sfSocketSelector_destroy: procedure(const selector: PsfSocketSelector); cdecl;
-  sfSocketSelector_addTcpListener: procedure(selector: PsfSocketSelector; socket: PsfTcpListener); cdecl;
-  sfSocketSelector_addTcpSocket: procedure(selector: PsfSocketSelector; socket: PsfTcpSocket); cdecl;
-  sfSocketSelector_addUdpSocket: procedure(selector: PsfSocketSelector; socket: PsfUdpSocket); cdecl;
-  sfSocketSelector_removeTcpListener: procedure(selector: PsfSocketSelector; socket: PsfTcpListener); cdecl;
-  sfSocketSelector_removeTcpSocket: procedure(selector: PsfSocketSelector; socket: PsfTcpSocket); cdecl;
-  sfSocketSelector_removeUdpSocket: procedure(selector: PsfSocketSelector; socket: PsfUdpSocket); cdecl;
-  sfSocketSelector_clear: procedure(selector: PsfSocketSelector); cdecl;
-  sfSocketSelector_wait: function(selector: PsfSocketSelector; timeout: sfTime): Boolean; cdecl;
-  sfSocketSelector_isTcpListenerReady: function(const selector: PsfSocketSelector; socket: PsfTcpListener): Boolean; cdecl;
-  sfSocketSelector_isTcpSocketReady: function(const selector: PsfSocketSelector; socket: PsfTcpSocket): Boolean; cdecl;
-  sfSocketSelector_isUdpSocketReady: function(const selector: PsfSocketSelector; socket: PsfUdpSocket): Boolean; cdecl;
-  sfTcpListener_create: function(): PsfTcpListener; cdecl;
-  sfTcpListener_destroy: procedure(const listener: PsfTcpListener); cdecl;
-  sfTcpListener_setBlocking: procedure(listener: PsfTcpListener; blocking: Boolean); cdecl;
-  sfTcpListener_isBlocking: function(const listener: PsfTcpListener): Boolean; cdecl;
-  sfTcpListener_getLocalPort: function(const listener: PsfTcpListener): Word; cdecl;
-  sfTcpListener_listen: function(listener: PsfTcpListener; port: Word; address: sfIpAddress): sfSocketStatus; cdecl;
-  sfTcpListener_accept: function(listener: PsfTcpListener; connected: PPsfTcpSocket): sfSocketStatus; cdecl;
-  sfTcpSocket_create: function(): PsfTcpSocket; cdecl;
-  sfTcpSocket_destroy: procedure(const socket: PsfTcpSocket); cdecl;
-  sfTcpSocket_setBlocking: procedure(socket: PsfTcpSocket; blocking: Boolean); cdecl;
-  sfTcpSocket_isBlocking: function(const socket: PsfTcpSocket): Boolean; cdecl;
-  sfTcpSocket_getLocalPort: function(const socket: PsfTcpSocket): Word; cdecl;
-  sfTcpSocket_getRemoteAddress: function(const socket: PsfTcpSocket): sfIpAddress; cdecl;
-  sfTcpSocket_getRemotePort: function(const socket: PsfTcpSocket): Word; cdecl;
-  sfTcpSocket_connect: function(socket: PsfTcpSocket; remoteAddress: sfIpAddress; remotePort: Word; timeout: sfTime): sfSocketStatus; cdecl;
-  sfTcpSocket_disconnect: procedure(socket: PsfTcpSocket); cdecl;
-  sfTcpSocket_send: function(socket: PsfTcpSocket; const data: Pointer; size: NativeUInt): sfSocketStatus; cdecl;
-  sfTcpSocket_sendPartial: function(socket: PsfTcpSocket; const data: Pointer; size: NativeUInt; sent: PNativeUInt): sfSocketStatus; cdecl;
-  sfTcpSocket_receive: function(socket: PsfTcpSocket; data: Pointer; size: NativeUInt; received: PNativeUInt): sfSocketStatus; cdecl;
-  sfTcpSocket_sendPacket: function(socket: PsfTcpSocket; packet: PsfPacket): sfSocketStatus; cdecl;
-  sfTcpSocket_receivePacket: function(socket: PsfTcpSocket; packet: PsfPacket): sfSocketStatus; cdecl;
-  sfUdpSocket_create: function(): PsfUdpSocket; cdecl;
-  sfUdpSocket_destroy: procedure(const socket: PsfUdpSocket); cdecl;
-  sfUdpSocket_setBlocking: procedure(socket: PsfUdpSocket; blocking: Boolean); cdecl;
-  sfUdpSocket_isBlocking: function(const socket: PsfUdpSocket): Boolean; cdecl;
-  sfUdpSocket_getLocalPort: function(const socket: PsfUdpSocket): Word; cdecl;
-  sfUdpSocket_bind: function(socket: PsfUdpSocket; port: Word; address: sfIpAddress): sfSocketStatus; cdecl;
-  sfUdpSocket_unbind: procedure(socket: PsfUdpSocket); cdecl;
-  sfUdpSocket_send: function(socket: PsfUdpSocket; const data: Pointer; size: NativeUInt; remoteAddress: sfIpAddress; remotePort: Word): sfSocketStatus; cdecl;
-  sfUdpSocket_receive: function(socket: PsfUdpSocket; data: Pointer; size: NativeUInt; received: PNativeUInt; remoteAddress: PsfIpAddress; remotePort: PWord): sfSocketStatus; cdecl;
-  sfUdpSocket_sendPacket: function(socket: PsfUdpSocket; packet: PsfPacket; remoteAddress: sfIpAddress; remotePort: Word): sfSocketStatus; cdecl;
-  sfUdpSocket_receivePacket: function(socket: PsfUdpSocket; packet: PsfPacket; remoteAddress: PsfIpAddress; remotePort: PWord): sfSocketStatus; cdecl;
-  sfUdpSocket_maxDatagramSize: function(): Cardinal; cdecl;
+
+//=== WINDOWBASE ============================================================
+var
+  sfWindowBase_Create: function(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState): PsfWindowBase; cdecl;
+  sfWindowBase_CreateUnicode: function(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState): PsfWindowBase; cdecl;
+  sfWindowBase_CreateFromHandle: function(handle: sfWindowHandle): PsfWindowBase; cdecl;
+  sfWindowBase_Destroy: procedure(const windowBase: PsfWindowBase); cdecl;
+  sfWindowBase_Close: procedure(windowBase: PsfWindowBase); cdecl;
+  sfWindowBase_IsOpen: function(const windowBase: PsfWindowBase): Boolean; cdecl;
+  sfWindowBase_PollEvent: function(windowBase: PsfWindowBase; event: PsfEvent): Boolean; cdecl;
+  sfWindowBase_WaitEvent: function(windowBase: PsfWindowBase; event: PsfEvent): Boolean; cdecl;
+  sfWindowBase_GetPosition: function(const windowBase: PsfWindowBase): sfVector2i; cdecl;
+  sfWindowBase_SetPosition: procedure(windowBase: PsfWindowBase; position: sfVector2i); cdecl;
+  sfWindowBase_GetSize: function(const windowBase: PsfWindowBase): sfVector2u; cdecl;
+  sfWindowBase_SetSize: procedure(windowBase: PsfWindowBase; size: sfVector2u); cdecl;
+  sfWindowBase_SetTitle: procedure(windowBase: PsfWindowBase; const title: PUTF8Char); cdecl;
+  sfWindowBase_SetUnicodeTitle: procedure(windowBase: PsfWindowBase; const title: PsfChar32); cdecl;
+  sfWindowBase_SetIcon: procedure(windowBase: PsfWindowBase; size: sfVector2u; const pixels: PUInt8); cdecl;
+  sfWindowBase_SetVisible: procedure(windowBase: PsfWindowBase; visible: Boolean); cdecl;
+  sfWindowBase_SetMouseCursorVisible: procedure(windowBase: PsfWindowBase; visible: Boolean); cdecl;
+  sfWindowBase_SetMouseCursorGrabbed: procedure(windowBase: PsfWindowBase; grabbed: Boolean); cdecl;
+  sfWindowBase_SetMouseCursor: procedure(windowBase: PsfWindowBase; const cursor: PsfCursor); cdecl;
+  sfWindowBase_SetKeyRepeatEnabled: procedure(windowBase: PsfWindowBase; enabled: Boolean); cdecl;
+  sfWindowBase_SetJoystickThreshold: procedure(windowBase: PsfWindowBase; threshold: Single); cdecl;
+  sfWindowBase_RequestFocus: procedure(windowBase: PsfWindowBase); cdecl;
+  sfWindowBase_HasFocus: function(const windowBase: PsfWindowBase): Boolean; cdecl;
+  sfWindowBase_GetNativeHandle: function(const windowBase: PsfWindowBase): sfWindowHandle; cdecl;
+  sfWindowBase_CreateVulkanSurface: function(windowBase: PsfWindowBase; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
+  
+//=== WINDOW ================================================================
+var
+  sfWindow_Create: function(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfWindow; cdecl;
+  sfWindow_CreateUnicode: function(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfWindow; cdecl;
+  sfWindow_CreateFromHandle: function(handle: sfWindowHandle; const settings: PsfContextSettings): PsfWindow; cdecl;
+  sfWindow_Destroy: procedure(const window: PsfWindow); cdecl;
+  sfWindow_Close: procedure(window: PsfWindow); cdecl;
+  sfWindow_IsOpen: function(const window: PsfWindow): Boolean; cdecl;
+  sfWindow_GetSettings: function(const window: PsfWindow): sfContextSettings; cdecl;
+  sfWindow_PollEvent: function(window: PsfWindow; event: PsfEvent): Boolean; cdecl;
+  sfWindow_WaitEvent: function(window: PsfWindow; event: PsfEvent): Boolean; cdecl;
+  sfWindow_GetPosition: function(const window: PsfWindow): sfVector2i; cdecl;
+  sfWindow_SetPosition: procedure(window: PsfWindow; position: sfVector2i); cdecl;
+  sfWindow_GetSize: function(const window: PsfWindow): sfVector2u; cdecl;
+  sfWindow_SetSize: procedure(window: PsfWindow; size: sfVector2u); cdecl;
+  sfWindow_SetTitle: procedure(window: PsfWindow; const title: PUTF8Char); cdecl;
+  sfWindow_SetUnicodeTitle: procedure(window: PsfWindow; const title: PsfChar32); cdecl;
+  sfWindow_SetIcon: procedure(window: PsfWindow; size: sfVector2u; const pixels: PUInt8); cdecl;
+  sfWindow_SetVisible: procedure(window: PsfWindow; visible: Boolean); cdecl;
+  sfWindow_SetVerticalSyncEnabled: procedure(window: PsfWindow; enabled: Boolean); cdecl;
+  sfWindow_SetMouseCursorVisible: procedure(window: PsfWindow; visible: Boolean); cdecl;
+  sfWindow_SetMouseCursorGrabbed: procedure(window: PsfWindow; grabbed: Boolean); cdecl;
+  sfWindow_SetMouseCursor: procedure(window: PsfWindow; const cursor: PsfCursor); cdecl;
+  sfWindow_SetKeyRepeatEnabled: procedure(window: PsfWindow; enabled: Boolean); cdecl;
+  sfWindow_SetFramerateLimit: procedure(window: PsfWindow; limit: Cardinal); cdecl;
+  sfWindow_SetJoystickThreshold: procedure(window: PsfWindow; threshold: Single); cdecl;
+  sfWindow_SetActive: function(window: PsfWindow; active: Boolean): Boolean; cdecl;
+  sfWindow_RequestFocus: procedure(window: PsfWindow); cdecl;
+  sfWindow_HasFocus: function(const window: PsfWindow): Boolean; cdecl;
+  sfWindow_Display: procedure(window: PsfWindow); cdecl;
+  sfWindow_GetNativeHandle: function(const window: PsfWindow): sfWindowHandle; cdecl;
+  sfWindow_CreateVulkanSurface: function(window: PsfWindow; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
+
+//=== RENDERTEXTURE =========================================================
+var
+  sfRenderTexture_Create: function(size: sfVector2u; const settings: PsfContextSettings): PsfRenderTexture; cdecl;
+  sfRenderTexture_Destroy: procedure(const renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_GetSize: function(const renderTexture: PsfRenderTexture): sfVector2u; cdecl;
+  sfRenderTexture_IsSrgb: function(const renderTexture: PsfRenderTexture): Boolean; cdecl;
+  sfRenderTexture_SetActive: function(renderTexture: PsfRenderTexture; active: Boolean): Boolean; cdecl;
+  sfRenderTexture_Display: procedure(renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_Clear: procedure(renderTexture: PsfRenderTexture; color: sfColor); cdecl;
+  sfRenderTexture_SetView: procedure(renderTexture: PsfRenderTexture; const view: PsfView); cdecl;
+  sfRenderTexture_GetView: function(const renderTexture: PsfRenderTexture): PsfView; cdecl;
+  sfRenderTexture_GetDefaultView: function(const renderTexture: PsfRenderTexture): PsfView; cdecl;
+  sfRenderTexture_GetViewport: function(const renderTexture: PsfRenderTexture; const view: PsfView): sfIntRect; cdecl;
+  sfRenderTexture_MapPixelToCoords: function(const renderTexture: PsfRenderTexture; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
+  sfRenderTexture_MapCoordsToPixel: function(const renderTexture: PsfRenderTexture; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
+  sfRenderTexture_DrawSprite: procedure(renderTexture: PsfRenderTexture; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_DrawText: procedure(renderTexture: PsfRenderTexture; const &object: PsfText; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_DrawShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfShape; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_DrawCircleShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfCircleShape; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_DrawConvexShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfConvexShape; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_DrawRectangleShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfRectangleShape; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_DrawVertexArray: procedure(renderTexture: PsfRenderTexture; const &object: PsfVertexArray; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_DrawVertexBuffer: procedure(renderTexture: PsfRenderTexture; const &object: PsfVertexBuffer; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_DrawVertexBufferRange: procedure(renderTexture: PsfRenderTexture; const &object: PsfVertexBuffer; firstVertex: NativeUInt; vertexCount: NativeUInt; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_DrawPrimitives: procedure(renderTexture: PsfRenderTexture; const vertices: PsfVertex; vertexCount: NativeUInt; &type: sfPrimitiveType; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_PushGLStates: procedure(renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_PopGLStates: procedure(renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_ResetGLStates: procedure(renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_GetTexture: function(const renderTexture: PsfRenderTexture): PsfTexture; cdecl;
+  sfRenderTexture_GetMaximumAntiAliasingLevel: function(): Cardinal; cdecl;
+  sfRenderTexture_SetSmooth: procedure(renderTexture: PsfRenderTexture; smooth: Boolean); cdecl;
+  sfRenderTexture_IsSmooth: function(const renderTexture: PsfRenderTexture): Boolean; cdecl;
+  sfRenderTexture_SetRepeated: procedure(renderTexture: PsfRenderTexture; repeated: Boolean); cdecl;
+  sfRenderTexture_IsRepeated: function(const renderTexture: PsfRenderTexture): Boolean; cdecl;
+  sfRenderTexture_GenerateMipmap: function(renderTexture: PsfRenderTexture): Boolean; cdecl;
+  
+//=== RENDERWINDOW ==========================================================
+var
+  sfRenderWindow_Create: function(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
+  sfRenderWindow_CreateUnicode: function(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
+  sfRenderWindow_CreateFromHandle: function(handle: sfWindowHandle; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
+  sfRenderWindow_Destroy: procedure(var renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_Close: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_IsOpen: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
+  sfRenderWindow_GetSettings: function(const renderWindow: PsfRenderWindow): sfContextSettings; cdecl;
+  sfRenderWindow_PollEvent: function(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
+  sfRenderWindow_WaitEvent: function(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
+  sfRenderWindow_GetPosition: function(const renderWindow: PsfRenderWindow): sfVector2i; cdecl;
+  sfRenderWindow_SetPosition: procedure(renderWindow: PsfRenderWindow; position: sfVector2i); cdecl;
+  sfRenderWindow_GetSize: function(const renderWindow: PsfRenderWindow): sfVector2u; cdecl;
+  sfRenderWindow_IsSrgb: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
+  sfRenderWindow_SetSize: procedure(renderWindow: PsfRenderWindow; size: sfVector2u); cdecl;
+  sfRenderWindow_SetTitle: procedure(renderWindow: PsfRenderWindow; const title: PUTF8Char); cdecl;
+  sfRenderWindow_SetUnicodeTitle: procedure(renderWindow: PsfRenderWindow; const title: PsfChar32); cdecl;
+  sfRenderWindow_SetIcon: procedure(renderWindow: PsfRenderWindow; size: sfVector2u; const pixels: PUInt8); cdecl;
+  sfRenderWindow_SetVisible: procedure(renderWindow: PsfRenderWindow; visible: Boolean); cdecl;
+  sfRenderWindow_SetVerticalSyncEnabled: procedure(renderWindow: PsfRenderWindow; enabled: Boolean); cdecl;
+  sfRenderWindow_SetMouseCursorVisible: procedure(renderWindow: PsfRenderWindow; show: Boolean); cdecl;
+  sfRenderWindow_SetMouseCursorGrabbed: procedure(renderWindow: PsfRenderWindow; grabbed: Boolean); cdecl;
+  sfRenderWindow_SetMouseCursor: procedure(renderWindow: PsfRenderWindow; const cursor: PsfCursor); cdecl;
+  sfRenderWindow_SetKeyRepeatEnabled: procedure(renderWindow: PsfRenderWindow; enabled: Boolean); cdecl;
+  sfRenderWindow_SetFramerateLimit: procedure(renderWindow: PsfRenderWindow; limit: Cardinal); cdecl;
+  sfRenderWindow_SetJoystickThreshold: procedure(renderWindow: PsfRenderWindow; threshold: Single); cdecl;
+  sfRenderWindow_SetActive: function(renderWindow: PsfRenderWindow; active: Boolean): Boolean; cdecl;
+  sfRenderWindow_RequestFocus: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_HasFocus: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
+  sfRenderWindow_Display: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_GetNativeHandle: function(const renderWindow: PsfRenderWindow): sfWindowHandle; cdecl;
+  sfRenderWindow_Clear: procedure(renderWindow: PsfRenderWindow; color: sfColor); cdecl;
+  sfRenderWindow_SetView: procedure(renderWindow: PsfRenderWindow; const view: PsfView); cdecl;
+  sfRenderWindow_GetView: function(const renderWindow: PsfRenderWindow): PsfView; cdecl;
+  sfRenderWindow_GetDefaultView: function(const renderWindow: PsfRenderWindow): PsfView; cdecl;
+  sfRenderWindow_GetViewport: function(const renderWindow: PsfRenderWindow; const view: PsfView): sfIntRect; cdecl;
+  sfRenderWindow_MapPixelToCoords: function(const renderWindow: PsfRenderWindow; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
+  sfRenderWindow_MapCoordsToPixel: function(const renderWindow: PsfRenderWindow; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
+  sfRenderWindow_DrawSprite: procedure(renderWindow: PsfRenderWindow; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_DrawText: procedure(renderWindow: PsfRenderWindow; const &object: PsfText; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_DrawShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfShape; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_DrawCircleShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfCircleShape; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_DrawConvexShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfConvexShape; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_DrawRectangleShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfRectangleShape; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_DrawVertexArray: procedure(renderWindow: PsfRenderWindow; const &object: PsfVertexArray; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_DrawVertexBuffer: procedure(renderWindow: PsfRenderWindow; const &object: PsfVertexBuffer; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_DrawVertexBufferRange: procedure(renderWindow: PsfRenderWindow; const &object: PsfVertexBuffer; firstVertex: NativeUInt; vertexCount: NativeUInt; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_DrawPrimitives: procedure(renderWindow: PsfRenderWindow; const vertices: PsfVertex; vertexCount: NativeUInt; &type: sfPrimitiveType; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_PushGLStates: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_PopGLStates: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_ResetGLStates: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_CreateVulkanSurface: function(renderWindow: PsfRenderWindow; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
+
+//=== TOUCH =================================================================
+var
+  sfTouch_GetPositionRenderWindow: function(finger: Cardinal; const relativeTo: PsfRenderWindow): sfVector2i; cdecl;
+  
+//=== SHADER ================================================================
+  sfShader_CreateFromFile: function(const vertexShaderFilename: PUTF8Char; const geometryShaderFilename: PUTF8Char; const fragmentShaderFilename: PUTF8Char): PsfShader; cdecl;
+  sfShader_CreateFromMemory: function(const vertexShader: PUTF8Char; const geometryShader: PUTF8Char; const fragmentShader: PUTF8Char): PsfShader; cdecl;
+  sfShader_CreateFromStream: function(vertexShaderStream: PsfInputStream; geometryShaderStream: PsfInputStream; fragmentShaderStream: PsfInputStream): PsfShader; cdecl;
+  sfShader_Destroy: procedure(const shader: PsfShader); cdecl;
+  sfShader_SetFloatUniform: procedure(shader: PsfShader; const name: PUTF8Char; x: Single); cdecl;
+  sfShader_SetVec2Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec2); cdecl;
+  sfShader_SetVec3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec3); cdecl;
+  sfShader_SetVec4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec4); cdecl;
+  sfShader_SetColorUniform: procedure(shader: PsfShader; const name: PUTF8Char; color: sfColor); cdecl;
+  sfShader_SetIntUniform: procedure(shader: PsfShader; const name: PUTF8Char; x: Integer); cdecl;
+  sfShader_SetIvec2Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec2); cdecl;
+  sfShader_SetIvec3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec3); cdecl;
+  sfShader_SetIvec4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec4); cdecl;
+  sfShader_SetIntColorUniform: procedure(shader: PsfShader; const name: PUTF8Char; color: sfColor); cdecl;
+  sfShader_SetBoolUniform: procedure(shader: PsfShader; const name: PUTF8Char; x: Boolean); cdecl;
+  sfShader_SetBvec2Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec2); cdecl;
+  sfShader_SetBvec3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec3); cdecl;
+  sfShader_SetBvec4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec4); cdecl;
+  sfShader_SetMat3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; const matrix: PsfGlslMat3); cdecl;
+  sfShader_SetMat4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; const matrix: PsfGlslMat4); cdecl;
+  sfShader_SetTextureUniform: procedure(shader: PsfShader; const name: PUTF8Char; const texture: PsfTexture); cdecl;
+  sfShader_SetCurrentTextureUniform: procedure(shader: PsfShader; const name: PUTF8Char); cdecl;
+  sfShader_SetFloatUniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const scalarArray: PSingle; length: NativeUInt); cdecl;
+  sfShader_SetVec2UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec2; length: NativeUInt); cdecl;
+  sfShader_SetVec3UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec3; length: NativeUInt); cdecl;
+  sfShader_SetVec4UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec4; length: NativeUInt); cdecl;
+  sfShader_SetMat3UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const matrixArray: PsfGlslMat3; length: NativeUInt); cdecl;
+  sfShader_SetMat4UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const matrixArray: PsfGlslMat4; length: NativeUInt); cdecl;
+  sfShader_GetNativeHandle: function(const shader: PsfShader): Cardinal; cdecl;
+  sfShader_Bind: procedure(const shader: PsfShader); cdecl;
+  sfShader_IsAvailable: function(): Boolean; cdecl;
+  sfShader_IsGeometryAvailable: function(): Boolean; cdecl;
+
+//=== SHAPE =================================================================
+var
+  sfShape_Create: function(getPointCount: sfShapeGetPointCountCallback; getPoint: sfShapeGetPointCallback; userData: Pointer): PsfShape; cdecl;
+  sfShape_Destroy: procedure(const shape: PsfShape); cdecl;
+  sfShape_SetPosition: procedure(shape: PsfShape; position: sfVector2f); cdecl;
+  sfShape_SetRotation: procedure(shape: PsfShape; angle: Single); cdecl;
+  sfShape_SetScale: procedure(shape: PsfShape; scale: sfVector2f); cdecl;
+  sfShape_SetOrigin: procedure(shape: PsfShape; origin: sfVector2f); cdecl;
+  sfShape_GetPosition: function(const shape: PsfShape): sfVector2f; cdecl;
+  sfShape_GetRotation: function(const shape: PsfShape): Single; cdecl;
+  sfShape_GetScale: function(const shape: PsfShape): sfVector2f; cdecl;
+  sfShape_GetOrigin: function(const shape: PsfShape): sfVector2f; cdecl;
+  sfShape_Move: procedure(shape: PsfShape; offset: sfVector2f); cdecl;
+  sfShape_Rotate: procedure(shape: PsfShape; angle: Single); cdecl;
+  sfShape_Scale: procedure(shape: PsfShape; factors: sfVector2f); cdecl;
+  sfShape_GetTransform: function(const shape: PsfShape): sfTransform; cdecl;
+  sfShape_GetInverseTransform: function(const shape: PsfShape): sfTransform; cdecl;
+  sfShape_SetTexture: procedure(shape: PsfShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
+  sfShape_SetTextureRect: procedure(shape: PsfShape; rect: sfIntRect); cdecl;
+  sfShape_SetFillColor: procedure(shape: PsfShape; color: sfColor); cdecl;
+  sfShape_SetOutlineColor: procedure(shape: PsfShape; color: sfColor); cdecl;
+  sfShape_SetOutlineThickness: procedure(shape: PsfShape; thickness: Single); cdecl;
+  sfShape_GetTexture: function(const shape: PsfShape): PsfTexture; cdecl;
+  sfShape_GetTextureRect: function(const shape: PsfShape): sfIntRect; cdecl;
+  sfShape_GetFillColor: function(const shape: PsfShape): sfColor; cdecl;
+  sfShape_GetOutlineColor: function(const shape: PsfShape): sfColor; cdecl;
+  sfShape_GetOutlineThickness: function(const shape: PsfShape): Single; cdecl;
+  sfShape_GetPointCount: function(const shape: PsfShape): NativeUInt; cdecl;
+  sfShape_GetPoint: function(const shape: PsfShape; index: NativeUInt): sfVector2f; cdecl;
+  sfShape_GetLocalBounds: function(const shape: PsfShape): sfFloatRect; cdecl;
+  sfShape_GetGlobalBounds: function(const shape: PsfShape): sfFloatRect; cdecl;
+  sfShape_Update: procedure(shape: PsfShape); cdecl;
+
+//=== SPRITE ================================================================
+var
+  sfSprite_Create: function(const texture: PsfTexture): PsfSprite; cdecl;
+  sfSprite_Copy: function(const sprite: PsfSprite): PsfSprite; cdecl;
+  sfSprite_Destroy: procedure(const sprite: PsfSprite); cdecl;
+  sfSprite_SetPosition: procedure(sprite: PsfSprite; position: sfVector2f); cdecl;
+  sfSprite_SetRotation: procedure(sprite: PsfSprite; angle: Single); cdecl;
+  sfSprite_SetScale: procedure(sprite: PsfSprite; scale: sfVector2f); cdecl;
+  sfSprite_SetOrigin: procedure(sprite: PsfSprite; origin: sfVector2f); cdecl;
+  sfSprite_GetPosition: function(const sprite: PsfSprite): sfVector2f; cdecl;
+  sfSprite_GetRotation: function(const sprite: PsfSprite): Single; cdecl;
+  sfSprite_GetScale: function(const sprite: PsfSprite): sfVector2f; cdecl;
+  sfSprite_GetOrigin: function(const sprite: PsfSprite): sfVector2f; cdecl;
+  sfSprite_Move: procedure(sprite: PsfSprite; offset: sfVector2f); cdecl;
+  sfSprite_Rotate: procedure(sprite: PsfSprite; angle: Single); cdecl;
+  sfSprite_Scale: procedure(sprite: PsfSprite; factors: sfVector2f); cdecl;
+  sfSprite_GetTransform: function(const sprite: PsfSprite): sfTransform; cdecl;
+  sfSprite_GetInverseTransform: function(const sprite: PsfSprite): sfTransform; cdecl;
+  sfSprite_SetTexture: procedure(sprite: PsfSprite; const texture: PsfTexture; resetRect: Boolean); cdecl;
+  sfSprite_SetTextureRect: procedure(sprite: PsfSprite; rectangle: sfIntRect); cdecl;
+  sfSprite_SetColor: procedure(sprite: PsfSprite; color: sfColor); cdecl;
+  sfSprite_GetTexture: function(const sprite: PsfSprite): PsfTexture; cdecl;
+  sfSprite_GetTextureRect: function(const sprite: PsfSprite): sfIntRect; cdecl;
+  sfSprite_GetColor: function(const sprite: PsfSprite): sfColor; cdecl;
+  sfSprite_GetLocalBounds: function(const sprite: PsfSprite): sfFloatRect; cdecl;
+  sfSprite_GetGlobalBounds: function(const sprite: PsfSprite): sfFloatRect; cdecl;
+  
+//=== TEXT ==================================================================
+var
+  sfText_Create: function(const font: PsfFont): PsfText; cdecl;
+  sfText_Copy: function(const text: PsfText): PsfText; cdecl;
+  sfText_Destroy: procedure(const text: PsfText); cdecl;
+  sfText_SetPosition: procedure(text: PsfText; position: sfVector2f); cdecl;
+  sfText_SetRotation: procedure(text: PsfText; angle: Single); cdecl;
+  sfText_SetScale: procedure(text: PsfText; scale: sfVector2f); cdecl;
+  sfText_SetOrigin: procedure(text: PsfText; origin: sfVector2f); cdecl;
+  sfText_GetPosition: function(const text: PsfText): sfVector2f; cdecl;
+  sfText_GetRotation: function(const text: PsfText): Single; cdecl;
+  sfText_GetScale: function(const text: PsfText): sfVector2f; cdecl;
+  sfText_GetOrigin: function(const text: PsfText): sfVector2f; cdecl;
+  sfText_Move: procedure(text: PsfText; offset: sfVector2f); cdecl;
+  sfText_Rotate: procedure(text: PsfText; angle: Single); cdecl;
+  sfText_Scale: procedure(text: PsfText; factors: sfVector2f); cdecl;
+  sfText_GetTransform: function(const text: PsfText): sfTransform; cdecl;
+  sfText_GetInverseTransform: function(const text: PsfText): sfTransform; cdecl;
+  sfText_SetString: procedure(text: PsfText; const &string: PUTF8Char); cdecl;
+  sfText_SetUnicodeString: procedure(text: PsfText; const &string: PsfChar32); cdecl;
+  sfText_SetFont: procedure(text: PsfText; const font: PsfFont); cdecl;
+  sfText_SetCharacterSize: procedure(text: PsfText; size: Cardinal); cdecl;
+  sfText_SetLineSpacing: procedure(text: PsfText; spacingFactor: Single); cdecl;
+  sfText_SetLetterSpacing: procedure(text: PsfText; spacingFactor: Single); cdecl;
+  sfText_SetStyle: procedure(text: PsfText; style: UInt32); cdecl;
+  sfText_SetFillColor: procedure(text: PsfText; color: sfColor); cdecl;
+  sfText_SetOutlineColor: procedure(text: PsfText; color: sfColor); cdecl;
+  sfText_SetOutlineThickness: procedure(text: PsfText; thickness: Single); cdecl;
+  sfText_GetString: function(const text: PsfText): PUTF8Char; cdecl;
+  sfText_GetUnicodeString: function(const text: PsfText): PsfChar32; cdecl;
+  sfText_GetFont: function(const text: PsfText): PsfFont; cdecl;
+  sfText_GetCharacterSize: function(const text: PsfText): Cardinal; cdecl;
+  sfText_GetLetterSpacing: function(const text: PsfText): Single; cdecl;
+  sfText_GetLineSpacing: function(const text: PsfText): Single; cdecl;
+  sfText_GetStyle: function(const text: PsfText): UInt32; cdecl;
+  sfText_GetFillColor: function(const text: PsfText): sfColor; cdecl;
+  sfText_GetOutlineColor: function(const text: PsfText): sfColor; cdecl;
+  sfText_GetOutlineThickness: function(const text: PsfText): Single; cdecl;
+  sfText_FindCharacterPos: function(const text: PsfText; index: NativeUInt): sfVector2f; cdecl;
+  sfText_GetLocalBounds: function(const text: PsfText): sfFloatRect; cdecl;
+  sfText_GetGlobalBounds: function(const text: PsfText): sfFloatRect; cdecl;
+
+//=== TEXTURE ===============================================================
+var
+  sfTexture_Create: function(size: sfVector2u): PsfTexture; cdecl;
+  sfTexture_CreateFromFile: function(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_CreateSrgbFromFile: function(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_CreateFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_CreateSrgbFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_CreateFromStream: function(stream: PsfInputStream; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_CreateSrgbFromStream: function(stream: PsfInputStream; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_CreateFromImage: function(const image: PsfImage; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_CreateSrgbFromImage: function(const image: PsfImage; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_Copy: function(const texture: PsfTexture): PsfTexture; cdecl;
+  sfTexture_Destroy: procedure(const texture: PsfTexture); cdecl;
+  sfTexture_GetSize: function(const texture: PsfTexture): sfVector2u; cdecl;
+  sfTexture_CopyToImage: function(const texture: PsfTexture): PsfImage; cdecl;
+  sfTexture_UpdateFromPixels: procedure(texture: PsfTexture; const pixels: PUInt8; size: sfVector2u; offset: sfVector2u); cdecl;
+  sfTexture_UpdateFromTexture: procedure(destination: PsfTexture; const source: PsfTexture; offset: sfVector2u); cdecl;
+  sfTexture_UpdateFromImage: procedure(texture: PsfTexture; const image: PsfImage; offset: sfVector2u); cdecl;
+  sfTexture_UpdateFromWindow: procedure(texture: PsfTexture; const window: PsfWindow; offset: sfVector2u); cdecl;
+  sfTexture_UpdateFromRenderWindow: procedure(texture: PsfTexture; const renderWindow: PsfRenderWindow; offset: sfVector2u); cdecl;
+  sfTexture_SetSmooth: procedure(texture: PsfTexture; smooth: Boolean); cdecl;
+  sfTexture_IsSmooth: function(const texture: PsfTexture): Boolean; cdecl;
+  sfTexture_IsSrgb: function(const texture: PsfTexture): Boolean; cdecl;
+  sfTexture_SetRepeated: procedure(texture: PsfTexture; repeated: Boolean); cdecl;
+  sfTexture_IsRepeated: function(const texture: PsfTexture): Boolean; cdecl;
+  sfTexture_GenerateMipmap: function(texture: PsfTexture): Boolean; cdecl;
+  sfTexture_Swap: procedure(left: PsfTexture; right: PsfTexture); cdecl;
+  sfTexture_GetNativeHandle: function(const texture: PsfTexture): Cardinal; cdecl;
+  sfTexture_Bind: procedure(const texture: PsfTexture; &type: sfTextureCoordinateType); cdecl;
+  sfTexture_GetMaximumSize: function(): Cardinal; cdecl;
+
+//=== TRANSFORMABLE =========================================================
+var
+  sfTransformable_Create: function(): PsfTransformable; cdecl;
+  sfTransformable_Copy: function(const transformable: PsfTransformable): PsfTransformable; cdecl;
+  sfTransformable_Destroy: procedure(const transformable: PsfTransformable); cdecl;
+  sfTransformable_SetPosition: procedure(transformable: PsfTransformable; position: sfVector2f); cdecl;
+  sfTransformable_SetRotation: procedure(transformable: PsfTransformable; angle: Single); cdecl;
+  sfTransformable_SetScale: procedure(transformable: PsfTransformable; scale: sfVector2f); cdecl;
+  sfTransformable_SetOrigin: procedure(transformable: PsfTransformable; origin: sfVector2f); cdecl;
+  sfTransformable_GetPosition: function(const transformable: PsfTransformable): sfVector2f; cdecl;
+  sfTransformable_GetRotation: function(const transformable: PsfTransformable): Single; cdecl;
+  sfTransformable_GetScale: function(const transformable: PsfTransformable): sfVector2f; cdecl;
+  sfTransformable_GetOrigin: function(const transformable: PsfTransformable): sfVector2f; cdecl;
+  sfTransformable_Move: procedure(transformable: PsfTransformable; offset: sfVector2f); cdecl;
+  sfTransformable_Rotate: procedure(transformable: PsfTransformable; angle: Single); cdecl;
+  sfTransformable_Scale: procedure(transformable: PsfTransformable; factors: sfVector2f); cdecl;
+  sfTransformable_GetTransform: function(const transformable: PsfTransformable): sfTransform; cdecl;
+  sfTransformable_GetInverseTransform: function(const transformable: PsfTransformable): sfTransform; cdecl;
+  
+//=== VERTEXARRAY ===========================================================
+var
+  sfVertexArray_Create: function(): PsfVertexArray; cdecl;
+  sfVertexArray_Copy: function(const vertexArray: PsfVertexArray): PsfVertexArray; cdecl;
+  sfVertexArray_Destroy: procedure(const vertexArray: PsfVertexArray); cdecl;
+  sfVertexArray_GetVertexCount: function(const vertexArray: PsfVertexArray): NativeUInt; cdecl;
+  sfVertexArray_GetVertex: function(vertexArray: PsfVertexArray; index: NativeUInt): PsfVertex; cdecl;
+  sfVertexArray_Clear: procedure(vertexArray: PsfVertexArray); cdecl;
+  sfVertexArray_Resize: procedure(vertexArray: PsfVertexArray; vertexCount: NativeUInt); cdecl;
+  sfVertexArray_Append: procedure(vertexArray: PsfVertexArray; vertex: sfVertex); cdecl;
+  sfVertexArray_SetPrimitiveType: procedure(vertexArray: PsfVertexArray; &type: sfPrimitiveType); cdecl;
+  sfVertexArray_GetPrimitiveType: function(vertexArray: PsfVertexArray): sfPrimitiveType; cdecl;
+  sfVertexArray_GetBounds: function(vertexArray: PsfVertexArray): sfFloatRect; cdecl;
+
+//=== VERTEXBUFFER ==========================================================
+  sfVertexBuffer_Create: function(vertexCount: Cardinal; &type: sfPrimitiveType; usage: sfVertexBufferUsage): PsfVertexBuffer; cdecl;
+  sfVertexBuffer_Copy: function(const vertexBuffer: PsfVertexBuffer): PsfVertexBuffer; cdecl;
+  sfVertexBuffer_Destroy: procedure(const vertexBuffer: PsfVertexBuffer); cdecl;
+  sfVertexBuffer_GetVertexCount: function(const vertexBuffer: PsfVertexBuffer): NativeUInt; cdecl;
+  sfVertexBuffer_Update: function(vertexBuffer: PsfVertexBuffer; const vertices: PsfVertex; vertexCount: Cardinal; offset: Cardinal): Boolean; cdecl;
+  sfVertexBuffer_UpdateFromVertexBuffer: function(vertexBuffer: PsfVertexBuffer; const other: PsfVertexBuffer): Boolean; cdecl;
+  sfVertexBuffer_Swap: procedure(left: PsfVertexBuffer; right: PsfVertexBuffer); cdecl;
+  sfVertexBuffer_GetNativeHandle: function(vertexBuffer: PsfVertexBuffer): Cardinal; cdecl;
+  sfVertexBuffer_SetPrimitiveType: procedure(vertexBuffer: PsfVertexBuffer; &type: sfPrimitiveType); cdecl;
+  sfVertexBuffer_GetPrimitiveType: function(const vertexBuffer: PsfVertexBuffer): sfPrimitiveType; cdecl;
+  sfVertexBuffer_SetUsage: procedure(vertexBuffer: PsfVertexBuffer; usage: sfVertexBufferUsage); cdecl;
+  sfVertexBuffer_GetUsage: function(const vertexBuffer: PsfVertexBuffer): sfVertexBufferUsage; cdecl;
+  sfVertexBuffer_Bind: procedure(const vertexBuffer: PsfVertexBuffer); cdecl;
+  sfVertexBuffer_IsAvailable: function(): Boolean; cdecl;
+  
+//=== VIEW ==================================================================
+  sfView_Create: function(): PsfView; cdecl;
+  sfView_CreateFromRect: function(rectangle: sfFloatRect): PsfView; cdecl;
+  sfView_Copy: function(const view: PsfView): PsfView; cdecl;
+  sfView_Destroy: procedure(const view: PsfView); cdecl;
+  sfView_SetCenter: procedure(view: PsfView; center: sfVector2f); cdecl;
+  sfView_SetSize: procedure(view: PsfView; size: sfVector2f); cdecl;
+  sfView_SetRotation: procedure(view: PsfView; angle: Single); cdecl;
+  sfView_SetViewport: procedure(view: PsfView; viewport: sfFloatRect); cdecl;
+  sfView_GetCenter: function(const view: PsfView): sfVector2f; cdecl;
+  sfView_GetSize: function(const view: PsfView): sfVector2f; cdecl;
+  sfView_GetRotation: function(const view: PsfView): Single; cdecl;
+  sfView_GetViewport: function(const view: PsfView): sfFloatRect; cdecl;
+  sfView_Move: procedure(view: PsfView; offset: sfVector2f); cdecl;
+  sfView_Rotate: procedure(view: PsfView; angle: Single); cdecl;
+  sfView_Zoom: procedure(view: PsfView; factor: Single); cdecl;
+
+//=== CLIPBOARD =============================================================
+var
+  sfClipboard_GetString: function(): PUTF8Char; cdecl;
+  sfClipboard_GetUnicodeString: function(): PsfChar32; cdecl;
+  sfClipboard_SetString: procedure(const text: PUTF8Char); cdecl;
+  sfClipboard_SetUnicodeString: procedure(const text: PsfChar32); cdecl;
+  
+//=== CONTEXT ==============================================================
+var
+  sfContext_Create: function(): PsfContext; cdecl;
+  sfContext_Destroy: procedure(const context: PsfContext); cdecl;
+  sfContext_IsExtensionAvailable: function(const name: PUTF8Char): Boolean; cdecl;
+  sfContext_SetActive: function(context: PsfContext; active: Boolean): Boolean; cdecl;
+  sfContext_GetFunction: function(const name: PUTF8Char): sfGlFunctionPointer; cdecl;
+  sfContext_GetSettings: function(const context: PsfContext): sfContextSettings; cdecl;
+  sfContext_GetActiveContextId: function(): UInt64; cdecl;
+  
+// === CURSOR ===============================================================
+var
+  sfCursor_CreateFromPixels: function(const pixels: PUInt8; size: sfVector2u; hotspot: sfVector2u): PsfCursor; cdecl;
+  sfCursor_CreateFromSystem: function(&type: sfCursorType): PsfCursor; cdecl;
+  sfCursor_Destroy: procedure(const cursor: PsfCursor); cdecl;
+  
+// === TOUCH ================================================================
+var
+  sfTouch_IsDown: function(finger: Cardinal): Boolean; cdecl;
+  sfTouch_GetPosition: function(finger: Cardinal; const relativeTo: PsfWindow): sfVector2i; cdecl;
+  sfTouch_GetPositionWindowBase: function(finger: Cardinal; const relativeTo: PsfWindowBase): sfVector2i; cdecl;
+
+//=== IPADDRESS =============================================================
+var
+  sfIpAddress_FromString: function(const address: PUTF8Char): sfIpAddress; cdecl;
+  sfIpAddress_FromBytes: function(byte0: UInt8; byte1: UInt8; byte2: UInt8; byte3: UInt8): sfIpAddress; cdecl;
+  sfIpAddress_FromInteger: function(address: UInt32): sfIpAddress; cdecl;
+  sfIpAddress_ToString: procedure(address: sfIpAddress; &string: PUTF8Char); cdecl;
+  sfIpAddress_ToInteger: function(address: sfIpAddress): UInt32; cdecl;
+  sfIpAddress_GetLocalAddress: function(): sfIpAddress; cdecl;
+  sfIpAddress_GetPublicAddress: function(timeout: sfTime): sfIpAddress; cdecl;
+
+//=== FTPLISTINGRESPONSE ====================================================
+var
+  sfFtpListingResponse_Destroy: procedure(const ftpListingResponse: PsfFtpListingResponse); cdecl;
+  sfFtpListingResponse_IsOk: function(const ftpListingResponse: PsfFtpListingResponse): Boolean; cdecl;
+  sfFtpListingResponse_GetStatus: function(const ftpListingResponse: PsfFtpListingResponse): sfFtpStatus; cdecl;
+  sfFtpListingResponse_GetMessage: function(const ftpListingResponse: PsfFtpListingResponse): PUTF8Char; cdecl;
+  sfFtpListingResponse_GetCount: function(const ftpListingResponse: PsfFtpListingResponse): NativeUInt; cdecl;
+  sfFtpListingResponse_GetName: function(const ftpListingResponse: PsfFtpListingResponse; index: NativeUInt): PUTF8Char; cdecl;
+
+//=== FTPDIRECTORYRESPONSE ==================================================
+var
+  sfFtpDirectoryResponse_Destroy: procedure(const ftpDirectoryResponse: PsfFtpDirectoryResponse); cdecl;
+  sfFtpDirectoryResponse_IsOk: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): Boolean; cdecl;
+  sfFtpDirectoryResponse_GetStatus: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): sfFtpStatus; cdecl;
+  sfFtpDirectoryResponse_GetMessage: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PUTF8Char; cdecl;
+  sfFtpDirectoryResponse_GetDirectory: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PUTF8Char; cdecl;
+  sfFtpDirectoryResponse_GetDirectoryUnicode: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PsfChar32; cdecl;
+  
+//=== FTPRESPONSE ===========================================================
+var
+  sfFtpResponse_Destroy: procedure(const ftpResponse: PsfFtpResponse); cdecl;
+  sfFtpResponse_IsOk: function(const ftpResponse: PsfFtpResponse): Boolean; cdecl;
+  sfFtpResponse_GetStatus: function(const ftpResponse: PsfFtpResponse): sfFtpStatus; cdecl;
+  sfFtpResponse_GetMessage: function(const ftpResponse: PsfFtpResponse): PUTF8Char; cdecl;
+
+//=== FTP ===================================================================
+var
+  sfFtp_Create: function(): PsfFtp; cdecl;
+  sfFtp_Destroy: procedure(const ftp: PsfFtp); cdecl;
+  sfFtp_Connect: function(ftp: PsfFtp; server: sfIpAddress; port: Word; timeout: sfTime): PsfFtpResponse; cdecl;
+  sfFtp_LoginAnonymous: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
+  sfFtp_Login: function(ftp: PsfFtp; const name: PUTF8Char; const password: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_Disconnect: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
+  sfFtp_KeepAlive: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
+  sfFtp_GetWorkingDirectory: function(ftp: PsfFtp): PsfFtpDirectoryResponse; cdecl;
+  sfFtp_GetDirectoryListing: function(ftp: PsfFtp; const directory: PUTF8Char): PsfFtpListingResponse; cdecl;
+  sfFtp_ChangeDirectory: function(ftp: PsfFtp; const directory: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_ParentDirectory: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
+  sfFtp_CreateDirectory: function(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_DeleteDirectory: function(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_RenameFile: function(ftp: PsfFtp; const &file: PUTF8Char; const newName: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_DeleteFile: function(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_Download: function(ftp: PsfFtp; const remoteFile: PUTF8Char; const localPath: PUTF8Char; mode: sfFtpTransferMode): PsfFtpResponse; cdecl;
+  sfFtp_Upload: function(ftp: PsfFtp; const localFile: PUTF8Char; const remotePath: PUTF8Char; mode: sfFtpTransferMode; append: Boolean): PsfFtpResponse; cdecl;
+  sfFtp_SendCommand: function(ftp: PsfFtp; const command: PUTF8Char; const parameter: PUTF8Char): PsfFtpResponse; cdecl;
+
+//=== HTTPREQUEST ===========================================================
+var
+  sfHttpRequest_Create: function(): PsfHttpRequest; cdecl;
+  sfHttpRequest_Destroy: procedure(const httpRequest: PsfHttpRequest); cdecl;
+  sfHttpRequest_SetField: procedure(httpRequest: PsfHttpRequest; const field: PUTF8Char; const value: PUTF8Char); cdecl;
+  sfHttpRequest_SetMethod: procedure(httpRequest: PsfHttpRequest; method: sfHttpMethod); cdecl;
+  sfHttpRequest_SetUri: procedure(httpRequest: PsfHttpRequest; const uri: PUTF8Char); cdecl;
+  sfHttpRequest_SetHttpVersion: procedure(httpRequest: PsfHttpRequest; major: Cardinal; minor: Cardinal); cdecl;
+  sfHttpRequest_SetBody: procedure(httpRequest: PsfHttpRequest; const body: PUTF8Char); cdecl;
+
+//=== HTTPRESPONSE ==========================================================
+var
+  sfHttpResponse_Destroy: procedure(const httpResponse: PsfHttpResponse); cdecl;
+  sfHttpResponse_GetField: function(const httpResponse: PsfHttpResponse; const field: PUTF8Char): PUTF8Char; cdecl;
+  sfHttpResponse_GetStatus: function(const httpResponse: PsfHttpResponse): sfHttpStatus; cdecl;
+  sfHttpResponse_GetMajorVersion: function(const httpResponse: PsfHttpResponse): Cardinal; cdecl;
+  sfHttpResponse_GetMinorVersion: function(const httpResponse: PsfHttpResponse): Cardinal; cdecl;
+  sfHttpResponse_GetBody: function(const httpResponse: PsfHttpResponse): PUTF8Char; cdecl;
+  
+//=== HTTP ==================================================================
+var
+  sfHttp_Create: function(): PsfHttp; cdecl;
+  sfHttp_Destroy: procedure(const http: PsfHttp); cdecl;
+  sfHttp_SetHost: procedure(http: PsfHttp; const host: PUTF8Char; port: Word); cdecl;
+  sfHttp_SendRequest: function(http: PsfHttp; const request: PsfHttpRequest; timeout: sfTime): PsfHttpResponse; cdecl;
+
+//=== PACKET ================================================================
+var
+  sfPacket_Create: function(): PsfPacket; cdecl;
+  sfPacket_Copy: function(const packet: PsfPacket): PsfPacket; cdecl;
+  sfPacket_Destroy: procedure(const packet: PsfPacket); cdecl;
+  sfPacket_Append: procedure(packet: PsfPacket; const data: Pointer; sizeInBytes: NativeUInt); cdecl;
+  sfPacket_GetReadPosition: function(const packet: PsfPacket): NativeUInt; cdecl;
+  sfPacket_Clear: procedure(packet: PsfPacket); cdecl;
+  sfPacket_GetData: function(const packet: PsfPacket): Pointer; cdecl;
+  sfPacket_GetDataSize: function(const packet: PsfPacket): NativeUInt; cdecl;
+  sfPacket_EndOfPacket: function(const packet: PsfPacket): Boolean; cdecl;
+  sfPacket_CanRead: function(const packet: PsfPacket): Boolean; cdecl;
+  sfPacket_ReadBool: function(packet: PsfPacket): Boolean; cdecl;
+  sfPacket_ReadInt8: function(packet: PsfPacket): Int8; cdecl;
+  sfPacket_ReadUint8: function(packet: PsfPacket): UInt8; cdecl;
+  sfPacket_ReadInt16: function(packet: PsfPacket): Int16; cdecl;
+  sfPacket_ReadUint16: function(packet: PsfPacket): UInt16; cdecl;
+  sfPacket_ReadInt32: function(packet: PsfPacket): Int32; cdecl;
+  sfPacket_ReadUint32: function(packet: PsfPacket): UInt32; cdecl;
+  sfPacket_ReadFloat: function(packet: PsfPacket): Single; cdecl;
+  sfPacket_ReadDouble: function(packet: PsfPacket): Double; cdecl;
+  sfPacket_ReadString: procedure(packet: PsfPacket; &string: PUTF8Char); cdecl;
+  sfPacket_ReadWideString: procedure(packet: PsfPacket; &string: PWideChar); cdecl;
+  sfPacket_WriteBool: procedure(packet: PsfPacket; p2: Boolean); cdecl;
+  sfPacket_WriteInt8: procedure(packet: PsfPacket; p2: Int8); cdecl;
+  sfPacket_WriteUint8: procedure(packet: PsfPacket; p2: UInt8); cdecl;
+  sfPacket_WriteInt16: procedure(packet: PsfPacket; p2: Int16); cdecl;
+  sfPacket_WriteUint16: procedure(packet: PsfPacket; p2: UInt16); cdecl;
+  sfPacket_WriteInt32: procedure(packet: PsfPacket; p2: Int32); cdecl;
+  sfPacket_WriteUint32: procedure(packet: PsfPacket; p2: UInt32); cdecl;
+  sfPacket_WriteFloat: procedure(packet: PsfPacket; p2: Single); cdecl;
+  sfPacket_WriteDouble: procedure(packet: PsfPacket; p2: Double); cdecl;
+  sfPacket_WriteString: procedure(packet: PsfPacket; const &string: PUTF8Char); cdecl;
+  sfPacket_WriteWideString: procedure(packet: PsfPacket; const &string: PWideChar); cdecl;
+  
+//=== SOCKETSELECTOR ========================================================
+  sfSocketSelector_Create: function(): PsfSocketSelector; cdecl;
+  sfSocketSelector_Copy: function(const selector: PsfSocketSelector): PsfSocketSelector; cdecl;
+  sfSocketSelector_Destroy: procedure(const selector: PsfSocketSelector); cdecl;
+  sfSocketSelector_AddTcpListener: procedure(selector: PsfSocketSelector; socket: PsfTcpListener); cdecl;
+  sfSocketSelector_AddTcpSocket: procedure(selector: PsfSocketSelector; socket: PsfTcpSocket); cdecl;
+  sfSocketSelector_AddUdpSocket: procedure(selector: PsfSocketSelector; socket: PsfUdpSocket); cdecl;
+  sfSocketSelector_RemoveTcpListener: procedure(selector: PsfSocketSelector; socket: PsfTcpListener); cdecl;
+  sfSocketSelector_RemoveTcpSocket: procedure(selector: PsfSocketSelector; socket: PsfTcpSocket); cdecl;
+  sfSocketSelector_RemoveUdpSocket: procedure(selector: PsfSocketSelector; socket: PsfUdpSocket); cdecl;
+  sfSocketSelector_Clear: procedure(selector: PsfSocketSelector); cdecl;
+  sfSocketSelector_Wait: function(selector: PsfSocketSelector; timeout: sfTime): Boolean; cdecl;
+  sfSocketSelector_IsTcpListenerReady: function(const selector: PsfSocketSelector; socket: PsfTcpListener): Boolean; cdecl;
+  sfSocketSelector_IsTcpSocketReady: function(const selector: PsfSocketSelector; socket: PsfTcpSocket): Boolean; cdecl;
+  sfSocketSelector_IsUdpSocketReady: function(const selector: PsfSocketSelector; socket: PsfUdpSocket): Boolean; cdecl;
+  
+//=== TCPLISTENER ===========================================================
+var
+  sfTcpListener_Create: function(): PsfTcpListener; cdecl;
+  sfTcpListener_Destroy: procedure(const listener: PsfTcpListener); cdecl;
+  sfTcpListener_SetBlocking: procedure(listener: PsfTcpListener; blocking: Boolean); cdecl;
+  sfTcpListener_IsBlocking: function(const listener: PsfTcpListener): Boolean; cdecl;
+  sfTcpListener_GetLocalPort: function(const listener: PsfTcpListener): Word; cdecl;
+  sfTcpListener_Listen: function(listener: PsfTcpListener; port: Word; address: sfIpAddress): sfSocketStatus; cdecl;
+  sfTcpListener_Accept: function(listener: PsfTcpListener; connected: PPsfTcpSocket): sfSocketStatus; cdecl;
+  
+//=== TCPSOCKET ==============================================================
+var
+  sfTcpSocket_Create: function(): PsfTcpSocket; cdecl;
+  sfTcpSocket_Destroy: procedure(const socket: PsfTcpSocket); cdecl;
+  sfTcpSocket_SetBlocking: procedure(socket: PsfTcpSocket; blocking: Boolean); cdecl;
+  sfTcpSocket_IsBlocking: function(const socket: PsfTcpSocket): Boolean; cdecl;
+  sfTcpSocket_GetLocalPort: function(const socket: PsfTcpSocket): Word; cdecl;
+  sfTcpSocket_GetRemoteAddress: function(const socket: PsfTcpSocket): sfIpAddress; cdecl;
+  sfTcpSocket_GetRemotePort: function(const socket: PsfTcpSocket): Word; cdecl;
+  sfTcpSocket_Connect: function(socket: PsfTcpSocket; remoteAddress: sfIpAddress; remotePort: Word; timeout: sfTime): sfSocketStatus; cdecl;
+  sfTcpSocket_Disconnect: procedure(socket: PsfTcpSocket); cdecl;
+  sfTcpSocket_Send: function(socket: PsfTcpSocket; const data: Pointer; size: NativeUInt): sfSocketStatus; cdecl;
+  sfTcpSocket_SendPartial: function(socket: PsfTcpSocket; const data: Pointer; size: NativeUInt; sent: PNativeUInt): sfSocketStatus; cdecl;
+  sfTcpSocket_Receive: function(socket: PsfTcpSocket; data: Pointer; size: NativeUInt; received: PNativeUInt): sfSocketStatus; cdecl;
+  sfTcpSocket_SendPacket: function(socket: PsfTcpSocket; packet: PsfPacket): sfSocketStatus; cdecl;
+  sfTcpSocket_ReceivePacket: function(socket: PsfTcpSocket; packet: PsfPacket): sfSocketStatus; cdecl;
+  
+//=== UDPSOCKET =============================================================
+var
+  sfUdpSocket_Create: function(): PsfUdpSocket; cdecl;
+  sfUdpSocket_Destroy: procedure(const socket: PsfUdpSocket); cdecl;
+  sfUdpSocket_SetBlocking: procedure(socket: PsfUdpSocket; blocking: Boolean); cdecl;
+  sfUdpSocket_IsBlocking: function(const socket: PsfUdpSocket): Boolean; cdecl;
+  sfUdpSocket_GetLocalPort: function(const socket: PsfUdpSocket): Word; cdecl;
+  sfUdpSocket_Bind: function(socket: PsfUdpSocket; port: Word; address: sfIpAddress): sfSocketStatus; cdecl;
+  sfUdpSocket_Unbind: procedure(socket: PsfUdpSocket); cdecl;
+  sfUdpSocket_Send: function(socket: PsfUdpSocket; const data: Pointer; size: NativeUInt; remoteAddress: sfIpAddress; remotePort: Word): sfSocketStatus; cdecl;
+  sfUdpSocket_Receive: function(socket: PsfUdpSocket; data: Pointer; size: NativeUInt; received: PNativeUInt; remoteAddress: PsfIpAddress; remotePort: PWord): sfSocketStatus; cdecl;
+  sfUdpSocket_SendPacket: function(socket: PsfUdpSocket; packet: PsfPacket; remoteAddress: sfIpAddress; remotePort: Word): sfSocketStatus; cdecl;
+  sfUdpSocket_ReceivePacket: function(socket: PsfUdpSocket; packet: PsfPacket; remoteAddress: PsfIpAddress; remotePort: PWord): sfSocketStatus; cdecl;
+  sfUdpSocket_MaxDatagramSize: function(): Cardinal; cdecl;
 
 //=== VECTOR ================================================================
 var
@@ -2137,6 +2293,9 @@ var
   sfRenderWindow_DrawPolyline: procedure(const AWindow: PsfRenderWindow; const APoints: array of sfVector2f; const AThickness: Single; const AColor: sfColor); cdecl;
   sfRenderWindow_DrawEllipse: procedure(const AWindow: PsfRenderWindow; const X, Y, AWidth, AHeight, AThickness: Single; const AColor: sfColor); cdecl;
   sfRenderWindow_DrawFilledEllipse: procedure(const AWindow: PsfRenderWindow; const X, Y, AWidth, AHeight: Single; const AColor: sfColor); cdecl;
+  
+procedure sfRenderWindow_DrawTextXY(const AWindow: PsfRenderWindow; const AText: PsfText; const X, Y: Single; const AColor: sfColor; const AMsg: WideString; const AArgs: array of const); cdecl;
+procedure sfRenderWindow_DrawTextXVarY(const AWindow: PsfRenderWindow; const AText: PsfText; const X: Single; var Y: Single; const AColor: sfColor; const AMsg: WideString; const AArgs: array of const); cdecl;
 
 //=== VIEW ==================================================================
 var
@@ -2156,7 +2315,6 @@ var
 //=== TEXTURE ===============================================================
 var
   sfTexture_CreateFromRes: function(const AInstance: HINST; const AResName: WideString; const AArea: PsfIntRect): PsfTexture; cdecl;
-
 
 //=== ZIPFILE ===============================================================
 const
@@ -2207,6 +2365,40 @@ uses
   SysUtils,
   Classes,
   Math;
+
+// === UTILS ================================================================
+function Format(const AMsg: string; const AArgs: array of const): string;
+begin
+  {$IFDEF FPC}
+  Result := SysUtils.UnicodeFormat(AMsg, AArgs);
+  {$ELSE}
+  Result := SysUtils.Format(AMsg, AArgs);
+  {$ENDIF}
+end;
+
+//=== RENDERWINDOWS =========================================================
+procedure sfRenderWindow_DrawTextXY(const AWindow: PsfRenderWindow; const AText: PsfText; const X, Y: Single; const AColor: sfColor; const AMsg: WideString; const AArgs: array of const); cdecl;
+var
+  LMsg: string;
+begin
+  LMsg := Format(AMsg, AArgs);
+
+  sfRenderWindow_DrawTextEx(AWindow, AText, X, Y, AColor, LMsg);
+end;
+
+procedure sfRenderWindow_DrawTextXVarY(const AWindow: PsfRenderWindow; const AText: PsfText; const X: Single; var Y: Single; const AColor: sfColor; const AMsg: WideString; const AArgs: array of const); cdecl;
+var
+  LFont: PsfFont;
+  LSize: Cardinal;
+begin
+  sfRenderWindow_DrawTextXY(AWindow, AText, X, Y, AColor, AMsg, AArgs);
+
+  LFont := sfText_GetFont(AText);
+  LSize := sfText_GetCharacterSize(AText);
+
+  Y := Y + sfFont_GetLineSpacing(LFont, LSize);
+end;
+
 
 {$REGION ' DLL LOADER '}
 
@@ -3194,6 +3386,9 @@ end;
 
 initialization
 begin
+  // Turn off floating point exceptions
+  SetExceptionMask(GetExceptionMask + [exOverflow, exInvalidOp]);
+
   {$IFNDEF FPC}
   // turn on memory leak detection
   ReportMemoryLeaksOnShutdown := True;
@@ -3209,6 +3404,5 @@ begin
   UnloadDLL();
 end;
 {$ENDREGION}
-
 
 end.
