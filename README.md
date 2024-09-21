@@ -141,31 +141,25 @@ The **Enhanced InputStream** works seamlessly with **ZipFile**, allowing you to 
 
 Contributions to **PSFML** are welcome! If you’d like to contribute to this project, feel free to submit issues or pull requests on our [GitHub repository](https://github.com/tinyBigGAMES/PSFML).
 
+<a href="https://github.com/tinyBigGAMES/PSFML/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=tinyBigGAMES/PSFML&max=500&columns=20&anon=1" />
+</a>
+
 ## License
 
 **PSFML** is licensed under the **BSD-3-Clause License**, which permits redistribution and use in source and binary forms, with or without modification, under specific conditions. See the [LICENSE](https://github.com/tinyBigGAMES/PSFML?tab=BSD-3-Clause-1-ov-file#BSD-3-Clause-1-ov-file) file for more details.
 
-
-
 ### Support
+
 - <a href="https://github.com/tinyBigGAMES/PSFML/issues" target="_blank">Issues</a>
 - <a href="https://github.com/tinyBigGAMES/PSFML/discussions" target="_blank">Discussions</a>
 - <a href="https://www.sfml-dev.org/" target="_blank">SFML website</a>
 - <a href="https://www.youtube.com/results?search_query=SFML&sp=CAI%253D" target="_blank">SFML on YouTube</a>
 
-### Contributors
-------------
-<a href="https://github.com/tinyBigGAMES/PSFML/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=tinyBigGAMES/PSFML&max=500&columns=20&anon=1" />
-</a>
-
-------------
-</br>
 <p align="center">
 <img src="media/delphi.png" alt="Delphi">
 </p>
 <h5 align="center">
-
 
 Made with :heart: in Delphi
 </h5>
