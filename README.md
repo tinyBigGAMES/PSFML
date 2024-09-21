@@ -153,11 +153,19 @@ Contributions to **PSFML** are welcome! If you’d like to contribute to this pr
 - <a href="https://www.sfml-dev.org/" target="_blank">SFML website</a>
 - <a href="https://www.youtube.com/results?search_query=SFML&sp=CAI%253D" target="_blank">SFML on YouTube</a>
 
+### Contributors
+------------
+<a href="https://github.com/tinyBigGAMES/PSFML/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=tinyBigGAMES/PSFML&max=500&columns=20&anon=1" />
+</a>
 
+------------
+</br></br>
 <p align="center">
 <img src="media/delphi.png" alt="Delphi">
 </p>
 <h5 align="center">
+
 
 Made with :heart: in Delphi
 </h5>
