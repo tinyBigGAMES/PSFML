@@ -1,0 +1,9 @@
+Mamba uses FFmpeg.exe for audio/video conversion.
+
+1. Download here:
+https://github.com/BtbN/FFmpeg-Builds/releases (win64 version)
+
+2. Place ffmpeg.exe in the [bin] folder.
+
+3. ConvertAudio.cmd/ConvertVideo.cmd will find and use ffmpeg to do audio/video conversion
+
