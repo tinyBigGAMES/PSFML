@@ -3356,10 +3356,12 @@ begin
   LResStream := TResourceStream.Create(HInstance, c9e319d2dedd4d30b7d95beb607db99d(), RT_RCDATA);
   try
     LResStream.Position := 0;
-    {$IFDEF DEVMODE}
-    DllFilename := 'C:\Dev\Delphi\Projects\PSFML\src\bin\PSFML.dll';
-    {$ELSE}
-    DLLFilename := GetTempPathStr + GetGUIDFileName + '.dat';
+
+    DLLFilename := GetTempPathStr + GetGUIDFileName + '.txt';
+    {$IFDEF DEBUG}
+      {$IFDEF DEVMODE}
+        DllFilename := 'C:\Dev\Delphi\Projects\PSFML\src\bin\PSFML.dll';
+      {$ENDIF}
     {$ENDIF}
 
     LResStream.SaveToFile(DLLFilename);
