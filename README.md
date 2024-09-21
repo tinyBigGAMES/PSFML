@@ -87,7 +87,7 @@ begin
   LWindow := sfRenderWindow_Create(LMode, 'PSFML: RenderWindow #01',
     sfClose, sfWindowed, @LSettings);
   sfRenderWindow_ScaleToDPI(LWindow, LMode.size.x, LMode.size.y, True);
-  sfRenderWindow_SetFramerateLimit(LWindow, CFrameRate);
+  sfRenderWindow_SetFramerateLimit(LWindow, 60);
   sfRenderWindow_setVerticalSyncEnabled(LWindow, False);
 
   LFont[0] := sfFont_CreateDefaultFont();
@@ -150,7 +150,6 @@ Contributions to **PSFML** are welcome! If you’d like to contribute to this pr
 ### Support
 - <a href="https://github.com/tinyBigGAMES/PSFML/issues" target="_blank">Issues</a>
 - <a href="https://github.com/tinyBigGAMES/PSFML/discussions" target="_blank">Discussions</a>
-- <a href="https://tinybiggames.com/contact/" target="_blank">Contact</a>
 - <a href="https://www.sfml-dev.org/" target="_blank">SFML website</a>
 - <a href="https://www.youtube.com/results?search_query=SFML&sp=CAI%253D" target="_blank">SFML on YouTube</a>
 
