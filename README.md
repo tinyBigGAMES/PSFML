@@ -18,13 +18,13 @@
 
 ## Introduction
 
-PSFML leverages the power of **SFML** and makes it accessible to Pascal programmers. With PSFML, you can create windowed applications, manage graphics, handle real-time user input, play audio, and even stream video. Built to work on **Windows** (Windows 10 and higher), PSFML is compatible with both **Delphi** and **FreePascal**, making it a versatile choice for Pascal developers.
+PSFML leverages the power of **SFML** and makes it accessible to Pascal programmers. With PSFML, you can create windowed applications, manage graphics, handle real-time user input, play audio, and even stream video. Built to work on **Windows** (Windows 10 and higher) and compatible with [Delphi](https://www.embarcadero.com/products/Delphi).
 
 ### Why PSFML?
 
 - **Pascal-First**: PSFML is developed specifically for Pascal developers, providing a natural and intuitive API.
 - **No DLL Hassles**: Simply add **PSFML** to your `uses` section, and everything you need is embedded in your executable. There’s no need to manage external DLLs.
-- **Compiler Support**: Supports **Delphi** and **FreePascal**, and works on **Windows 64-bit** (tested on **Windows 10** and **Windows 11**).
+- **Compiler Support**: Supports **Delphi** (Community Edition and higher), and works on **Windows 64-bit** (tested on **Windows 11**, developed in Delphi 12.2).
 - **Latest SFML**: In sync with latest **SFML** release, so you can use all the latest features of the library.
 
 ## Features
@@ -42,15 +42,15 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
 
 ### Requirements
 
-- **Delphi/FreePascal** that supports **Windows 64-bit** and **Unicode**.
+- **Delphi CE** or a higher edition. **RAD Studio 12.2** is required to build the sources.
 - **Windows 10** or higher (64-bit).
 
 ### Installation
 
 1. Download the latest version of [PSFML](https://github.com/tinyBigGAMES/PSFML/archive/refs/heads/main.zip).
 2. Extract the contents to your project directory.
-3. Add the **PSFML** `src` folder to your **Library Path** in Delphi or FreePascal.
-4. In your project, include `PSFML` in your `uses` section.
+3. Add the **PSFML** `lib` folder to your **Library Path**.
+4. In your project, include `PSFML` in your `uses` section. To take advantage of extensions, you must also add `PSFML.Ext` after `PSFML` in your `uses` section.
 5. Refer to the `examples` folder for detailed usage instructions and examples on how to utilize PSFML effectively.
 6. Make sure to run the `ZipFile01` example first to generate the `data.zip` file required by the other examples.
 
@@ -60,64 +60,76 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
 
 Here’s a simple example of how to create a window and handle real-time user input using **PSFML**:
 
-```Pascal
+```Pascal  
 uses
-  SysUtils,  
-  PSFML;
-
+  System.SysUtils,
+  PSFML,     // add core SFML
+  PSFML.Ext; // add extensions. Must always come AFTER PSFML
 var
   LWindow: PsfRenderWindow;
-  LMode: sfVideoMode;
-  LSettings: sfContextSettings;
   LEvent: sfEvent;
   LFont: array[0..0] of PsfFont;
   LText: array[0..0] of PsfText;
+  LHudPos: sfVector2f;
 begin
-  LMode.size.x := 1920 div 2;
-  LMode.size.y := 1080 div 2;
-  LMode.bitsPerPixel := 32;
-
-  LSettings := Default(sfContextSettings);
-  LSettings.depthBits := 24;
-  LSettings.stencilBits := 8;
-  LSettings.antialiasingLevel := 8; // Set anti-aliasing level
-  LSettings.majorVersion := 2; // OpenGL major version
-  LSettings.minorVersion := 1; // OpenGL minor version
-
-  LWindow := sfRenderWindow_Create(LMode, 'PSFML: RenderWindow #01',
-    sfClose, sfWindowed, @LSettings);
-  sfRenderWindow_ScaleToDPI(LWindow, LMode.size.x, LMode.size.y, True);
-  sfRenderWindow_SetFramerateLimit(LWindow, 60);
-  sfRenderWindow_setVerticalSyncEnabled(LWindow, False);
+  LWindow := sfRenderWindow_create('PSFML: RenderWindow #01');
 
   LFont[0] := sfFont_CreateDefaultFont();
   sfFont_SetSmooth(LFont[0], True);
 
   LText[0] := sfText_Create(LFont[0]);
-  sfText_SetCharacterSizeDPI(LWindow, LText[0], 12);
+  sfText_SetCharacterSize(LWindow, LText[0], 12);
+
+  sfRenderWindow_clear(LWindow, BLACK);
+  sfRenderWindow_clearFrame(LWindow, DARKSLATEBROWN);
 
   while sfRenderWindow_isOpen(LWindow) do
   begin
+
     while sfRenderWindow_pollEvent(LWindow, @LEvent) do
     begin
-      if LEvent.&type = sfEvtClosed then
-        sfRenderWindow_close(LWindow);
+      case LEvent.&type of
+        sfEvtClosed:
+        begin
+          sfRenderWindow_close(LWindow);
+        end;
+
+        sfEvtResized:
+        begin
+          sfRenderWindow_resizeFrame(LWindow, LEvent.size.width, LEvent.size.height);
+        end;
+
+        sfEvtKeyReleased:
+        begin
+          case LEvent.key.code of
+            sfKeyEscape:
+            begin
+              sfRenderWindow_close(LWindow);
+            end;
+          end;
+        end;
+      end;
     end;
 
-    sfRenderWindow_ScaleOnDPIChange(LWindow);
+    sfRenderWindow_startFrame(LWindow);
 
-    sfRenderWindow_Clear(LWindow, DARKSLATEBROWN);
+      sfRenderWindow_drawFilledRect(LWindow, LWindow.Size.x-50, 0, 50, 50, RED);
 
-    sfRenderWindow_DrawTextEx(LWindow, LText[0], 3, 3,
-      WHITE, Format('%d fps', [sfRenderWindow_GetFrameRate(LWindow)]));
+      LHudPos := sfVector2f_Create(3, 3);
+      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, WHITE,
+        '%d fps', [sfRenderWindow_GetFrameRate(LWindow)]);
+      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN,
+        'ESC - Quit', []);
 
-    sfRenderWindow_Display(LWindow);
+    sfRenderWindow_endFrame(LWindow);
+
+    sfRenderWindow_display(LWindow);
   end;
 
   sfText_Destroy(LText[0]);
   sfFont_Destroy(LFont[0]);
 
-  sfRenderWindow_Destroy(LWindow);
+  sfRenderWindow_destroy(LWindow);
 end.
 ```
 
