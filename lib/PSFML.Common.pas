@@ -97,7 +97,7 @@ function  FloatToSmallInt(Value: Single): SmallInt; inline;
 procedure ClearKeyboardBuffer();
 function  WasRunFromConsole() : Boolean;
 function  IsStartedFromDelphiIDE: Boolean;
-
+function  EnableVirtualTerminalProcessing(): DWORD;
 
 implementation
 
@@ -235,6 +235,34 @@ function IsStartedFromDelphiIDE: Boolean;
 begin
   // Check if the IDE environment variable is present
   Result := (GetEnvironmentVariable('BDS') <> '');
+end;
+
+function EnableVirtualTerminalProcessing(): DWORD;
+var
+  HOut: THandle;
+  LMode: DWORD;
+begin
+  HOut := GetStdHandle(STD_OUTPUT_HANDLE);
+  if HOut = INVALID_HANDLE_VALUE then
+  begin
+    Result := GetLastError;
+    Exit;
+  end;
+
+  if not GetConsoleMode(HOut, LMode) then
+  begin
+    Result := GetLastError;
+    Exit;
+  end;
+
+  LMode := LMode or ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+  if not SetConsoleMode(HOut, LMode) then
+  begin
+    Result := GetLastError;
+    Exit;
+  end;
+
+  Result := 0;  // Success
 end;
 
 { =========================================================================== }
@@ -543,7 +571,32 @@ begin
   end;
 end;
 
+
+(*
+    // Set output mode to handle virtual terminal sequences
+    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+    if (hOut == INVALID_HANDLE_VALUE)
+    {
+        return GetLastError();
+    }
+
+    DWORD dwMode = 0;
+    if (!GetConsoleMode(hOut, &dwMode))
+    {
+        return GetLastError();
+    }
+
+    dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
+    if (!SetConsoleMode(hOut, dwMode))
+    {
+        return GetLastError();
+    }
+*)
+
 { =========================================================================== }
+
+
+
 var
   InputCodePage: Cardinal;
   OutputCodePage: Cardinal;
@@ -560,6 +613,9 @@ begin
 
   // init critical section
   CriticalSection := TCriticalSection.Create;
+
+  EnableVirtualTerminalProcessing();
+
 end;
 
 finalization
