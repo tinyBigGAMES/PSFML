@@ -42,7 +42,7 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
 
 ### Requirements
 
-- **Delphi CE** or a higher edition. **RAD Studio 12.2** is required to build the sources.
+- **Delphi CE** or a higher edition (files in `lib` folder). **C++ Builder 12.2** is required to build the sources (files in `src` folder).
 - **Windows 10** or higher (64-bit).
 
 ### Installation
