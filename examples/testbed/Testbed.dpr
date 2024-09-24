@@ -25,10 +25,10 @@ uses
   UCommon in 'UCommon.pas',
   PSFML in '..\..\lib\PSFML.pas',
   PSFML.Ext in '..\..\lib\PSFML.Ext.pas',
-  PSFML.Common in '..\..\lib\PSFML.Common.pas',
   UZipFile in 'UZipFile.pas',
   PSFML.MModule in '..\..\lib\PSFML.MModule.pas',
-  UVideo in 'UVideo.pas';
+  UVideo in 'UVideo.pas',
+  PSFML.Common in '..\..\lib\PSFML.Common.pas';
 
 begin
   try

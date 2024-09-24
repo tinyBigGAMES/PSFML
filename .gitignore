@@ -83,3 +83,4 @@ bin/data.zip
 *.dsv
 ~README.md.saved.bak
 src/extern/Win64x/
+!src/extern/vendor/lib/*

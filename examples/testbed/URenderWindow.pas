@@ -57,7 +57,7 @@ begin
 
         sfEvtResized:
         begin
-          sfRenderWindow_resizeFrame(LWindow, LEvent.size.width, LEvent.size.height);
+          sfRenderWindow_resizeFrame(LWindow, LEvent.size.size.x, LEvent.size.size.y);
         end;
 
         sfEvtKeyReleased:

@@ -122,10 +122,10 @@
         <DCCReference Include="UCommon.pas"/>
         <DCCReference Include="..\..\lib\PSFML.pas"/>
         <DCCReference Include="..\..\lib\PSFML.Ext.pas"/>
-        <DCCReference Include="..\..\lib\PSFML.Common.pas"/>
         <DCCReference Include="UZipFile.pas"/>
         <DCCReference Include="..\..\lib\PSFML.MModule.pas"/>
         <DCCReference Include="UVideo.pas"/>
+        <DCCReference Include="..\..\lib\PSFML.Common.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

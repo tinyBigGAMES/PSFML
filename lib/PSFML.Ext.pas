@@ -409,7 +409,7 @@ procedure sfRenderWindow_close(renderWindow: PsfRenderWindow); cdecl;
 function  sfRenderWindow_isOpen(const renderWindow: PsfRenderWindow): Boolean; cdecl;
 function  sfRenderWindow_getSettings(const renderWindow: PsfRenderWindow): sfContextSettings; cdecl;
 function  sfRenderWindow_pollEvent(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
-function  sfRenderWindow_waitEvent(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
+function  sfRenderWindow_waitEvent(renderWindow: PsfRenderWindow; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
 function  sfRenderWindow_getPosition(const renderWindow: PsfRenderWindow): sfVector2i; cdecl;
 procedure sfRenderWindow_setPosition(renderWindow: PsfRenderWindow; position: sfVector2i); cdecl;
 function  sfRenderWindow_getSize(const renderWindow: PsfRenderWindow): sfVector2u; cdecl;
@@ -1293,9 +1293,9 @@ begin
   Result := PSFML.sfRenderWindow_pollEvent(renderWindow.Handle, event);
 end;
 
-function  sfRenderWindow_waitEvent(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean;
+function  sfRenderWindow_waitEvent(renderWindow: PsfRenderWindow; timeout: sfTime; event: PsfEvent): Boolean;
 begin
-  Result := PSFML.sfRenderWindow_waitEvent(renderWindow.Handle, event);
+  Result := PSFML.sfRenderWindow_waitEvent(renderWindow.Handle, timeout, event);
 end;
 
 function  sfRenderWindow_getPosition(const renderWindow: PsfRenderWindow): sfVector2i;
@@ -2122,7 +2122,7 @@ var
 begin
   Result := False;
 
-  sfVideo_destroy;
+  sfVideo_destroy();
 
   sfVideo.Volume := AVolume;
   sfVideo.Loop := ALoop;
@@ -2244,26 +2244,44 @@ begin
   begin
     sfSoundStream_stop(sfVideo.AudioStream);
     sfSoundStream_destroy(sfVideo.AudioStream);
-    sfVideo.RingBuffer.Clear;
+    sfVideo.RingBuffer.Clear();
+  end;
+
+  if Assigned(sfVideo.InputStream) then
+  begin
+    sfInputStream_close(sfVideo.InputStream);
+    sfVideo.InputStream := nil;
   end;
 
   if Assigned(sfVideo.Sprite) then
+  begin
     sfSprite_destroy(sfVideo.Sprite);
+    sfVideo.Sprite := nil;
+  end;
 
   if Assigned(sfVideo.Texture) then
+  begin
     sfTexture_destroy(sfVideo.Texture);
+    sfVideo.Texture := nil;
+  end;
 
   if Assigned(sfVideo.Image) then
+  begin
     sfImage_destroy(sfVideo.Image);
+    sfVideo.Image := nil;
+  end;
 
   if Assigned(sfVideo.RingBuffer) then
+  begin
     sfVideo.RingBuffer.Free;
+    sfVideo.RingBuffer := nil;
+  end;
 
   if Assigned(sfVideo.Handle) then
+  begin
     plm_destroy(sfVideo.Handle);
-
-  if Assigned(sfVideo.InputStream) then
-    sfInputStream_close(sfVideo.InputStream);
+    sfVideo.Handle := nil;
+  end;
 
   sfVideo := Default(TsfVideo);
 end;

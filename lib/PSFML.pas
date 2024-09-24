@@ -54,15 +54,6 @@ const
   PLM_BUFFER_DEFAULT_SIZE = (128*1024);
 
 type
-  sfSoundStatus = Integer;
-  PsfSoundStatus = ^sfSoundStatus;
-
-const
-  sfStopped = 0;
-  sfPaused = 1;
-  sfPlaying = 2;
-
-type
   sfSoundChannel = Integer;
   PsfSoundChannel = ^sfSoundChannel;
 
@@ -87,6 +78,15 @@ const
   sfSoundChannelTopBackLeft = 17;
   sfSoundChannelTopBackRight = 18;
   sfSoundChannelTopBackCenter = 19;
+
+type
+  sfSoundStatus = Integer;
+  PsfSoundStatus = ^sfSoundStatus;
+
+const
+  sfStopped = 0;
+  sfPaused = 1;
+  sfPlaying = 2;
 
 type
   sfBlendFactor = Integer;
@@ -126,6 +126,32 @@ const
   sfTriangles = 3;
   sfTriangleStrip = 4;
   sfTriangleFan = 5;
+
+type
+  sfStencilComparison = Integer;
+  PsfStencilComparison = ^sfStencilComparison;
+
+const
+  sfStencilComparisonNever = 0;
+  sfStencilComparisonLess = 1;
+  sfStencilComparisonLessEqual = 2;
+  sfStencilComparisonGreater = 3;
+  sfStencilComparisonGreaterEqual = 4;
+  sfStencilComparisonEqual = 5;
+  sfStencilComparisonNotEqual = 6;
+  sfStencilComparisonAlways = 7;
+
+type
+  sfStencilUpdateOperation = Integer;
+  PsfStencilUpdateOperation = ^sfStencilUpdateOperation;
+
+const
+  sfStencilUpdateOperationKeep = 0;
+  sfStencilUpdateOperationZero = 1;
+  sfStencilUpdateOperationReplace = 2;
+  sfStencilUpdateOperationIncrement = 3;
+  sfStencilUpdateOperationDecrement = 4;
+  sfStencilUpdateOperationInvert = 5;
 
 const
   sfJoystickCount = 8;
@@ -458,18 +484,19 @@ const
   sfEvtMouseButtonPressed = 8;
   sfEvtMouseButtonReleased = 9;
   sfEvtMouseMoved = 10;
-  sfEvtMouseEntered = 11;
-  sfEvtMouseLeft = 12;
-  sfEvtJoystickButtonPressed = 13;
-  sfEvtJoystickButtonReleased = 14;
-  sfEvtJoystickMoved = 15;
-  sfEvtJoystickConnected = 16;
-  sfEvtJoystickDisconnected = 17;
-  sfEvtTouchBegan = 18;
-  sfEvtTouchMoved = 19;
-  sfEvtTouchEnded = 20;
-  sfEvtSensorChanged = 21;
-  sfEvtCount = 22;
+  sfEvtMouseMovedRaw = 11;
+  sfEvtMouseEntered = 12;
+  sfEvtMouseLeft = 13;
+  sfEvtJoystickButtonPressed = 14;
+  sfEvtJoystickButtonReleased = 15;
+  sfEvtJoystickMoved = 16;
+  sfEvtJoystickConnected = 17;
+  sfEvtJoystickDisconnected = 18;
+  sfEvtTouchBegan = 19;
+  sfEvtTouchMoved = 20;
+  sfEvtTouchEnded = 21;
+  sfEvtSensorChanged = 22;
+  sfEvtCount = 23;
 
 type
   sfWindowStyle = Integer;
@@ -678,6 +705,8 @@ type
   PHWND__ = Pointer;
   PPHWND__ = ^PHWND__;
   PsfVector3f = ^sfVector3f;
+  PsfListenerCone = ^sfListenerCone;
+  PsfSoundSourceCone = ^sfSoundSourceCone;
   PsfInputStream = ^sfInputStream;
   PsfTime = ^sfTime;
   PsfTimeSpan = ^sfTimeSpan;
@@ -693,11 +722,14 @@ type
   PsfFontInfo = ^sfFontInfo;
   PsfGlyph = ^sfGlyph;
   PsfRenderStates = ^sfRenderStates;
+  PsfStencilValue = ^sfStencilValue;
+  PsfStencilMode = ^sfStencilMode;
   PsfVertex = ^sfVertex;
   PsfJoystickIdentification = ^sfJoystickIdentification;
   PsfKeyEvent = ^sfKeyEvent;
   PsfTextEvent = ^sfTextEvent;
   PsfMouseMoveEvent = ^sfMouseMoveEvent;
+  PsfMouseMoveRawEvent = ^sfMouseMoveRawEvent;
   PsfMouseButtonEvent = ^sfMouseButtonEvent;
   PsfMouseWheelScrollEvent = ^sfMouseWheelScrollEvent;
   PsfJoystickMoveEvent = ^sfJoystickMoveEvent;
@@ -733,6 +765,20 @@ type
     x: Single;
     y: Single;
     z: Single;
+  end;
+
+  sfListenerCone = record
+    innerAngle: Single;
+    outerAngle: Single;
+    outerGain: Single;
+  end;
+
+  sfEffectProcessor = procedure(const inputFrames: PSingle; inputFrameCount: PCardinal; outputFrames: PSingle; outputFrameCount: PCardinal; frameChannelCount: Cardinal); cdecl;
+
+  sfSoundSourceCone = record
+    innerAngle: Single;
+    outerAngle: Single;
+    outerGain: Single;
   end;
 
   PsfMusic = Pointer;
@@ -887,6 +933,18 @@ type
     shader: PsfShader;
   end;
 
+  sfStencilValue = record
+    value: Cardinal;
+  end;
+
+  sfStencilMode = record
+    stencilComparison: sfStencilComparison;
+    stencilUpdateOperation: sfStencilUpdateOperation;
+    stencilReference: sfStencilValue;
+    stencilMask: sfStencilValue;
+    stencilOnly: Boolean;
+  end;
+
   sfVertex = record
     position: sfVector2f;
     color: sfColor;
@@ -925,23 +983,25 @@ type
 
   sfMouseMoveEvent = record
     &type: sfEventType;
-    x: Integer;
-    y: Integer;
+    position: sfVector2i;
+  end;
+
+  sfMouseMoveRawEvent = record
+    &type: sfEventType;
+    delta: sfVector2i;
   end;
 
   sfMouseButtonEvent = record
     &type: sfEventType;
     button: sfMouseButton;
-    x: Integer;
-    y: Integer;
+    position: sfVector2i;
   end;
 
   sfMouseWheelScrollEvent = record
     &type: sfEventType;
     wheel: sfMouseWheel;
     delta: Single;
-    x: Integer;
-    y: Integer;
+    position: sfVector2i;
   end;
 
   sfJoystickMoveEvent = record
@@ -964,23 +1024,19 @@ type
 
   sfSizeEvent = record
     &type: sfEventType;
-    width: Cardinal;
-    height: Cardinal;
+    size: sfVector2u;
   end;
 
   sfTouchEvent = record
     &type: sfEventType;
     finger: Cardinal;
-    x: Integer;
-    y: Integer;
+    position: sfVector2i;
   end;
 
   sfSensorEvent = record
     &type: sfEventType;
     sensorType: sfSensorType;
-    x: Single;
-    y: Single;
-    z: Single;
+    value: sfVector3f;
   end;
 
   PsfEvent = ^sfEvent;
@@ -991,13 +1047,14 @@ type
       2: (key: sfKeyEvent);
       3: (text: sfTextEvent);
       4: (mouseMove: sfMouseMoveEvent);
-      5: (mouseButton: sfMouseButtonEvent);
-      6: (mouseWheelScroll: sfMouseWheelScrollEvent);
-      7: (joystickMove: sfJoystickMoveEvent);
-      8: (joystickButton: sfJoystickButtonEvent);
-      9: (joystickConnect: sfJoystickConnectEvent);
-      10: (touch: sfTouchEvent);
-      11: (sensor: sfSensorEvent);
+      5: (mouseMoveRaw: sfMouseMoveRawEvent);
+      6: (mouseButton: sfMouseButtonEvent);
+      7: (mouseWheelScroll: sfMouseWheelScrollEvent);
+      8: (joystickMove: sfJoystickMoveEvent);
+      9: (joystickButton: sfJoystickButtonEvent);
+      10: (joystickConnect: sfJoystickConnectEvent);
+      11: (touch: sfTouchEvent);
+      12: (sensor: sfSensorEvent);
   end;
 
   sfVideoMode = record
@@ -1230,6 +1287,10 @@ var
   sfListener_getPosition: function(): sfVector3f; cdecl;
   sfListener_setDirection: procedure(direction: sfVector3f); cdecl;
   sfListener_getDirection: function(): sfVector3f; cdecl;
+  sfListener_setVelocity: procedure(velocity: sfVector3f); cdecl;
+  sfListener_getVelocity: function(): sfVector3f; cdecl;
+  sfListener_setCone: procedure(cone: sfListenerCone); cdecl;
+  sfListener_getCone: function(): sfListenerCone; cdecl;
   sfListener_setUpVector: procedure(upVector: sfVector3f); cdecl;
   sfListener_getUpVector: function(): sfVector3f; cdecl;
   sfTime_asSeconds: function(time: sfTime): Single; cdecl;
@@ -1244,6 +1305,7 @@ var
   sfMusic_destroy: procedure(const music: PsfMusic); cdecl;
   sfMusic_setLooping: procedure(music: PsfMusic; loop: Boolean); cdecl;
   sfMusic_isLooping: function(const music: PsfMusic): Boolean; cdecl;
+  sfMusic_setEffectProcessor: procedure(music: PsfMusic; effectProcessor: sfEffectProcessor); cdecl;
   sfMusic_getDuration: function(const music: PsfMusic): sfTime; cdecl;
   sfMusic_getLoopPoints: function(const music: PsfMusic): sfTimeSpan; cdecl;
   sfMusic_setLoopPoints: procedure(music: PsfMusic; timePoints: sfTimeSpan); cdecl;
@@ -1252,20 +1314,41 @@ var
   sfMusic_stop: procedure(music: PsfMusic); cdecl;
   sfMusic_getChannelCount: function(const music: PsfMusic): Cardinal; cdecl;
   sfMusic_getSampleRate: function(const music: PsfMusic): Cardinal; cdecl;
+  sfMusic_getChannelMap: function(const music: PsfMusic; count: PNativeUInt): PsfSoundChannel; cdecl;
   sfMusic_getStatus: function(const music: PsfMusic): sfSoundStatus; cdecl;
   sfMusic_getPlayingOffset: function(const music: PsfMusic): sfTime; cdecl;
   sfMusic_setPitch: procedure(music: PsfMusic; pitch: Single); cdecl;
+  sfMusic_setPan: procedure(music: PsfMusic; pan: Single); cdecl;
   sfMusic_setVolume: procedure(music: PsfMusic; volume: Single); cdecl;
+  sfMusic_setSpatializationEnabled: procedure(music: PsfMusic; enabled: Boolean); cdecl;
   sfMusic_setPosition: procedure(music: PsfMusic; position: sfVector3f); cdecl;
+  sfMusic_setDirection: procedure(music: PsfMusic; direction: sfVector3f); cdecl;
+  sfMusic_setCone: procedure(music: PsfMusic; cone: sfSoundSourceCone); cdecl;
+  sfMusic_setVelocity: procedure(music: PsfMusic; velocity: sfVector3f); cdecl;
+  sfMusic_setDopplerFactor: procedure(music: PsfMusic; factor: Single); cdecl;
+  sfMusic_setDirectionalAttenuationFactor: procedure(music: PsfMusic; factor: Single); cdecl;
   sfMusic_setRelativeToListener: procedure(music: PsfMusic; relative: Boolean); cdecl;
   sfMusic_setMinDistance: procedure(music: PsfMusic; distance: Single); cdecl;
+  sfMusic_setMaxDistance: procedure(music: PsfMusic; distance: Single); cdecl;
+  sfMusic_setMinGain: procedure(music: PsfMusic; gain: Single); cdecl;
+  sfMusic_setMaxGain: procedure(music: PsfMusic; gain: Single); cdecl;
   sfMusic_setAttenuation: procedure(music: PsfMusic; attenuation: Single); cdecl;
   sfMusic_setPlayingOffset: procedure(music: PsfMusic; timeOffset: sfTime); cdecl;
   sfMusic_getPitch: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getPan: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_isSpatializationEnabled: function(const music: PsfMusic): Boolean; cdecl;
   sfMusic_getVolume: function(const music: PsfMusic): Single; cdecl;
   sfMusic_getPosition: function(const music: PsfMusic): sfVector3f; cdecl;
+  sfMusic_getDirection: function(const music: PsfMusic): sfVector3f; cdecl;
+  sfMusic_getCone: function(const music: PsfMusic): sfSoundSourceCone; cdecl;
+  sfMusic_getVelocity: function(const music: PsfMusic): sfVector3f; cdecl;
+  sfMusic_getDopplerFactor: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getDirectionalAttenuationFactor: function(const music: PsfMusic): Single; cdecl;
   sfMusic_isRelativeToListener: function(const music: PsfMusic): Boolean; cdecl;
   sfMusic_getMinDistance: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getMaxDistance: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getMinGain: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getMaxGain: function(const music: PsfMusic): Single; cdecl;
   sfMusic_getAttenuation: function(const music: PsfMusic): Single; cdecl;
   sfSound_create: function(const buffer: PsfSoundBuffer): PsfSound; cdecl;
   sfSound_copy: function(const sound: PsfSound): PsfSound; cdecl;
@@ -1279,17 +1362,38 @@ var
   sfSound_isLooping: function(const sound: PsfSound): Boolean; cdecl;
   sfSound_getStatus: function(const sound: PsfSound): sfSoundStatus; cdecl;
   sfSound_setPitch: procedure(sound: PsfSound; pitch: Single); cdecl;
+  sfSound_setPan: procedure(sound: PsfSound; pan: Single); cdecl;
   sfSound_setVolume: procedure(sound: PsfSound; volume: Single); cdecl;
+  sfSound_setSpatializationEnabled: procedure(sound: PsfSound; enabled: Boolean); cdecl;
   sfSound_setPosition: procedure(sound: PsfSound; position: sfVector3f); cdecl;
+  sfSound_setDirection: procedure(sound: PsfSound; direction: sfVector3f); cdecl;
+  sfSound_setCone: procedure(sound: PsfSound; cone: sfSoundSourceCone); cdecl;
+  sfSound_setVelocity: procedure(sound: PsfSound; velocity: sfVector3f); cdecl;
+  sfSound_setDopplerFactor: procedure(sound: PsfSound; factor: Single); cdecl;
+  sfSound_setDirectionalAttenuationFactor: procedure(sound: PsfSound; factor: Single); cdecl;
   sfSound_setRelativeToListener: procedure(sound: PsfSound; relative: Boolean); cdecl;
   sfSound_setMinDistance: procedure(sound: PsfSound; distance: Single); cdecl;
+  sfSound_setMaxDistance: procedure(sound: PsfSound; distance: Single); cdecl;
+  sfSound_setMinGain: procedure(sound: PsfSound; gain: Single); cdecl;
+  sfSound_setMaxGain: procedure(sound: PsfSound; gain: Single); cdecl;
   sfSound_setAttenuation: procedure(sound: PsfSound; attenuation: Single); cdecl;
   sfSound_setPlayingOffset: procedure(sound: PsfSound; timeOffset: sfTime); cdecl;
+  sfSound_setEffectProcessor: procedure(sound: PsfSound; effectProcessor: sfEffectProcessor); cdecl;
   sfSound_getPitch: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getPan: function(const sound: PsfSound): Single; cdecl;
   sfSound_getVolume: function(const sound: PsfSound): Single; cdecl;
+  sfSound_isSpatializationEnabled: function(const sound: PsfSound): Boolean; cdecl;
   sfSound_getPosition: function(const sound: PsfSound): sfVector3f; cdecl;
+  sfSound_getDirection: function(const sound: PsfSound): sfVector3f; cdecl;
+  sfSound_getCone: function(const sound: PsfSound): sfSoundSourceCone; cdecl;
+  sfSound_getVelocity: function(const sound: PsfSound): sfVector3f; cdecl;
+  sfSound_getDopplerFactor: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getDirectionalAttenuationFactor: function(const sound: PsfSound): Single; cdecl;
   sfSound_isRelativeToListener: function(const sound: PsfSound): Boolean; cdecl;
   sfSound_getMinDistance: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getMaxDistance: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getMinGain: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getMaxGain: function(const sound: PsfSound): Single; cdecl;
   sfSound_getAttenuation: function(const sound: PsfSound): Single; cdecl;
   sfSound_getPlayingOffset: function(const sound: PsfSound): sfTime; cdecl;
   sfSoundBuffer_createFromFile: function(const filename: PUTF8Char): PsfSoundBuffer; cdecl;
@@ -1303,6 +1407,7 @@ var
   sfSoundBuffer_getSampleCount: function(const soundBuffer: PsfSoundBuffer): UInt64; cdecl;
   sfSoundBuffer_getSampleRate: function(const soundBuffer: PsfSoundBuffer): Cardinal; cdecl;
   sfSoundBuffer_getChannelCount: function(const soundBuffer: PsfSoundBuffer): Cardinal; cdecl;
+  sfSoundBuffer_getChannelMap: function(const soundBuffer: PsfSoundBuffer; count: PNativeUInt): PsfSoundChannel; cdecl;
   sfSoundBuffer_getDuration: function(const soundBuffer: PsfSoundBuffer): sfTime; cdecl;
   sfSoundBufferRecorder_create: function(): PsfSoundBufferRecorder; cdecl;
   sfSoundBufferRecorder_destroy: procedure(const soundBufferRecorder: PsfSoundBufferRecorder); cdecl;
@@ -1326,6 +1431,7 @@ var
   sfSoundRecorder_getDevice: function(soundRecorder: PsfSoundRecorder): PUTF8Char; cdecl;
   sfSoundRecorder_setChannelCount: procedure(soundRecorder: PsfSoundRecorder; channelCount: Cardinal); cdecl;
   sfSoundRecorder_getChannelCount: function(const soundRecorder: PsfSoundRecorder): Cardinal; cdecl;
+  sfSoundRecorder_getChannelMap: function(const soundRecorder: PsfSoundRecorder; count: PNativeUInt): PsfSoundChannel; cdecl;
   sfSoundStream_create: function(onGetData: sfSoundStreamGetDataCallback; onSeek: sfSoundStreamSeekCallback; channelCount: Cardinal; sampleRate: Cardinal; channelMapData: PsfSoundChannel; channelMapSize: NativeUInt; userData: Pointer): PsfSoundStream; cdecl;
   sfSoundStream_destroy: procedure(const soundStream: PsfSoundStream); cdecl;
   sfSoundStream_play: procedure(soundStream: PsfSoundStream); cdecl;
@@ -1334,21 +1440,43 @@ var
   sfSoundStream_getStatus: function(const soundStream: PsfSoundStream): sfSoundStatus; cdecl;
   sfSoundStream_getChannelCount: function(const soundStream: PsfSoundStream): Cardinal; cdecl;
   sfSoundStream_getSampleRate: function(const soundStream: PsfSoundStream): Cardinal; cdecl;
+  sfSoundStream_getChannelMap: function(const soundStream: PsfSoundStream; count: PNativeUInt): PsfSoundChannel; cdecl;
   sfSoundStream_setPitch: procedure(soundStream: PsfSoundStream; pitch: Single); cdecl;
+  sfSoundStream_setPan: procedure(soundStream: PsfSoundStream; pan: Single); cdecl;
   sfSoundStream_setVolume: procedure(soundStream: PsfSoundStream; volume: Single); cdecl;
+  sfSoundStream_setSpatializationEnabled: procedure(soundStream: PsfSoundStream; enabled: Boolean); cdecl;
   sfSoundStream_setPosition: procedure(soundStream: PsfSoundStream; position: sfVector3f); cdecl;
+  sfSoundStream_setDirection: procedure(soundStream: PsfSoundStream; direction: sfVector3f); cdecl;
+  sfSoundStream_setCone: procedure(soundStream: PsfSoundStream; cone: sfSoundSourceCone); cdecl;
+  sfSoundStream_setVelocity: procedure(soundStream: PsfSoundStream; velocity: sfVector3f); cdecl;
+  sfSoundStream_setDopplerFactor: procedure(soundStream: PsfSoundStream; factor: Single); cdecl;
+  sfSoundStream_setDirectionalAttenuationFactor: procedure(soundStream: PsfSoundStream; factor: Single); cdecl;
   sfSoundStream_setRelativeToListener: procedure(soundStream: PsfSoundStream; relative: Boolean); cdecl;
   sfSoundStream_setMinDistance: procedure(soundStream: PsfSoundStream; distance: Single); cdecl;
+  sfSoundStream_setMaxDistance: procedure(soundStream: PsfSoundStream; distance: Single); cdecl;
+  sfSoundStream_setMinGain: procedure(soundStream: PsfSoundStream; gain: Single); cdecl;
+  sfSoundStream_setMaxGain: procedure(soundStream: PsfSoundStream; gain: Single); cdecl;
   sfSoundStream_setAttenuation: procedure(soundStream: PsfSoundStream; attenuation: Single); cdecl;
   sfSoundStream_setPlayingOffset: procedure(soundStream: PsfSoundStream; timeOffset: sfTime); cdecl;
   sfSoundStream_setLooping: procedure(soundStream: PsfSoundStream; loop: Boolean); cdecl;
   sfSoundStream_getPitch: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getPan: function(const soundStream: PsfSoundStream): Single; cdecl;
   sfSoundStream_getVolume: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_isSpatializationEnabled: function(const soundStream: PsfSoundStream): Boolean; cdecl;
   sfSoundStream_getPosition: function(const soundStream: PsfSoundStream): sfVector3f; cdecl;
+  sfSoundStream_getDirection: function(const soundStream: PsfSoundStream): sfVector3f; cdecl;
+  sfSoundStream_getCone: function(const soundStream: PsfSoundStream): sfSoundSourceCone; cdecl;
+  sfSoundStream_getVelocity: function(const soundStream: PsfSoundStream): sfVector3f; cdecl;
+  sfSoundStream_getDopplerFactor: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getDirectionalAttenuationFactor: function(const soundStream: PsfSoundStream): Single; cdecl;
   sfSoundStream_isRelativeToListener: function(const soundStream: PsfSoundStream): Boolean; cdecl;
   sfSoundStream_getMinDistance: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getMaxDistance: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getMinGain: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getMaxGain: function(const soundStream: PsfSoundStream): Single; cdecl;
   sfSoundStream_getAttenuation: function(const soundStream: PsfSoundStream): Single; cdecl;
   sfSoundStream_isLooping: function(const soundStream: PsfSoundStream): Boolean; cdecl;
+  sfSoundStream_setEffectProcessor: procedure(soundStream: PsfSoundStream; effectProcessor: sfEffectProcessor); cdecl;
   sfSoundStream_getPlayingOffset: function(const soundStream: PsfSoundStream): sfTime; cdecl;
   sfBuffer_create: function(): PsfBuffer; cdecl;
   sfBuffer_destroy: procedure(const buffer: PsfBuffer); cdecl;
@@ -1555,7 +1683,7 @@ var
   sfWindowBase_close: procedure(windowBase: PsfWindowBase); cdecl;
   sfWindowBase_isOpen: function(const windowBase: PsfWindowBase): Boolean; cdecl;
   sfWindowBase_pollEvent: function(windowBase: PsfWindowBase; event: PsfEvent): Boolean; cdecl;
-  sfWindowBase_waitEvent: function(windowBase: PsfWindowBase; event: PsfEvent): Boolean; cdecl;
+  sfWindowBase_waitEvent: function(windowBase: PsfWindowBase; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
   sfWindowBase_getPosition: function(const windowBase: PsfWindowBase): sfVector2i; cdecl;
   sfWindowBase_setPosition: procedure(windowBase: PsfWindowBase; position: sfVector2i); cdecl;
   sfWindowBase_getSize: function(const windowBase: PsfWindowBase): sfVector2u; cdecl;
@@ -1581,7 +1709,7 @@ var
   sfWindow_isOpen: function(const window: PsfWindow): Boolean; cdecl;
   sfWindow_getSettings: function(const window: PsfWindow): sfContextSettings; cdecl;
   sfWindow_pollEvent: function(window: PsfWindow; event: PsfEvent): Boolean; cdecl;
-  sfWindow_waitEvent: function(window: PsfWindow; event: PsfEvent): Boolean; cdecl;
+  sfWindow_waitEvent: function(window: PsfWindow; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
   sfWindow_getPosition: function(const window: PsfWindow): sfVector2i; cdecl;
   sfWindow_setPosition: procedure(window: PsfWindow; position: sfVector2i); cdecl;
   sfWindow_getSize: function(const window: PsfWindow): sfVector2u; cdecl;
@@ -1610,10 +1738,13 @@ var
   sfRenderTexture_setActive: function(renderTexture: PsfRenderTexture; active: Boolean): Boolean; cdecl;
   sfRenderTexture_display: procedure(renderTexture: PsfRenderTexture); cdecl;
   sfRenderTexture_clear: procedure(renderTexture: PsfRenderTexture; color: sfColor); cdecl;
+  sfRenderTexture_clearStencil: procedure(renderTexture: PsfRenderTexture; stencilValue: sfStencilValue); cdecl;
+  sfRenderTexture_clearColorAndStencil: procedure(renderTexture: PsfRenderTexture; color: sfColor; stencilValue: sfStencilValue); cdecl;
   sfRenderTexture_setView: procedure(renderTexture: PsfRenderTexture; const view: PsfView); cdecl;
   sfRenderTexture_getView: function(const renderTexture: PsfRenderTexture): PsfView; cdecl;
   sfRenderTexture_getDefaultView: function(const renderTexture: PsfRenderTexture): PsfView; cdecl;
   sfRenderTexture_getViewport: function(const renderTexture: PsfRenderTexture; const view: PsfView): sfIntRect; cdecl;
+  sfRenderTexture_getScissor: function(const renderTexture: PsfRenderTexture; const view: PsfView): sfIntRect; cdecl;
   sfRenderTexture_mapPixelToCoords: function(const renderTexture: PsfRenderTexture; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
   sfRenderTexture_mapCoordsToPixel: function(const renderTexture: PsfRenderTexture; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
   sfRenderTexture_drawSprite: procedure(renderTexture: PsfRenderTexture; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
@@ -1644,7 +1775,7 @@ var
   sfRenderWindow_isOpen: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
   sfRenderWindow_getSettings: function(const renderWindow: PsfRenderWindow): sfContextSettings; cdecl;
   sfRenderWindow_pollEvent: function(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
-  sfRenderWindow_waitEvent: function(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
+  sfRenderWindow_waitEvent: function(renderWindow: PsfRenderWindow; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
   sfRenderWindow_getPosition: function(const renderWindow: PsfRenderWindow): sfVector2i; cdecl;
   sfRenderWindow_setPosition: procedure(renderWindow: PsfRenderWindow; position: sfVector2i); cdecl;
   sfRenderWindow_getSize: function(const renderWindow: PsfRenderWindow): sfVector2u; cdecl;
@@ -1667,10 +1798,13 @@ var
   sfRenderWindow_display: procedure(renderWindow: PsfRenderWindow); cdecl;
   sfRenderWindow_getNativeHandle: function(const renderWindow: PsfRenderWindow): sfWindowHandle; cdecl;
   sfRenderWindow_clear: procedure(renderWindow: PsfRenderWindow; color: sfColor); cdecl;
+  sfRenderWindow_clearStencil: procedure(renderWindow: PsfRenderWindow; stencilValue: sfStencilValue); cdecl;
+  sfRenderWindow_clearColorAndStencil: procedure(renderWindow: PsfRenderWindow; color: sfColor; stencilValue: sfStencilValue); cdecl;
   sfRenderWindow_setView: procedure(renderWindow: PsfRenderWindow; const view: PsfView); cdecl;
   sfRenderWindow_getView: function(const renderWindow: PsfRenderWindow): PsfView; cdecl;
   sfRenderWindow_getDefaultView: function(const renderWindow: PsfRenderWindow): PsfView; cdecl;
   sfRenderWindow_getViewport: function(const renderWindow: PsfRenderWindow; const view: PsfView): sfIntRect; cdecl;
+  sfRenderWindow_getScissor: function(const renderWindow: PsfRenderWindow; const view: PsfView): sfIntRect; cdecl;
   sfRenderWindow_mapPixelToCoords: function(const renderWindow: PsfRenderWindow; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
   sfRenderWindow_mapCoordsToPixel: function(const renderWindow: PsfRenderWindow; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
   sfRenderWindow_drawSprite: procedure(renderWindow: PsfRenderWindow; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
@@ -1817,6 +1951,7 @@ var
   sfText_getLocalBounds: function(const text: PsfText): sfFloatRect; cdecl;
   sfText_getGlobalBounds: function(const text: PsfText): sfFloatRect; cdecl;
   sfTexture_create: function(size: sfVector2u): PsfTexture; cdecl;
+  sfTexture_createSrgb: function(size: sfVector2u): PsfTexture; cdecl;
   sfTexture_createFromFile: function(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
   sfTexture_createSrgbFromFile: function(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
   sfTexture_createFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt; const area: PsfIntRect): PsfTexture; cdecl;
@@ -1893,10 +2028,12 @@ var
   sfView_setSize: procedure(view: PsfView; size: sfVector2f); cdecl;
   sfView_setRotation: procedure(view: PsfView; angle: Single); cdecl;
   sfView_setViewport: procedure(view: PsfView; viewport: sfFloatRect); cdecl;
+  sfView_setScissor: procedure(view: PsfView; scissor: sfFloatRect); cdecl;
   sfView_getCenter: function(const view: PsfView): sfVector2f; cdecl;
   sfView_getSize: function(const view: PsfView): sfVector2f; cdecl;
   sfView_getRotation: function(const view: PsfView): Single; cdecl;
   sfView_getViewport: function(const view: PsfView): sfFloatRect; cdecl;
+  sfView_getScissor: function(const view: PsfView): sfFloatRect; cdecl;
   sfView_move: procedure(view: PsfView; offset: sfVector2f); cdecl;
   sfView_rotate: procedure(view: PsfView; angle: Single); cdecl;
   sfView_zoom: procedure(view: PsfView; factor: Single); cdecl;
@@ -2464,14 +2601,18 @@ begin
   sfKeyboard_isScancodePressed := GetProcAddress(aDLLHandle, 'sfKeyboard_isScancodePressed');
   sfKeyboard_localize := GetProcAddress(aDLLHandle, 'sfKeyboard_localize');
   sfKeyboard_setVirtualKeyboardVisible := GetProcAddress(aDLLHandle, 'sfKeyboard_setVirtualKeyboardVisible');
+  sfListener_getCone := GetProcAddress(aDLLHandle, 'sfListener_getCone');
   sfListener_getDirection := GetProcAddress(aDLLHandle, 'sfListener_getDirection');
   sfListener_getGlobalVolume := GetProcAddress(aDLLHandle, 'sfListener_getGlobalVolume');
   sfListener_getPosition := GetProcAddress(aDLLHandle, 'sfListener_getPosition');
   sfListener_getUpVector := GetProcAddress(aDLLHandle, 'sfListener_getUpVector');
+  sfListener_getVelocity := GetProcAddress(aDLLHandle, 'sfListener_getVelocity');
+  sfListener_setCone := GetProcAddress(aDLLHandle, 'sfListener_setCone');
   sfListener_setDirection := GetProcAddress(aDLLHandle, 'sfListener_setDirection');
   sfListener_setGlobalVolume := GetProcAddress(aDLLHandle, 'sfListener_setGlobalVolume');
   sfListener_setPosition := GetProcAddress(aDLLHandle, 'sfListener_setPosition');
   sfListener_setUpVector := GetProcAddress(aDLLHandle, 'sfListener_setUpVector');
+  sfListener_setVelocity := GetProcAddress(aDLLHandle, 'sfListener_setVelocity');
   sfMicroseconds := GetProcAddress(aDLLHandle, 'sfMicroseconds');
   sfMilliseconds := GetProcAddress(aDLLHandle, 'sfMilliseconds');
   sfMouse_getPosition := GetProcAddress(aDLLHandle, 'sfMouse_getPosition');
@@ -2487,27 +2628,49 @@ begin
   sfMusic_destroy := GetProcAddress(aDLLHandle, 'sfMusic_destroy');
   sfMusic_getAttenuation := GetProcAddress(aDLLHandle, 'sfMusic_getAttenuation');
   sfMusic_getChannelCount := GetProcAddress(aDLLHandle, 'sfMusic_getChannelCount');
+  sfMusic_getChannelMap := GetProcAddress(aDLLHandle, 'sfMusic_getChannelMap');
+  sfMusic_getCone := GetProcAddress(aDLLHandle, 'sfMusic_getCone');
+  sfMusic_getDirection := GetProcAddress(aDLLHandle, 'sfMusic_getDirection');
+  sfMusic_getDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfMusic_getDirectionalAttenuationFactor');
+  sfMusic_getDopplerFactor := GetProcAddress(aDLLHandle, 'sfMusic_getDopplerFactor');
   sfMusic_getDuration := GetProcAddress(aDLLHandle, 'sfMusic_getDuration');
   sfMusic_getLoopPoints := GetProcAddress(aDLLHandle, 'sfMusic_getLoopPoints');
+  sfMusic_getMaxDistance := GetProcAddress(aDLLHandle, 'sfMusic_getMaxDistance');
+  sfMusic_getMaxGain := GetProcAddress(aDLLHandle, 'sfMusic_getMaxGain');
   sfMusic_getMinDistance := GetProcAddress(aDLLHandle, 'sfMusic_getMinDistance');
+  sfMusic_getMinGain := GetProcAddress(aDLLHandle, 'sfMusic_getMinGain');
+  sfMusic_getPan := GetProcAddress(aDLLHandle, 'sfMusic_getPan');
   sfMusic_getPitch := GetProcAddress(aDLLHandle, 'sfMusic_getPitch');
   sfMusic_getPlayingOffset := GetProcAddress(aDLLHandle, 'sfMusic_getPlayingOffset');
   sfMusic_getPosition := GetProcAddress(aDLLHandle, 'sfMusic_getPosition');
   sfMusic_getSampleRate := GetProcAddress(aDLLHandle, 'sfMusic_getSampleRate');
   sfMusic_getStatus := GetProcAddress(aDLLHandle, 'sfMusic_getStatus');
+  sfMusic_getVelocity := GetProcAddress(aDLLHandle, 'sfMusic_getVelocity');
   sfMusic_getVolume := GetProcAddress(aDLLHandle, 'sfMusic_getVolume');
   sfMusic_isLooping := GetProcAddress(aDLLHandle, 'sfMusic_isLooping');
   sfMusic_isRelativeToListener := GetProcAddress(aDLLHandle, 'sfMusic_isRelativeToListener');
+  sfMusic_isSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfMusic_isSpatializationEnabled');
   sfMusic_pause := GetProcAddress(aDLLHandle, 'sfMusic_pause');
   sfMusic_play := GetProcAddress(aDLLHandle, 'sfMusic_play');
   sfMusic_setAttenuation := GetProcAddress(aDLLHandle, 'sfMusic_setAttenuation');
+  sfMusic_setCone := GetProcAddress(aDLLHandle, 'sfMusic_setCone');
+  sfMusic_setDirection := GetProcAddress(aDLLHandle, 'sfMusic_setDirection');
+  sfMusic_setDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfMusic_setDirectionalAttenuationFactor');
+  sfMusic_setDopplerFactor := GetProcAddress(aDLLHandle, 'sfMusic_setDopplerFactor');
+  sfMusic_setEffectProcessor := GetProcAddress(aDLLHandle, 'sfMusic_setEffectProcessor');
   sfMusic_setLooping := GetProcAddress(aDLLHandle, 'sfMusic_setLooping');
   sfMusic_setLoopPoints := GetProcAddress(aDLLHandle, 'sfMusic_setLoopPoints');
+  sfMusic_setMaxDistance := GetProcAddress(aDLLHandle, 'sfMusic_setMaxDistance');
+  sfMusic_setMaxGain := GetProcAddress(aDLLHandle, 'sfMusic_setMaxGain');
   sfMusic_setMinDistance := GetProcAddress(aDLLHandle, 'sfMusic_setMinDistance');
+  sfMusic_setMinGain := GetProcAddress(aDLLHandle, 'sfMusic_setMinGain');
+  sfMusic_setPan := GetProcAddress(aDLLHandle, 'sfMusic_setPan');
   sfMusic_setPitch := GetProcAddress(aDLLHandle, 'sfMusic_setPitch');
   sfMusic_setPlayingOffset := GetProcAddress(aDLLHandle, 'sfMusic_setPlayingOffset');
   sfMusic_setPosition := GetProcAddress(aDLLHandle, 'sfMusic_setPosition');
   sfMusic_setRelativeToListener := GetProcAddress(aDLLHandle, 'sfMusic_setRelativeToListener');
+  sfMusic_setSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfMusic_setSpatializationEnabled');
+  sfMusic_setVelocity := GetProcAddress(aDLLHandle, 'sfMusic_setVelocity');
   sfMusic_setVolume := GetProcAddress(aDLLHandle, 'sfMusic_setVolume');
   sfMusic_stop := GetProcAddress(aDLLHandle, 'sfMusic_stop');
   sfPacket_append := GetProcAddress(aDLLHandle, 'sfPacket_append');
@@ -2576,6 +2739,8 @@ begin
   sfRectangleShape_setTexture := GetProcAddress(aDLLHandle, 'sfRectangleShape_setTexture');
   sfRectangleShape_setTextureRect := GetProcAddress(aDLLHandle, 'sfRectangleShape_setTextureRect');
   sfRenderTexture_clear := GetProcAddress(aDLLHandle, 'sfRenderTexture_clear');
+  sfRenderTexture_clearColorAndStencil := GetProcAddress(aDLLHandle, 'sfRenderTexture_clearColorAndStencil');
+  sfRenderTexture_clearStencil := GetProcAddress(aDLLHandle, 'sfRenderTexture_clearStencil');
   sfRenderTexture_create := GetProcAddress(aDLLHandle, 'sfRenderTexture_create');
   sfRenderTexture_destroy := GetProcAddress(aDLLHandle, 'sfRenderTexture_destroy');
   sfRenderTexture_display := GetProcAddress(aDLLHandle, 'sfRenderTexture_display');
@@ -2592,6 +2757,7 @@ begin
   sfRenderTexture_generateMipmap := GetProcAddress(aDLLHandle, 'sfRenderTexture_generateMipmap');
   sfRenderTexture_getDefaultView := GetProcAddress(aDLLHandle, 'sfRenderTexture_getDefaultView');
   sfRenderTexture_getMaximumAntiAliasingLevel := GetProcAddress(aDLLHandle, 'sfRenderTexture_getMaximumAntiAliasingLevel');
+  sfRenderTexture_getScissor := GetProcAddress(aDLLHandle, 'sfRenderTexture_getScissor');
   sfRenderTexture_getSize := GetProcAddress(aDLLHandle, 'sfRenderTexture_getSize');
   sfRenderTexture_getTexture := GetProcAddress(aDLLHandle, 'sfRenderTexture_getTexture');
   sfRenderTexture_getView := GetProcAddress(aDLLHandle, 'sfRenderTexture_getView');
@@ -2609,6 +2775,8 @@ begin
   sfRenderTexture_setSmooth := GetProcAddress(aDLLHandle, 'sfRenderTexture_setSmooth');
   sfRenderTexture_setView := GetProcAddress(aDLLHandle, 'sfRenderTexture_setView');
   sfRenderWindow_clear := GetProcAddress(aDLLHandle, 'sfRenderWindow_clear');
+  sfRenderWindow_clearColorAndStencil := GetProcAddress(aDLLHandle, 'sfRenderWindow_clearColorAndStencil');
+  sfRenderWindow_clearStencil := GetProcAddress(aDLLHandle, 'sfRenderWindow_clearStencil');
   sfRenderWindow_close := GetProcAddress(aDLLHandle, 'sfRenderWindow_close');
   sfRenderWindow_create := GetProcAddress(aDLLHandle, 'sfRenderWindow_create');
   sfRenderWindow_createFromHandle := GetProcAddress(aDLLHandle, 'sfRenderWindow_createFromHandle');
@@ -2629,6 +2797,7 @@ begin
   sfRenderWindow_getDefaultView := GetProcAddress(aDLLHandle, 'sfRenderWindow_getDefaultView');
   sfRenderWindow_getNativeHandle := GetProcAddress(aDLLHandle, 'sfRenderWindow_getNativeHandle');
   sfRenderWindow_getPosition := GetProcAddress(aDLLHandle, 'sfRenderWindow_getPosition');
+  sfRenderWindow_getScissor := GetProcAddress(aDLLHandle, 'sfRenderWindow_getScissor');
   sfRenderWindow_getSettings := GetProcAddress(aDLLHandle, 'sfRenderWindow_getSettings');
   sfRenderWindow_getSize := GetProcAddress(aDLLHandle, 'sfRenderWindow_getSize');
   sfRenderWindow_getView := GetProcAddress(aDLLHandle, 'sfRenderWindow_getView');
@@ -2746,24 +2915,45 @@ begin
   sfSound_destroy := GetProcAddress(aDLLHandle, 'sfSound_destroy');
   sfSound_getAttenuation := GetProcAddress(aDLLHandle, 'sfSound_getAttenuation');
   sfSound_getBuffer := GetProcAddress(aDLLHandle, 'sfSound_getBuffer');
+  sfSound_getCone := GetProcAddress(aDLLHandle, 'sfSound_getCone');
+  sfSound_getDirection := GetProcAddress(aDLLHandle, 'sfSound_getDirection');
+  sfSound_getDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfSound_getDirectionalAttenuationFactor');
+  sfSound_getDopplerFactor := GetProcAddress(aDLLHandle, 'sfSound_getDopplerFactor');
+  sfSound_getMaxDistance := GetProcAddress(aDLLHandle, 'sfSound_getMaxDistance');
+  sfSound_getMaxGain := GetProcAddress(aDLLHandle, 'sfSound_getMaxGain');
   sfSound_getMinDistance := GetProcAddress(aDLLHandle, 'sfSound_getMinDistance');
+  sfSound_getMinGain := GetProcAddress(aDLLHandle, 'sfSound_getMinGain');
+  sfSound_getPan := GetProcAddress(aDLLHandle, 'sfSound_getPan');
   sfSound_getPitch := GetProcAddress(aDLLHandle, 'sfSound_getPitch');
   sfSound_getPlayingOffset := GetProcAddress(aDLLHandle, 'sfSound_getPlayingOffset');
   sfSound_getPosition := GetProcAddress(aDLLHandle, 'sfSound_getPosition');
   sfSound_getStatus := GetProcAddress(aDLLHandle, 'sfSound_getStatus');
+  sfSound_getVelocity := GetProcAddress(aDLLHandle, 'sfSound_getVelocity');
   sfSound_getVolume := GetProcAddress(aDLLHandle, 'sfSound_getVolume');
   sfSound_isLooping := GetProcAddress(aDLLHandle, 'sfSound_isLooping');
   sfSound_isRelativeToListener := GetProcAddress(aDLLHandle, 'sfSound_isRelativeToListener');
+  sfSound_isSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfSound_isSpatializationEnabled');
   sfSound_pause := GetProcAddress(aDLLHandle, 'sfSound_pause');
   sfSound_play := GetProcAddress(aDLLHandle, 'sfSound_play');
   sfSound_setAttenuation := GetProcAddress(aDLLHandle, 'sfSound_setAttenuation');
   sfSound_setBuffer := GetProcAddress(aDLLHandle, 'sfSound_setBuffer');
+  sfSound_setCone := GetProcAddress(aDLLHandle, 'sfSound_setCone');
+  sfSound_setDirection := GetProcAddress(aDLLHandle, 'sfSound_setDirection');
+  sfSound_setDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfSound_setDirectionalAttenuationFactor');
+  sfSound_setDopplerFactor := GetProcAddress(aDLLHandle, 'sfSound_setDopplerFactor');
+  sfSound_setEffectProcessor := GetProcAddress(aDLLHandle, 'sfSound_setEffectProcessor');
   sfSound_setLooping := GetProcAddress(aDLLHandle, 'sfSound_setLooping');
+  sfSound_setMaxDistance := GetProcAddress(aDLLHandle, 'sfSound_setMaxDistance');
+  sfSound_setMaxGain := GetProcAddress(aDLLHandle, 'sfSound_setMaxGain');
   sfSound_setMinDistance := GetProcAddress(aDLLHandle, 'sfSound_setMinDistance');
+  sfSound_setMinGain := GetProcAddress(aDLLHandle, 'sfSound_setMinGain');
+  sfSound_setPan := GetProcAddress(aDLLHandle, 'sfSound_setPan');
   sfSound_setPitch := GetProcAddress(aDLLHandle, 'sfSound_setPitch');
   sfSound_setPlayingOffset := GetProcAddress(aDLLHandle, 'sfSound_setPlayingOffset');
   sfSound_setPosition := GetProcAddress(aDLLHandle, 'sfSound_setPosition');
   sfSound_setRelativeToListener := GetProcAddress(aDLLHandle, 'sfSound_setRelativeToListener');
+  sfSound_setSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfSound_setSpatializationEnabled');
+  sfSound_setVelocity := GetProcAddress(aDLLHandle, 'sfSound_setVelocity');
   sfSound_setVolume := GetProcAddress(aDLLHandle, 'sfSound_setVolume');
   sfSound_stop := GetProcAddress(aDLLHandle, 'sfSound_stop');
   sfSoundBuffer_copy := GetProcAddress(aDLLHandle, 'sfSoundBuffer_copy');
@@ -2773,6 +2963,7 @@ begin
   sfSoundBuffer_createFromStream := GetProcAddress(aDLLHandle, 'sfSoundBuffer_createFromStream');
   sfSoundBuffer_destroy := GetProcAddress(aDLLHandle, 'sfSoundBuffer_destroy');
   sfSoundBuffer_getChannelCount := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getChannelCount');
+  sfSoundBuffer_getChannelMap := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getChannelMap');
   sfSoundBuffer_getDuration := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getDuration');
   sfSoundBuffer_getSampleCount := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getSampleCount');
   sfSoundBuffer_getSampleRate := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getSampleRate');
@@ -2792,6 +2983,7 @@ begin
   sfSoundRecorder_destroy := GetProcAddress(aDLLHandle, 'sfSoundRecorder_destroy');
   sfSoundRecorder_getAvailableDevices := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getAvailableDevices');
   sfSoundRecorder_getChannelCount := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getChannelCount');
+  sfSoundRecorder_getChannelMap := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getChannelMap');
   sfSoundRecorder_getDefaultDevice := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getDefaultDevice');
   sfSoundRecorder_getDevice := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getDevice');
   sfSoundRecorder_getSampleRate := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getSampleRate');
@@ -2804,24 +2996,46 @@ begin
   sfSoundStream_destroy := GetProcAddress(aDLLHandle, 'sfSoundStream_destroy');
   sfSoundStream_getAttenuation := GetProcAddress(aDLLHandle, 'sfSoundStream_getAttenuation');
   sfSoundStream_getChannelCount := GetProcAddress(aDLLHandle, 'sfSoundStream_getChannelCount');
+  sfSoundStream_getChannelMap := GetProcAddress(aDLLHandle, 'sfSoundStream_getChannelMap');
+  sfSoundStream_getCone := GetProcAddress(aDLLHandle, 'sfSoundStream_getCone');
+  sfSoundStream_getDirection := GetProcAddress(aDLLHandle, 'sfSoundStream_getDirection');
+  sfSoundStream_getDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfSoundStream_getDirectionalAttenuationFactor');
+  sfSoundStream_getDopplerFactor := GetProcAddress(aDLLHandle, 'sfSoundStream_getDopplerFactor');
+  sfSoundStream_getMaxDistance := GetProcAddress(aDLLHandle, 'sfSoundStream_getMaxDistance');
+  sfSoundStream_getMaxGain := GetProcAddress(aDLLHandle, 'sfSoundStream_getMaxGain');
   sfSoundStream_getMinDistance := GetProcAddress(aDLLHandle, 'sfSoundStream_getMinDistance');
+  sfSoundStream_getMinGain := GetProcAddress(aDLLHandle, 'sfSoundStream_getMinGain');
+  sfSoundStream_getPan := GetProcAddress(aDLLHandle, 'sfSoundStream_getPan');
   sfSoundStream_getPitch := GetProcAddress(aDLLHandle, 'sfSoundStream_getPitch');
   sfSoundStream_getPlayingOffset := GetProcAddress(aDLLHandle, 'sfSoundStream_getPlayingOffset');
   sfSoundStream_getPosition := GetProcAddress(aDLLHandle, 'sfSoundStream_getPosition');
   sfSoundStream_getSampleRate := GetProcAddress(aDLLHandle, 'sfSoundStream_getSampleRate');
   sfSoundStream_getStatus := GetProcAddress(aDLLHandle, 'sfSoundStream_getStatus');
+  sfSoundStream_getVelocity := GetProcAddress(aDLLHandle, 'sfSoundStream_getVelocity');
   sfSoundStream_getVolume := GetProcAddress(aDLLHandle, 'sfSoundStream_getVolume');
   sfSoundStream_isLooping := GetProcAddress(aDLLHandle, 'sfSoundStream_isLooping');
   sfSoundStream_isRelativeToListener := GetProcAddress(aDLLHandle, 'sfSoundStream_isRelativeToListener');
+  sfSoundStream_isSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfSoundStream_isSpatializationEnabled');
   sfSoundStream_pause := GetProcAddress(aDLLHandle, 'sfSoundStream_pause');
   sfSoundStream_play := GetProcAddress(aDLLHandle, 'sfSoundStream_play');
   sfSoundStream_setAttenuation := GetProcAddress(aDLLHandle, 'sfSoundStream_setAttenuation');
+  sfSoundStream_setCone := GetProcAddress(aDLLHandle, 'sfSoundStream_setCone');
+  sfSoundStream_setDirection := GetProcAddress(aDLLHandle, 'sfSoundStream_setDirection');
+  sfSoundStream_setDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfSoundStream_setDirectionalAttenuationFactor');
+  sfSoundStream_setDopplerFactor := GetProcAddress(aDLLHandle, 'sfSoundStream_setDopplerFactor');
+  sfSoundStream_setEffectProcessor := GetProcAddress(aDLLHandle, 'sfSoundStream_setEffectProcessor');
   sfSoundStream_setLooping := GetProcAddress(aDLLHandle, 'sfSoundStream_setLooping');
+  sfSoundStream_setMaxDistance := GetProcAddress(aDLLHandle, 'sfSoundStream_setMaxDistance');
+  sfSoundStream_setMaxGain := GetProcAddress(aDLLHandle, 'sfSoundStream_setMaxGain');
   sfSoundStream_setMinDistance := GetProcAddress(aDLLHandle, 'sfSoundStream_setMinDistance');
+  sfSoundStream_setMinGain := GetProcAddress(aDLLHandle, 'sfSoundStream_setMinGain');
+  sfSoundStream_setPan := GetProcAddress(aDLLHandle, 'sfSoundStream_setPan');
   sfSoundStream_setPitch := GetProcAddress(aDLLHandle, 'sfSoundStream_setPitch');
   sfSoundStream_setPlayingOffset := GetProcAddress(aDLLHandle, 'sfSoundStream_setPlayingOffset');
   sfSoundStream_setPosition := GetProcAddress(aDLLHandle, 'sfSoundStream_setPosition');
   sfSoundStream_setRelativeToListener := GetProcAddress(aDLLHandle, 'sfSoundStream_setRelativeToListener');
+  sfSoundStream_setSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfSoundStream_setSpatializationEnabled');
+  sfSoundStream_setVelocity := GetProcAddress(aDLLHandle, 'sfSoundStream_setVelocity');
   sfSoundStream_setVolume := GetProcAddress(aDLLHandle, 'sfSoundStream_setVolume');
   sfSoundStream_stop := GetProcAddress(aDLLHandle, 'sfSoundStream_stop');
   sfSprite_copy := GetProcAddress(aDLLHandle, 'sfSprite_copy');
@@ -2916,6 +3130,7 @@ begin
   sfTexture_createFromImage := GetProcAddress(aDLLHandle, 'sfTexture_createFromImage');
   sfTexture_createFromMemory := GetProcAddress(aDLLHandle, 'sfTexture_createFromMemory');
   sfTexture_createFromStream := GetProcAddress(aDLLHandle, 'sfTexture_createFromStream');
+  sfTexture_createSrgb := GetProcAddress(aDLLHandle, 'sfTexture_createSrgb');
   sfTexture_createSrgbFromFile := GetProcAddress(aDLLHandle, 'sfTexture_createSrgbFromFile');
   sfTexture_createSrgbFromImage := GetProcAddress(aDLLHandle, 'sfTexture_createSrgbFromImage');
   sfTexture_createSrgbFromMemory := GetProcAddress(aDLLHandle, 'sfTexture_createSrgbFromMemory');
@@ -3017,12 +3232,14 @@ begin
   sfView_destroy := GetProcAddress(aDLLHandle, 'sfView_destroy');
   sfView_getCenter := GetProcAddress(aDLLHandle, 'sfView_getCenter');
   sfView_getRotation := GetProcAddress(aDLLHandle, 'sfView_getRotation');
+  sfView_getScissor := GetProcAddress(aDLLHandle, 'sfView_getScissor');
   sfView_getSize := GetProcAddress(aDLLHandle, 'sfView_getSize');
   sfView_getViewport := GetProcAddress(aDLLHandle, 'sfView_getViewport');
   sfView_move := GetProcAddress(aDLLHandle, 'sfView_move');
   sfView_rotate := GetProcAddress(aDLLHandle, 'sfView_rotate');
   sfView_setCenter := GetProcAddress(aDLLHandle, 'sfView_setCenter');
   sfView_setRotation := GetProcAddress(aDLLHandle, 'sfView_setRotation');
+  sfView_setScissor := GetProcAddress(aDLLHandle, 'sfView_setScissor');
   sfView_setSize := GetProcAddress(aDLLHandle, 'sfView_setSize');
   sfView_setViewport := GetProcAddress(aDLLHandle, 'sfView_setViewport');
   sfView_zoom := GetProcAddress(aDLLHandle, 'sfView_zoom');
