@@ -26,67 +26,134 @@ uses
   System.Math,
   WinApi.Windows,
   WinApi.Messages,
-  WinApi.OpenGL,
   PSFML,
   PSFML.Common;
+
+{ sfError }
+type
+  sfErrorCallback = procedure(const AText: string; const AUserData: Pointer); cdecl;
+
+procedure sfError_setCallback(const AHandler: sfErrorCallback;  const AUserData: Pointer); cdecl;
+function  sfError_getCallback(): sfErrorCallback; cdecl;
+procedure sfError_set(const AMsg: string; const AArgs: array of const); cdecl;
+function  sfError_getLast(): string; cdecl;
 
 { sfConsole }
 const
   sfCR   = #13;
   sfLF   = #10;
   sfCRLF = #13#10;
+  sfEsc  = #27;
 
-  sfResetAll  = #27'[0m';
-  sfResetBack = #27'[49m';
-  sfResetFore = #27'[39m';
+  // Cursor Movement
+  sfCSICursorPos = sfEsc + '[%d;%dH';         // Set cursor position
+  sfCSICursorUp = sfEsc + '[%dA';             // Move cursor up
+  sfCSICursorDown = sfEsc + '[%dB';           // Move cursor down
+  sfCSICursorForward = sfEsc + '[%dC';        // Move cursor forward
+  sfCSICursorBack = sfEsc + '[%dD';           // Move cursor backward
+  sfCSISaveCursorPos = sfEsc + '[s';          // Save cursor position
+  sfCSIRestoreCursorPos = sfEsc + '[u';       // Restore cursor position
 
-  sfStyleBold      = #27'[1m';
-  sfStyleDim       = #27'[2m';
-  sfStyleItalic    = #27'[3m';
-  sfStyleUnderline = #27'[4m';
-  sfStyleBlink     = #27'[5m';
-  sfStyleFramed    = #27'[51m';
-  sfStyleEncircled = #27'[52m';
+  // Cursor Visibility
+  sfCSIShowCursor = sfEsc + '[?25h';          // Show cursor
+  sfCSIHideCursor = sfEsc + '[?25l';          // Hide cursor
+  sfCSIBlinkCursor = sfEsc + '[?12h';         // Enable cursor blinking
+  sfCSISteadyCursor = sfEsc + '[?12l';        // Disable cursor blinking
 
-  sfForeBlack   = #27'[30m';
-  sfForeRed     = #27'[31m';
-  sfForeGreen   = #27'[32m';
-  sfForeYellow  = #27'[33m';
-  sfForeBlue    = #27'[34m';
-  sfForeMagenta = #27'[35m';
-  sfForeCyan    = #27'[36m';
-  sfForeWhite   = #27'[37m';
+  // Screen Manipulation
+  sfCSIClearScreen = sfEsc + '[2J';           // Clear screen
+  sfCSIClearLine = sfEsc + '[2K';             // Clear line
+  sfCSIScrollUp = sfEsc + '[%dS';             // Scroll up by n lines
+  sfCSIScrollDown = sfEsc + '[%dT';           // Scroll down by n lines
 
-  sfBackBlack   = #27'[40m';
-  sfBackRed     = #27'[41m';
-  sfBackGreen   = #27'[42m';
-  sfBackYellow  = #27'[43m';
-  sfBackBlue    = #27'[44m';
-  sfBackMagenta = #27'[45m';
-  sfBackCyan    = #27'[46m';
-  sfBackWhite   = #27'[47m';
+  // Text Formatting
+  sfCSIBold = sfEsc + '[1m';                  // Bold text
+  sfCSIUnderline = sfEsc + '[4m';             // Underline text
+  sfCSIResetFormat = sfEsc + '[0m';           // Reset text formatting
+  sfCSIResetBackground = #27'[49m';         // Reset background text formatting
+  sfCSIResetForeground = #27'[39m';         // Reset forground text formatting
+  sfCSIInvertColors = sfEsc + '[7m';          // Invert foreground/background
+  sfCSINormalColors = sfEsc + '[27m';         // Normal colors
 
-  sfSetCursorPos       = #27 + '[%d;%dH';  // Set cursor position escape sequence
-  sfEraseToScreenEnd   = #27 + '[0J';
-  sfEraseToScreenStart = #27 + '[1J';
-  sfEraseFullScreen    = #27 + '[2J';
-  sfEraseSaved         = #27 + '[3J';
-  sfEraseInLine        = #27 + '[K';
-  sfEraseToLineEnd     = #27 + '[0K';
-  sfEraseLineToCursor  = #27 + '[1K';
-  sfEraseFullLine      = #27 + '[2K';
+  sfCSIDim = sfEsc + '[2m';
+  sfCSIItalic = sfEsc + '[3m';
+  sfCSIBlink = sfEsc + '[5m';
+  sfCSIFramed = sfEsc + '[51m';
+  sfCSIEncircled = sfEsc + '[52m';
+
+  // Text Modification
+  sfCSIInsertChar = sfEsc + '[%d@';           // Insert n spaces at cursor position
+  sfCSIDeleteChar = sfEsc + '[%dP';           // Delete n characters at cursor position
+  sfCSIEraseChar = sfEsc + '[%dX';            // Erase n characters at cursor position
+
+  // Colors (Foreground and Background)
+  sfCSIFGBlack = sfEsc + '[30m';
+  sfCSIFGRed = sfEsc + '[31m';
+  sfCSIFGGreen = sfEsc + '[32m';
+  sfCSIFGYellow = sfEsc + '[33m';
+  sfCSIFGBlue = sfEsc + '[34m';
+  sfCSIFGMagenta = sfEsc + '[35m';
+  sfCSIFGCyan = sfEsc + '[36m';
+  sfCSIFGWhite = sfEsc + '[37m';
+
+  sfCSIBGBlack = sfEsc + '[40m';
+  sfCSIBGRed = sfEsc + '[41m';
+  sfCSIBGGreen = sfEsc + '[42m';
+  sfCSIBGYellow = sfEsc + '[43m';
+  sfCSIBGBlue = sfEsc + '[44m';
+  sfCSIBGMagenta = sfEsc + '[45m';
+  sfCSIBGCyan = sfEsc + '[46m';
+  sfCSIBGWhite = sfEsc + '[47m';
+
+  sfCSIFGBrightBlack = sfEsc + '[90m';
+  sfCSIFGBrightRed = sfEsc + '[91m';
+  sfCSIFGBrightGreen = sfEsc + '[92m';
+  sfCSIFGBrightYellow = sfEsc + '[93m';
+  sfCSIFGBrightBlue = sfEsc + '[94m';
+  sfCSIFGBrightMagenta = sfEsc + '[95m';
+  sfCSIFGBrightCyan = sfEsc + '[96m';
+  sfCSIFGBrightWhite = sfEsc + '[97m';
+
+  sfCSIBGBrightBlack = sfEsc + '[100m';
+  sfCSIBGBrightRed = sfEsc + '[101m';
+  sfCSIBGBrightGreen = sfEsc + '[102m';
+  sfCSIBGBrightYellow = sfEsc + '[103m';
+  sfCSIBGBrightBlue = sfEsc + '[104m';
+  sfCSIBGBrightMagenta = sfEsc + '[105m';
+  sfCSIBGBrightCyan = sfEsc + '[106m';
+  sfCSIBGBrightWhite = sfEsc + '[107m';
+
+  sfCSIFGRGB = sfEsc + '[38;2;%d;%d;%dm';        // Foreground RGB
+  sfCSIBGRGB = sfEsc + '[48;2;%d;%d;%dm';        // Background RGB
 
 procedure sfConsole_print(); cdecl; overload;
 procedure sfConsole_Print(const AMsg: string; const AArgs: array of const); cdecl; overload;
-
-procedure sfConsole_printLn(); overload;
+procedure sfConsole_printLn() cdecl; overload;
 procedure sfConsole_printLn(const AMsg: string; const AArgs: array of const); cdecl; overload;
 
-procedure sfConsole_waitForAnyKey();
-function  sfConsole_anyKeyPressed(): Boolean;
+procedure sfConsole_setCursorPos(const X, Y: Integer); cdecl
+procedure sfConsole_moveCursorUp(const ALines: Integer); cdecl
+procedure sfConsole_moveCursorDown(const ALines: Integer); cdecl
+procedure sfConsole_moveCursorForward(const ACols: Integer); cdecl
+procedure sfConsole_moveCursorBack(const ACols: Integer); cdecl
+procedure sfConsole_clearScreen(); cdecl
+procedure sfConsole_clearLine(); cdecl
+procedure sfConsole_hideCursor(); cdecl
+procedure sfConsole_showCursor(); cdecl
+procedure sfConsole_saveCursorPos(); cdecl
+procedure sfConsole_restoreCursorPos(); cdecl
+procedure sfConsole_setBoldText(); cdecl
+procedure sfConsole_resetTextFormat(); cdecl
+procedure sfConsole_setForegroundColor(const AColor: string); cdecl
+procedure sfConsole_setBackgroundColor(const AColor: string); cdecl
+procedure sfConsole_setForegroundRGB(const ARed, AGreen, ABlue: Byte); cdecl
+procedure sfConsole_setBackgroundRGB(const ARed, AGreen, ABlue: Byte); cdecl
 
-procedure sfConsole_pause(const AForcePause: Boolean=False; AColor: string=sfForeWhite; const AMsg: string='');
-procedure sfConsole_setTitle(const ATitle: string);
+procedure sfConsole_waitForAnyKey(); cdecl
+function  sfConsole_anyKeyPressed(): Boolean; cdecl
+
+procedure sfConsole_pause(const AForcePause: Boolean=False; AColor: string=sfCSIFGWhite; const AMsg: string=''); cdecl
+procedure sfConsole_setTitle(const ATitle: string); cdecl
 
 { sfTransform_Identity }
 const
@@ -494,6 +561,15 @@ function sfMusic_createFromStream(stream: PsfInputStream): PsfMusic; cdecl;
 { sfSoundBuffer }
 function sfSoundBuffer_createFromStream(stream: PsfInputStream): PsfSoundBuffer; cdecl;
 
+{ sfTime }
+procedure sfTime_sleep(const AMilliseconds: Integer); cdecl;
+
+{ sfSoundStream }
+procedure sfSoundStream_destroy(const soundStream: PsfSoundStream); cdecl;
+procedure sfSoundStream_pause(soundStream: PsfSoundStream); cdecl;
+procedure sfSoundStream_stop(soundStream: PsfSoundStream); cdecl;
+
+
 { sfShader }
 function sfShader_createFromStream(vertexShaderStream: PsfInputStream; geometryShaderStream: PsfInputStream; fragmentShaderStream: PsfInputStream): PsfShader; cdecl;
 
@@ -516,34 +592,179 @@ procedure sfVideo_setVolume(const AVolume: Single); cdecl;
 
 implementation
 
+uses
+  WinApi.MMSystem;
+
+{ sfError }
+type
+  TsfError = record
+    Callback: sfErrorCallback;
+    UserData: Pointer;
+    Msg: string;
+  end;
+
+var
+  sfError: TsfError;
+
+procedure cerr_callback(const text: PUTF8Char; user_data: Pointer); cdecl;
+begin
+  sfError_set(UTF8ToUnicodeString(text), []);
+end;
+
+procedure sfError_setCallback(const AHandler: sfErrorCallback;  const AUserData: Pointer);
+begin
+  sfError.Callback := AHandler;
+  sfError.UserData := AUserData;
+end;
+
+function  sfError_getCallback(): sfErrorCallback;
+begin
+  Result := sfError.Callback;
+end;
+
+procedure sfError_set(const AMsg: string; const AArgs: array of const);
+begin
+  sfError.Msg := Format(AMsg, AArgs);
+  if Assigned(sfError.Callback) then
+  begin
+    sfError.Callback(sfError.Msg, sfError.UserData);
+  end;
+end;
+
+function  sfError_getLast(): string;
+begin
+  Result := sfError.Msg;
+end;
+
 { sfConsole }
 procedure sfConsole_Print(const AMsg: string; const AArgs: array of const);
 begin
   if not HasConsoleOutput() then Exit;
-  Write(Format(AMsg, AArgs));
-  Write(sfResetAll);
+  Write(Format(AMsg, AArgs)+sfCSIResetFormat);
 end;
 
 procedure sfConsole_print();
 begin
   if not HasConsoleOutput() then Exit;
   Write;
-  Write(sfResetAll);
+  Write(sfCSIResetFormat);
 end;
 
 
 procedure sfConsole_printLn(const AMsg: string; const AArgs: array of const);
 begin
   if not HasConsoleOutput() then Exit;
-  WriteLn(Format(AMsg, AArgs));
-  Write(sfResetAll);
+  WriteLn(Format(AMsg, AArgs)+sfCSIResetFormat);
 end;
 
 procedure sfConsole_printLn();
 begin
   if not HasConsoleOutput() then Exit;
   WriteLn;
-  Write(sfResetAll);
+  Write(sfCSIResetFormat);
+end;
+
+procedure sfConsole_setCursorPos(const X, Y: Integer);
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(Format(sfCSICursorPos, [Y, X]));
+end;
+
+procedure sfConsole_moveCursorUp(const ALines: Integer);
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(Format(sfCSICursorUp, [ALines]));
+end;
+
+procedure sfConsole_moveCursorDown(const ALines: Integer);
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(Format(sfCSICursorDown, [ALines]));
+end;
+
+procedure sfConsole_moveCursorForward(const ACols: Integer);
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(Format(sfCSICursorForward, [ACols]));
+end;
+
+procedure sfConsole_moveCursorBack(const ACols: Integer);
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(Format(sfCSICursorBack, [ACols]));
+end;
+
+procedure sfConsole_clearScreen();
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(sfCSIClearScreen);
+  sfConsole_setCursorPos(0, 0);
+end;
+
+procedure sfConsole_clearLine();
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(sfCSIClearLine);
+end;
+
+procedure sfConsole_hideCursor();
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(sfCSIHideCursor);
+end;
+
+procedure sfConsole_showCursor();
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(sfCSIShowCursor);
+end;
+
+procedure sfConsole_saveCursorPos();
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(sfCSISaveCursorPos);
+end;
+
+procedure sfConsole_restoreCursorPos();
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(sfCSIRestoreCursorPos);
+end;
+
+procedure sfConsole_setBoldText;
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(sfCSIBold);
+end;
+
+procedure sfConsole_resetTextFormat();
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(sfCSIResetFormat);
+end;
+
+procedure sfConsole_setForegroundColor(const AColor: string);
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(AColor);
+end;
+
+procedure sfConsole_setBackgroundColor(const AColor: string);
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(AColor);
+end;
+
+procedure sfConsole_setForegroundRGB(const ARed, AGreen, ABlue: Byte);
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(Format(sfCSIFGRGB, [ARed, AGreen, ABlue]));
+end;
+
+procedure sfConsole_setBackgroundRGB(const ARed, AGreen, ABlue: Byte);
+begin
+  if not HasConsoleOutput() then Exit;
+  Write(Format(sfCSIBGRGB, [ARed, AGreen, ABlue]));
 end;
 
 procedure sfConsole_waitForAnyKey();
@@ -1166,7 +1387,7 @@ end;
 
 procedure sfRenderWindow_destroy(var AWindow: PsfRenderWindow);
 begin
-  sfVideo_destroy;
+  //sfVideo_destroy;
   sfRectangleShape_destroy(AWindow.ClearRectangle);
   sfClock_destroy(AWindow.Timing.Clock);
   sfView_destroy(AWindow.View);
@@ -1276,7 +1497,6 @@ procedure sfRenderWindow_close(renderWindow: PsfRenderWindow);
 begin
   PSFML.sfRenderWindow_close(renderWindow.Handle);
 end;
-
 
 function  sfRenderWindow_isOpen(const renderWindow: PsfRenderWindow): Boolean;
 begin
@@ -2007,6 +2227,47 @@ begin
   Result := PSFML.sfSoundBuffer_createFromStream(@stream.Base);
 end;
 
+
+{ sfTime }
+var
+  sfTimeFrequency: Int64 = 0; // Global variable to store the frequency
+
+procedure sfTime_sleep(const AMilliseconds: Integer);
+var
+  LStartTime, LCurrentTime: Int64;
+  LDelayTicks: Int64;
+begin
+  if AMilliseconds = 0 then Exit;
+
+  // Initialize the frequency only once
+  if sfTimeFrequency = 0 then
+    QueryPerformanceFrequency(sfTimeFrequency);
+
+  QueryPerformanceCounter(LStartTime);
+  LDelayTicks := (AMilliseconds * sfTimeFrequency) div 1000;
+
+  repeat
+    SleepEx(1, True); // SleepEx in alertable mode to allow background tasks
+    QueryPerformanceCounter(LCurrentTime);
+  until (LCurrentTime - LStartTime) >= LDelayTicks;
+end;
+
+{ sfSoundStream }
+procedure sfSoundStream_destroy(const soundStream: PsfSoundStream);
+begin
+  PSFML.sfSoundStream_destroy(soundStream);
+end;
+
+procedure sfSoundStream_pause(soundStream: PsfSoundStream);
+begin
+  PSFML.sfSoundStream_pause(soundStream);
+end;
+
+procedure sfSoundStream_stop(soundStream: PsfSoundStream);
+begin
+  PSFML.sfSoundStream_stop(soundStream);
+end;
+
 { sfShader }
 function sfShader_createFromStream(vertexShaderStream: PsfInputStream; geometryShaderStream: PsfInputStream; fragmentShaderStream: PsfInputStream): PsfShader;
 begin
@@ -2022,20 +2283,16 @@ type
     CSampleBuffSize  = 2304;
     Channels = 2;
     //BufferSize = 44100 * Channels * sizeof(SmallInt);
-    BufferSize = 44100 { * Channels * sizeof(SmallInt)};
+    BufferSize = 44100;
   public
-    DataBuffer: array[0..CPlmBufferSize-1] of Byte;
-    SampleBuffer: array[0..CSampleBuffSize-1] of Byte;
-    AudioDecodeBuffer1: array[0..CSampleBuffSize-1] of smallint;
-    AudioDecodeBuffer2: array[0..(CSampleBuffSize*sizeof(smallint))-1] of Byte;
-    Handle: Pplm_t;
-    RingBuffer: TRingBuffer<Byte>;
-    TextureWidth,TextureHeight: integer;
     Image: PsfImage;
     Texture: PsfTexture;
     Sprite: PsfSprite;
     AudioStream:  PsfSoundStream;
     InputStream: PsfInputStream;
+    Handle: Pplm_t;
+    RingBuffer: TRingBuffer<Byte>;
+    TextureWidth,TextureHeight: integer;
     Loop: Boolean;
     SampleRate: Integer;
     FrameRate: Integer;
@@ -2045,6 +2302,10 @@ type
     Sender: Pointer;
     Handler: sfVideoStatusCallback;
     Name: string;
+    DataBuffer: array[0..CPlmBufferSize-1] of Byte;
+    SampleBuffer: array[0..CSampleBuffSize-1] of Byte;
+    AudioDecodeBuffer1: array[0..CSampleBuffSize-1] of smallint;
+    AudioDecodeBuffer2: array[0..(CSampleBuffSize*sizeof(smallint))-1] of Byte;
   end;
 
 var
@@ -2074,9 +2335,11 @@ var
   LVideo: PsfVideo;
   LReadCount: Int64;
 begin
+  Result := False;
   LVideo := UserData;
+  if LVideo.Status = vsStopped then Exit;
+  if LVideo.RingBuffer = nil then Exit;
   Data.samples := @LVideo.SampleBuffer;
-  //LReadCount := LVideo.RingBuffer.Read(LVideo.SampleBuffer, 1024*2);
   LReadCount := LVideo.RingBuffer.Read(LVideo.SampleBuffer, LVideo.CSampleBuffSize);
   Data.sampleCount := LReadcount div LVideo.Channels;
   Result := True;
@@ -2145,18 +2408,13 @@ begin
 
   sfVideo.TextureWidth := plm_get_width(sfVideo.Handle);
   sfVideo.TextureHeight := plm_get_height(sfVideo.Handle);
-
   sfVideo.SampleRate := plm_get_samplerate(sfVideo.Handle);
-
-  plm_set_audio_decode_callback(sfVideo.Handle, @Video_OnDecodeAudio, @sfVideo);
-  plm_set_video_decode_callback(sfVideo.Handle, @Video_OnDecodeVideo, @sfVideo);
-  plm_set_audio_lead_time(sfVideo.Handle, sfVideo.CSampleBuffSize/sfVideo.SampleRate);
 
   LSize := sfVector2u_create(sfVideo.TextureWidth, sfVideo.TextureHeight);
   sfVideo.Image := sfImage_createFromColor(LSize, WHITE);
   if not Assigned(sfVideo.Image) then
   begin
-    plm_destroy(sfVideo.Handle);
+    sfVideo_destroy();
     Exit;
   end;
 
@@ -2164,38 +2422,30 @@ begin
   sfVideo.Texture := sfTexture_create(LSize);
   if not Assigned(sfVideo.Texture) then
   begin
-    sfImage_destroy(sfVideo.Image);
-    plm_destroy(sfVideo.Handle);
+    sfVideo_destroy();
+    Exit;
   end;
 
   sfVideo.Sprite := sfSprite_create(sfVideo.Texture);
   if not Assigned(sfVideo.Sprite) then
   begin
-    sfTexture_destroy(sfVideo.Texture);
-    sfImage_destroy(sfVideo.Image);
-    plm_destroy(sfVideo.Handle);
+    sfVideo_destroy();
     Exit;
   end;
-
   sfSprite_setTexture(sfVideo.Sprite, sfVideo.Texture, True);
 
   sfVideo.RingBuffer := TRingBuffer<byte>.Create(sfVideo.BufferSize);
   if not Assigned(sfVideo.RingBuffer) then
   begin
-    sfSprite_destroy(sfVideo.Sprite);
-    sfTexture_destroy(sfVideo.Texture);
-    sfImage_destroy(sfVideo.Image);
-    plm_destroy(sfVideo.Handle);
+    sfVideo_destroy();
+    Exit;
   end;
 
   sfVideo.AudioStream := sfSoundStream_create(Video_OnGetSampleData, nil, 2, 44100, nil, 0, @sfVideo);
   if not Assigned(sfVideo.AudioStream) then
   begin
-    sfVideo.RingBuffer.Free();
-    sfSprite_destroy(sfVideo.Sprite);
-    sfTexture_destroy(sfVideo.Texture);
-    sfImage_destroy(sfVideo.Image);
-    plm_destroy(sfVideo.Handle);
+    sfVideo_destroy();
+    Exit;
   end;
 
   sfVideo.Sender := ASender;
@@ -2207,6 +2457,10 @@ begin
   begin
     sfVideo.Handler(sfVideo.Sender, sfVideo.Status, sfVideo.Name);
   end;
+
+  plm_set_audio_decode_callback(sfVideo.Handle, @Video_OnDecodeAudio, @sfVideo);
+  plm_set_video_decode_callback(sfVideo.Handle, @Video_OnDecodeVideo, @sfVideo);
+  plm_set_audio_lead_time(sfVideo.Handle, sfVideo.CSampleBuffSize/sfVideo.SampleRate);
 
   sfSoundStream_play(sfVideo.AudioStream);
   sfVideo_setVolume(AVolume);
@@ -2238,6 +2492,7 @@ end;
 
 procedure sfVideo_destroy();
 begin
+
   sfVideo.Status := vsStopped;
 
   if Assigned(sfVideo.AudioStream) then
@@ -2370,12 +2625,14 @@ end;
 initialization
 begin
   ReportMemoryLeaksOnShutdown := True;
+  redirect_cerr_to_callback(cerr_callback, nil);
   sfVideo := Default(TsfVideo);
 end;
 
 finalization
 begin
   sfVideo_destroy();
+  restore_cerr();
 end;
 {$ENDREGION}
 

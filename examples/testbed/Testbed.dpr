@@ -26,7 +26,6 @@ uses
   PSFML in '..\..\lib\PSFML.pas',
   PSFML.Ext in '..\..\lib\PSFML.Ext.pas',
   UZipFile in 'UZipFile.pas',
-  PSFML.MModule in '..\..\lib\PSFML.MModule.pas',
   UVideo in 'UVideo.pas',
   PSFML.Common in '..\..\lib\PSFML.Common.pas';
 

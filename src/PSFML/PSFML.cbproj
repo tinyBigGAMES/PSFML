@@ -214,6 +214,9 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <BuildOrder>6</BuildOrder>
             <IgnorePath>true</IgnorePath>
         </LibFiles>
+        <CppCompile Include="cerr_redirector.cpp">
+            <BuildOrder>13</BuildOrder>
+        </CppCompile>
         <DefFile Include="exports.def">
             <BuildOrder>3</BuildOrder>
         </DefFile>
@@ -308,13 +311,13 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName=".\bin\PSFML.dll" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName=".\bin\PSFML" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64x">
                         <RemoteName>PSFML</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName=".\bin\PSFML" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName=".\resdata\PSFML.dll" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win64x">
                         <RemoteName>PSFML</RemoteName>
                         <Overwrite>true</Overwrite>

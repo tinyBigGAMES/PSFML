@@ -82,6 +82,13 @@ type
     procedure Clear;
   end;
 
+  { TBaseObject }
+  TBaseObject = class
+  public
+    constructor Create(); virtual;
+    destructor Destroy(); override;
+  end;
+
 function  HasConsoleOutput(): Boolean;
 function  UnitToScalarValue(const aValue, aMaxValue: Double): Double;
 procedure FreeNilObject(const [ref] AObject: TObject);
@@ -473,9 +480,8 @@ begin
   try
     for I := Low(FBuffer) to High(FBuffer) do
     begin
-     FBuffer[i] := Default(T);
+      FBuffer[I] := Default(T);
     end;
-
     FReadIndex := 0;
     FWriteIndex := 0;
   finally
@@ -569,6 +575,17 @@ begin
   finally
     LeaveCriticalSection;
   end;
+end;
+
+{ TBaseObject }
+constructor TBaseObject.Create();
+begin
+  inherited;
+end;
+
+destructor TBaseObject.Destroy();
+begin
+  inherited;
 end;
 
 { =========================================================================== }

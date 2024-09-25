@@ -31,26 +31,27 @@ begin
   if ANewFile then
     sfConsole_PrintLn('', []);
 
-  sfConsole_print(sfCR+'%sAdding %s(%d%s)...', [sfForeGreen, ExtractFileName(AFilename), AProgress, '%']);
+  sfConsole_print(sfCR+'%sAdding %s(%d%s)...', [sfCSIFGGreen, ExtractFileName(AFilename), AProgress, '%']);
 end;
 
 procedure Test01();
 begin
   sfConsole_setTitle('PSFM: ZipFile #01');
-  sfConsole_print('%s', [sfEraseFullScreen]);
-  sfConsole_print(sfSetCursorPos, [0, 0]);
+  //sfConsole_print('%s', [sfEraseFullScreen]);
+  //sfConsole_print(sfSetCursorPos, [0, 0]);
+  sfConsole_clearScreen();
 
-  sfConsole_printLn(sfCRLF+'%sCreating %s...', [sfForeWhite, CZipFilename]);
+  sfConsole_printLn(sfCRLF+'%sCreating %s...', [sfCSIFGWhite, CZipFilename]);
 
   if sfZipFile_build(CZipFilename, 'res', sfZipFileDefaultPassword, nil, Test01_ZipFileBuildProgress) then
   begin
     sfConsole_printLn('', []);
-    sfConsole_printLn('%sSuccess!', [sfStyleBlink + sfForeCyan]);
+    sfConsole_printLn('%sSuccess!', [sfCSIBlink + sfCSIFGCyan]);
   end
   else
   begin
     sfConsole_printLn('', []);
-    sfConsole_printLn('%sFailed!', [sfStyleBold + sfForeRed]);
+    sfConsole_printLn('%sFailed!', [sfCSIBold + sfCSIFGRed]);
   end;
 
   sfConsole_pause(True);

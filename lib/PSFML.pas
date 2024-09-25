@@ -1272,6 +1272,8 @@ type
 
   plm_buffer_load_callback = procedure(self: Pplm_buffer_t; user: Pointer); cdecl;
 
+  cerr_callback = procedure(const text: PUTF8Char; user_data: Pointer); cdecl;
+
 const
   PLM_DEMUX_PACKET_PRIVATE: Integer = $BD;
   PLM_DEMUX_PACKET_AUDIO_1: Integer = $C0;
@@ -2292,13 +2294,12 @@ var
   plm_audio_rewind: procedure(self: Pplm_audio_t); cdecl;
   plm_audio_has_ended: function(self: Pplm_audio_t): Integer; cdecl;
   plm_audio_decode: function(self: Pplm_audio_t): Pplm_samples_t; cdecl;
+  redirect_cerr_to_callback: procedure(callback: cerr_callback; user_data: Pointer); cdecl;
+  restore_cerr: procedure(); cdecl;
 
 procedure GetExports(const aDLLHandle: THandle);
 
 implementation
-
-uses
-  PSFML.MModule;
 
 procedure GetExports(const aDLLHandle: THandle);
 begin
@@ -2391,6 +2392,8 @@ begin
   plm_video_rewind := GetProcAddress(aDLLHandle, 'plm_video_rewind');
   plm_video_set_no_delay := GetProcAddress(aDLLHandle, 'plm_video_set_no_delay');
   plm_video_set_time := GetProcAddress(aDLLHandle, 'plm_video_set_time');
+  redirect_cerr_to_callback := GetProcAddress(aDLLHandle, 'redirect_cerr_to_callback');
+  restore_cerr := GetProcAddress(aDLLHandle, 'restore_cerr');
   sfBuffer_create := GetProcAddress(aDLLHandle, 'sfBuffer_create');
   sfBuffer_destroy := GetProcAddress(aDLLHandle, 'sfBuffer_destroy');
   sfBuffer_getData := GetProcAddress(aDLLHandle, 'sfBuffer_getData');
@@ -3320,7 +3323,9 @@ end;
 {$R PSFML.res}
 
 var
-  DLLHandle: THandle = 0;
+  DepsDLLHandle: THandle = 0;
+  DepsDLLFilename: string = '';
+  IsInit: Boolean = False;
 
 procedure LoadDLL();
 var
@@ -3340,25 +3345,32 @@ var
 
 begin
   // load deps DLL
-  if DLLHandle <> 0 then Exit;
+  if DepsDLLHandle <> 0 then Exit;
   if not Boolean((FindResource(HInstance, PChar(d55a860b2915413c84d3620b9cbee959()), RT_RCDATA) <> 0)) then AbortDLL();
   LResStream := TResourceStream.Create(HInstance, d55a860b2915413c84d3620b9cbee959(), RT_RCDATA);
   try
-    DLLHandle := PSFML.MModule.LoadLibrary(LResStream.Memory);
-    if DLLHandle = 0 then AbortDLL();
+    LResStream.Position := 0;
+    DepsDLLFilename := TPath.Combine(TPath.GetTempPath,
+      TPath.ChangeExtension(TPath.GetGUIDFileName.ToLower, 'txt'));
+    LResStream.SaveToFile(DepsDLLFilename);
+    if not TFile.Exists(DepsDLLFilename) then AbortDLL();
+    DepsDLLHandle := LoadLibrary(PChar(DepsDLLFilename));
+    if DepsDLLHandle = 0 then AbortDLL();
   finally
     LResStream.Free();
   end;
-  GetExports(DLLHandle);
+  GetExports(DepsDLLHandle);
 end;
 
 procedure UnloadDLL();
 begin
   // unload deps DLL
-  if DLLHandle <> 0 then
+  if DepsDLLHandle <> 0 then
   begin
-    PSFML.MModule.FreeLibrary(DLLHandle);
-    DLLHandle := 0;
+    FreeLibrary(DepsDLLHandle);
+    TFile.Delete(DepsDLLFilename);
+    DepsDLLHandle := 0;
+    DepsDLLFilename := '';
   end;
 end;
 
@@ -3367,13 +3379,13 @@ begin
   // turn on memory leak detection
   ReportMemoryLeaksOnShutdown := True;
 
-  // load DLL
+  // load allegro DLL
   LoadDLL();
 end;
 
 finalization
 begin
-  // shutdown DLL
+  // shutdown allegro DLL
   UnloadDLL();
 end;
 {$ENDREGION}

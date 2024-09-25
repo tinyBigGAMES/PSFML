@@ -81,6 +81,8 @@ __recovery/
 modules/
 bin/data.zip
 *.dsv
+*.d
 ~README.md.saved.bak
-src/extern/Win64x/
+src/extern/Win64x/*
 !src/extern/vendor/lib/*
+src/PSFML/resdata/PSFML.dll.txt

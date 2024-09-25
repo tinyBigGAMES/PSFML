@@ -28,34 +28,28 @@ uses
   URenderWindow,
   UVideo;
 
-procedure Pause();
-begin
-  WriteLn;
-  Write('Press ENTER to continue...');
-  ReadLn;
-  WriteLn;
-end;
-
 procedure RunTests();
 var
   LChoice: string;
 begin
+
   while True do
   begin
     sfConsole_setTitle('PSFM - SFML for Pascal');
-    sfConsole_print('%s', [sfEraseFullScreen]);
-    sfConsole_print(sfSetCursorPos, [0, 0]);
-    sfConsole_printLn('%s%sPSFML%s - SFML for Pascal', [sfStyleBold, sfForeMagenta, sfForeWhite]);
+    //sfConsole_print('%s', [sfEraseFullScreen]);
+    //sfConsole_print(sfSetCursorPos, [0, 0]);
+    sfConsole_clearScreen();
+    sfConsole_printLn('%s%sPSFML%s - SFML for Pascal', [sfCSIBold, sfCSIFGMagenta, sfCSIFGWhite]);
     sfConsole_printLn('', []);
-    sfConsole_printLn('%s---==== M E N U ===---', [sfForeCyan]);
+    sfConsole_printLn('%s---==== M E N U ===---', [sfCSIFGCyan]);
     sfConsole_printLn('', []);
 
-    sfConsole_printLn('%s1 - ZipFile #01', [sfForeGreen]);
-    sfConsole_printLn('%s2 - RenerWindow #01', [sfForeGreen]);
-    sfConsole_printLn('%s3 - Video #01', [sfForeGreen]);
-    sfConsole_printLn('%s4 - Video #02', [sfForeGreen]);
+    sfConsole_printLn('%s1 - ZipFile #01', [sfCSIFGGreen]);
+    sfConsole_printLn('%s2 - RenerWindow #01', [sfCSIFGGreen]);
+    sfConsole_printLn('%s3 - Video #01', [sfCSIFGGreen]);
+    sfConsole_printLn('%s4 - Video #02', [sfCSIFGGreen]);
 
-    sfConsole_printLn('%sq - Quit', [sfForeGreen]);
+    sfConsole_printLn('%sq - Quit', [sfCSIFGGreen]);
     sfConsole_printLn('', []);
     sfConsole_print('Select: ', []);
     ReadLn(LChoice);

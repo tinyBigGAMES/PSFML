@@ -16,9 +16,31 @@ unit UCommon;
 
 interface
 
+uses
+  PSFML,
+  PSFML.Ext;
+
 const
   CZipFilename = 'data.zip';
 
+procedure ErrorCallback(const AText: string; const AUserData: Pointer); cdecl;
+
 implementation
+
+procedure ErrorCallback(const AText: string; const AUserData: Pointer);
+begin
+  sfConsole_printLn('%s%s', [sfCSIFGRed, AText]);
+end;
+
+
+initialization
+begin
+  sfError_setCallback(ErrorCallback, nil);
+end;
+
+finalization
+begin
+
+end;
 
 end.
