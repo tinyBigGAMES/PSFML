@@ -23,7 +23,7 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
 ### Why PSFML?
 
 - **Pascal-First**: PSFML is developed specifically for Pascal developers, providing a natural and intuitive API.
-- **No DLL Hassles**: Simply add **PSFML** to your `uses` section, and everything you need is embedded in your executable. There’s no need to manage external DLLs.
+- **Minimal DLL Requirement**: Simply include `PSFML.dll` with your project to keep distribution size small, eliminating the need for managing multiple external DLLs.
 - **Compiler Support**: Supports **Delphi** (Community Edition and higher), and works on **Windows 64-bit** (tested on **Windows 11**, developed in Delphi 12.2).
 - **Latest SFML**: In sync with latest **SFML** release, so you can use all the latest features of the library.
 

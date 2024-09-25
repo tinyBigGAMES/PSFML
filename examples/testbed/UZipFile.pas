@@ -37,8 +37,6 @@ end;
 procedure Test01();
 begin
   sfConsole_setTitle('PSFM: ZipFile #01');
-  //sfConsole_print('%s', [sfEraseFullScreen]);
-  //sfConsole_print(sfSetCursorPos, [0, 0]);
   sfConsole_clearScreen();
 
   sfConsole_printLn(sfCRLF+'%sCreating %s...', [sfCSIFGWhite, CZipFilename]);

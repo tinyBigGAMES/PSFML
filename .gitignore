@@ -80,9 +80,11 @@ __recovery/
 # Boss dependency manager vendor folder https://github.com/HashLoad/boss
 modules/
 bin/data.zip
+!bin/PSFML.dll
 *.dsv
 *.d
 ~README.md.saved.bak
 src/extern/Win64x/*
 !src/extern/vendor/lib/*
 src/PSFML/resdata/PSFML.dll.txt
+src/PSFML/Win64x/*

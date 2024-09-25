@@ -36,8 +36,6 @@ begin
   while True do
   begin
     sfConsole_setTitle('PSFM - SFML for Pascal');
-    //sfConsole_print('%s', [sfEraseFullScreen]);
-    //sfConsole_print(sfSetCursorPos, [0, 0]);
     sfConsole_clearScreen();
     sfConsole_printLn('%s%sPSFML%s - SFML for Pascal', [sfCSIBold, sfCSIFGMagenta, sfCSIFGWhite]);
     sfConsole_printLn('', []);

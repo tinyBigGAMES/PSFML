@@ -107,11 +107,11 @@
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Keys>CompanyName=tinyBigGAMES™ LLC;FileDescription=PSFML™ - SFML for Pascal;FileVersion=0.1.0.0;InternalName=PSFML™ - SFML for Pascal;LegalCopyright=Copyright © 2024-present tinyBigGAMES™ LLC;LegalTrademarks=All Rights Reserved.;OriginalFilename=PSFML.dll;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=PSFML™ - SFML for Pascal;ProductVersion=1.0.0.0;Comments=https://github.com/tinyBigGAMES/PSFML</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <BCC_EnableBatchCompilation>true</BCC_EnableBatchCompilation>
         <BCC_PCHName_Clang>PSFMLPCH1.h</BCC_PCHName_Clang>
-        <FinalOutputDir>.\resdata</FinalOutputDir>
+        <FinalOutputDir>..\..\bin</FinalOutputDir>
         <Manifest_File>(None)</Manifest_File>
         <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
         <ILINK_AdditionalOptions>libmsvcrt-os.a</ILINK_AdditionalOptions>
@@ -119,6 +119,9 @@
         <UsePackages>false</UsePackages>
         <PostBuildEvent><![CDATA["resdata\resdata.cmd"
 $(PostBuildEvent)]]></PostBuildEvent>
+        <VerInfo_MajorVer>0</VerInfo_MajorVer>
+        <VerInfo_MinorVer>1</VerInfo_MinorVer>
+        <VerInfo_DLL>true</VerInfo_DLL>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <BCC_OptimizeForSpeed>false</BCC_OptimizeForSpeed>
@@ -150,6 +153,9 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <LinkPackageImports>rtl.bpi;vcl.bpi</LinkPackageImports>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <VerInfo_MajorVer>0</VerInfo_MajorVer>
+        <VerInfo_MinorVer>1</VerInfo_MinorVer>
+        <VerInfo_DLL>true</VerInfo_DLL>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <Defines>NDEBUG;$(Defines)</Defines>
@@ -162,6 +168,9 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <LinkPackageStatics>rtl.lib;vcl.lib</LinkPackageStatics>
+        <VerInfo_MajorVer>0</VerInfo_MajorVer>
+        <VerInfo_MinorVer>1</VerInfo_MinorVer>
+        <VerInfo_DLL>true</VerInfo_DLL>
     </PropertyGroup>
     <ItemGroup>
         <LibFiles Include="..\extern\vendor\lib\csfml.lib" Condition="'$(Platform)'=='Win64x' Or '$(Platform)'=='Win32'">
@@ -311,13 +320,13 @@ $(PostBuildEvent)]]></PostBuildEvent>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName=".\bin\PSFML" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\bin\PSFML.dll" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win64x">
                         <RemoteName>PSFML</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName=".\resdata\PSFML.dll" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName=".\bin\PSFML" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64x">
                         <RemoteName>PSFML</RemoteName>
                         <Overwrite>true</Overwrite>
