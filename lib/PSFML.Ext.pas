@@ -457,12 +457,23 @@ type
     ScaleSize: sfVector2f;
     Fullscreen: Boolean;
     ClearRectangle: PsfRectangleShape;
+    MousePos: sfVector2u;
   end;
 
 function  sfRenderWindow_create(ATitle: string; const AWidth: Cardinal=sfDefaultWindow_width; const AHeight: Cardinal=sfDefaultWindow_height; const AStyle: Uint32=Ord(sfDefaultWindow_style)): PsfRenderWindow; cdecl;
 procedure sfRenderWindow_destroy(var AWindow: PsfRenderWindow); cdecl;
+procedure sfRenderWindow_toggleFullscreen(const AWindow: PsfRenderWindow); cdecl;
+procedure sfRenderWindow_toggleBorders(const AWindow: PsfRenderWindow; const AShow: Boolean); cdecl;
+function  sfRenderWindow_areBordersVisible(const AWindow: PsfRenderWindow): Boolean; cdecl;
+procedure sfRenderWindow_minimize(const AWindow: PsfRenderWindow); cdecl;
+function  sfRenderWindow_isMinimized(const AWindow: PsfRenderWindow): Boolean; cdecl;
+procedure sfRenderWindow_maximize(const AWindow: PsfRenderWindow); cdecl;
+function  sfRenderWindow_isMaximized(const AWindow: PsfRenderWindow): Boolean; cdecl;
+procedure sfRenderWindow_restore(const AWindow: PsfRenderWindow); cdecl;
+function  sfRenderWindow_isRestored(const AWindow: PsfRenderWindow): Boolean; cdecl;
 procedure sfRenderWindow_setFramerateLimit(const AWindow: PsfRenderWindow; limit: Cardinal); cdecl;
 procedure sfRenderWindow_startFrame(const AWindow: PsfRenderWindow); cdecl;
+function  sfRenderWindow_getFrameMousePos(const AWindow: PsfRenderWindow): sfVector2u; cdecl;
 procedure sfRenderWindow_clearFrame(const AWindow: PsfRenderWindow; const AColor: sfColor); cdecl;
 procedure sfRenderWindow_resizeFrame(const AWindow: PsfRenderWindow; const AWidth, AHeight: Cardinal); cdecl;
 procedure sfRenderWindow_endFrame(const AWindow: PsfRenderWindow); cdecl;
@@ -1398,6 +1409,139 @@ begin
   AWindow := nil;
 end;
 
+procedure sfRenderWindow_toggleFullscreen(const AWindow: PsfRenderWindow);
+var
+  LWnd: HWND;
+begin
+  if not Assigned(AWindow) then Exit;
+  if not Assigned(AWindow.Handle) then Exit;
+
+  LWnd := HWND(sfRenderWindow_getSystemHandle(AWindow));
+
+  AWindow.Fullscreen := not AWindow.Fullscreen;
+
+  if AWindow.Fullscreen then
+    begin
+      BringWindowToTop(LWnd);
+      SetForegroundWindow(LWnd);
+      SetActiveWindow(LWnd);
+      SetWindowPos(LWnd, HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE or SWP_NOSIZE or SWP_SHOWWINDOW);
+      sfRenderWindow_toggleBorders(AWindow, False);
+      sfRenderWindow_maximize(AWindow);
+    end
+  else
+    begin
+      sfRenderWindow_toggleBorders(AWindow, True);
+      sfRenderWindow_restore(AWindow);
+      SetWindowPos(LWnd, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE or SWP_NOSIZE or SWP_NOACTIVATE);
+    end;
+end;
+
+procedure sfRenderWindow_toggleBorders(const AWindow: PsfRenderWindow; const AShow: Boolean);
+var
+  LStyle: LongInt;
+  LWnd: HWND;
+begin
+  if not Assigned(AWindow) then Exit;
+  if not Assigned(AWindow.Handle) then Exit;
+
+  LWnd := HWND(sfRenderWindow_getSystemHandle(AWindow));
+
+  LStyle := GetWindowLong(LWnd, GWL_STYLE);
+  if AShow then
+    LStyle := LStyle or (WS_CAPTION or WS_THICKFRAME or WS_BORDER)  // Show title bar and borders
+  else
+    LStyle := LStyle and not (WS_CAPTION or WS_THICKFRAME or WS_BORDER);  // Hide title bar and borders
+
+  SetWindowLong(LWnd, GWL_STYLE, LStyle);
+
+  // Update window to apply the changes
+  SetWindowPos(LWnd, 0, 0, 0, 0, 0, SWP_NOMOVE or SWP_NOSIZE or SWP_NOZORDER or SWP_FRAMECHANGED);
+end;
+
+function sfRenderWindow_areBordersVisible(const AWindow: PsfRenderWindow): Boolean;
+var
+  LStyle: LongInt;
+  LWnd: HWND;
+begin
+  Result := False;
+  if not Assigned(AWindow) then Exit;
+  if not Assigned(AWindow.Handle) then Exit;
+
+  LWnd := HWND(sfRenderWindow_getSystemHandle(AWindow));
+  LStyle := GetWindowLong(LWnd, GWL_STYLE);
+  Result := (LStyle and (WS_BORDER or WS_THICKFRAME)) <> 0;
+end;
+
+procedure sfRenderWindow_minimize(const AWindow: PsfRenderWindow);
+var
+  LWnd: HWND;
+begin
+  if not Assigned(AWindow) then Exit;
+  if not Assigned(AWindow.Handle) then Exit;
+
+  LWnd := HWND(sfRenderWindow_getSystemHandle(AWindow));
+  ShowWindow(LWnd, SW_MINIMIZE);
+end;
+
+function sfRenderWindow_isMinimized(const AWindow: PsfRenderWindow): Boolean;
+var
+  LWnd: HWND;
+begin
+  Result := False;
+  if not Assigned(AWindow) then Exit;
+  if not Assigned(AWindow.Handle) then Exit;
+
+  LWnd := HWND(sfRenderWindow_getSystemHandle(AWindow));
+  Result := IsIconic(LWnd);
+end;
+
+procedure sfRenderWindow_maximize(const AWindow: PsfRenderWindow);
+var
+  LWnd: HWND;
+begin
+  if not Assigned(AWindow) then Exit;
+  if not Assigned(AWindow.Handle) then Exit;
+
+  LWnd := HWND(sfRenderWindow_getSystemHandle(AWindow));
+  ShowWindow(LWnd, SW_MAXIMIZE);
+end;
+
+function sfRenderWindow_isMaximized(const AWindow: PsfRenderWindow): Boolean;
+var
+  LWnd: HWND;
+begin
+  Result := False;
+  if not Assigned(AWindow) then Exit;
+  if not Assigned(AWindow.Handle) then Exit;
+
+  LWnd := HWND(sfRenderWindow_getSystemHandle(AWindow));
+  Result := IsZoomed(LWnd);
+end;
+
+procedure sfRenderWindow_restore(const AWindow: PsfRenderWindow);
+var
+  LWnd: HWND;
+begin
+  if not Assigned(AWindow) then Exit;
+  if not Assigned(AWindow.Handle) then Exit;
+
+  LWnd := HWND(sfRenderWindow_getSystemHandle(AWindow));
+  ShowWindow(LWnd, SW_RESTORE);
+end;
+
+function sfRenderWindow_isRestored(const AWindow: PsfRenderWindow): Boolean;
+var
+  LWnd: HWND;
+begin
+  Result := False;
+  if not Assigned(AWindow) then Exit;
+  if not Assigned(AWindow.Handle) then Exit;
+
+  LWnd := HWND(sfRenderWindow_getSystemHandle(AWindow));
+  Result := not IsIconic(LWnd) and not IsZoomed(LWnd);
+end;
+
 procedure sfRenderWindow_setFramerateLimit(const AWindow: PsfRenderWindow; limit: Cardinal);
 begin
   if not Assigned(AWindow) then Exit;
@@ -1408,6 +1552,9 @@ begin
 end;
 
 procedure sfRenderWindow_startFrame(const AWindow: PsfRenderWindow);
+var
+  LMousePos: sfVector2i;
+  LWorldMousePos: sfVector2f;
 begin
   if not Assigned(AWindow) then Exit;
   if not Assigned(AWindow.Handle) then Exit;
@@ -1415,6 +1562,23 @@ begin
 
   sfRenderWindow_setView(AWindow, AWindow.View);
   sfRenderWindow_drawRectangleShape(AWindow, AWindow.ClearRectangle, nil);
+
+  LMousePos := sfMouse_getPositionRenderWindow(AWindow.Handle);
+
+  LWorldMousePos := sfRenderWindow_mapPixelToCoords(AWindow, LMousePos, AWindow.View);
+
+  LWorldMousePos.x := EnsureRange(LWorldMousePos.x, 0, AWindow.Size.x-1);
+  LWorldMousePos.y := EnsureRange(LWorldMousePos.y, 0, AWindow.Size.y-1);
+
+  AWindow.MousePos.x := Round(LWorldMousePos.x);
+  AWindow.MousePos.y := Round(LWorldMousePos.y);
+end;
+
+function  sfRenderWindow_getFrameMousePos(const AWindow: PsfRenderWindow): sfVector2u;
+begin
+  Result := sfVector2u_create(0,0);
+  if not Assigned(AWindow) then Exit;
+  Result := AWindow.MousePos;
 end;
 
 procedure sfRenderWindow_clearFrame(const AWindow: PsfRenderWindow; const AColor: sfColor);

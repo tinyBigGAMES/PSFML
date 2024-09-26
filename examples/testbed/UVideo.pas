@@ -71,6 +71,11 @@ begin
             begin
               sfRenderWindow_close(LWindow);
             end;
+
+            sfKeyF12:
+            begin
+              sfRenderWindow_toggleFullscreen(LWindow);
+            end;
           end;
         end;
       end;
@@ -86,7 +91,8 @@ begin
 
       LHudPos := sfVector2f_Create(3, 3);
       sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, WHITE, '%d fps', [sfRenderWindow_GetFrameRate(LWindow)]);
-      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'ESC - Quit', []);
+      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'ESC   - Quit', []);
+      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'F12   - Toggle fullscreen', []);
 
 
     sfRenderWindow_endFrame(LWindow);
@@ -161,6 +167,11 @@ begin
             begin
               sfRenderWindow_close(LWindow);
             end;
+
+            sfKeyF12:
+            begin
+              sfRenderWindow_toggleFullscreen(LWindow);
+            end;
           end;
         end;
       end;
@@ -176,7 +187,9 @@ begin
 
       LHudPos := sfVector2f_Create(3, 3);
       sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, WHITE, '%d fps', [sfRenderWindow_GetFrameRate(LWindow)]);
-      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'ESC - Quit', []);
+      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'ESC   - Quit', []);
+      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'F12   - Toggle fullscreen', []);
+
 
     sfRenderWindow_endFrame(LWindow);
 

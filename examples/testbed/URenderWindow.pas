@@ -32,6 +32,7 @@ var
   LFont: array[0..0] of PsfFont;
   LText: array[0..0] of PsfText;
   LHudPos: sfVector2f;
+  LMousePos: sfVector2u;
 begin
   LWindow := sfRenderWindow_create('PSFML: RenderWindow #01');
 
@@ -67,18 +68,26 @@ begin
             begin
               sfRenderWindow_close(LWindow);
             end;
+
+            sfKeyF12:
+            begin
+              sfRenderWindow_toggleFullscreen(LWindow);
+            end;
           end;
         end;
       end;
     end;
 
     sfRenderWindow_startFrame(LWindow);
+      LMousePos := sfRenderWindow_getFrameMousePos(LWindow);
 
       sfRenderWindow_drawFilledRect(LWindow, LWindow.Size.x-50, 0, 50, 50, RED);
 
       LHudPos := sfVector2f_Create(3, 3);
       sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, WHITE, '%d fps', [sfRenderWindow_GetFrameRate(LWindow)]);
-      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'ESC - Quit', []);
+      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'ESC   - Quit', []);
+      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'F12   - Toggle fullscreen', []);
+      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKORANGE, 'Mouse - X: %d, Y: %d', [LMousePos.x, LMousePos.y]);
 
     sfRenderWindow_endFrame(LWindow);
 
