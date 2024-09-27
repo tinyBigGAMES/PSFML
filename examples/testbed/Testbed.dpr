@@ -27,7 +27,10 @@ uses
   PSFML.Ext in '..\..\lib\PSFML.Ext.pas',
   UZipFile in 'UZipFile.pas',
   UVideo in 'UVideo.pas',
-  PSFML.Common in '..\..\lib\PSFML.Common.pas';
+  PSFML.Common in '..\..\lib\PSFML.Common.pas',
+  PSFML.Audio in '..\..\lib\PSFML.Audio.pas',
+  UAudio in 'UAudio.pas',
+  PSFML.Math in '..\..\lib\PSFML.Math.pas';
 
 begin
   try

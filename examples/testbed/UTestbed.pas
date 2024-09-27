@@ -26,7 +26,8 @@ uses
   PSFML.Ext,
   UZipFile,
   URenderWindow,
-  UVideo;
+  UVideo,
+  UAudio;
 
 procedure RunTests();
 var
@@ -46,6 +47,9 @@ begin
     sfConsole_printLn('%s2 - RenerWindow #01', [sfCSIFGGreen]);
     sfConsole_printLn('%s3 - Video #01', [sfCSIFGGreen]);
     sfConsole_printLn('%s4 - Video #02', [sfCSIFGGreen]);
+    sfConsole_printLn('%s5 - Audio #01', [sfCSIFGGreen]);
+    sfConsole_printLn('%s6 - Audio #02', [sfCSIFGGreen]);
+    sfConsole_printLn('%s7 - Audio #03', [sfCSIFGGreen]);
 
     sfConsole_printLn('%sq - Quit', [sfCSIFGGreen]);
     sfConsole_printLn('', []);
@@ -64,6 +68,15 @@ begin
 
     else if LChoice = '4' then
       UVideo.Test02()
+
+    else if LChoice = '5' then
+      UAudio.Test01()
+
+    else if LChoice = '6' then
+      UAudio.Test02()
+
+    else if LChoice = '7' then
+      UAudio.Test03()
 
     else if LChoice = 'q' then
       Break;

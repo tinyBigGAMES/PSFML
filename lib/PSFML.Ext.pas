@@ -20,6 +20,7 @@ interface
 
 uses
   System.Types,
+  System.Generics.Collections,
   System.SysUtils,
   System.IOUtils,
   System.Classes,
@@ -600,6 +601,8 @@ function  sfVideo_isLooping(): Boolean; cdecl;
 procedure sfVideo_setLooping(const ALoop: Boolean); cdecl;
 function  sfVideo_getVolume(): Single; cdecl;
 procedure sfVideo_setVolume(const AVolume: Single); cdecl;
+
+{ sfAudio }
 
 implementation
 
@@ -2005,7 +2008,7 @@ begin
     sfRectangleShape_setFillColor(rectangle, AColor);
     sfRectangleShape_setRotation(rectangle, angle);
 
-    sfRenderWindow_drawRectangleShape(AWindow.Handle, rectangle, nil);
+    sfRenderWindow_drawRectangleShape(AWindow, rectangle, nil);
   finally
     sfRectangleShape_destroy(rectangle);
   end;
@@ -2023,7 +2026,7 @@ begin
   sfRectangleShape_setPosition(top, sfVector2f_create(X, Y));
   sfRectangleShape_setSize(top, sfVector2f_create(AWidth, AThickness));
   sfRectangleShape_setFillColor(top, AColor);
-  sfRenderWindow_drawRectangleShape(AWindow.Handle, top, nil);
+  sfRenderWindow_drawRectangleShape(AWindow, top, nil);
   sfRectangleShape_destroy(top);
 
   // Bottom
@@ -2031,7 +2034,7 @@ begin
   sfRectangleShape_setPosition(bottom, sfVector2f_create(X, Y + AHeight - AThickness));
   sfRectangleShape_setSize(bottom, sfVector2f_create(AWidth, AThickness));
   sfRectangleShape_setFillColor(bottom, AColor);
-  sfRenderWindow_drawRectangleShape(AWindow.Handle, bottom, nil);
+  sfRenderWindow_drawRectangleShape(AWindow, bottom, nil);
   sfRectangleShape_destroy(bottom);
 
   // Left
@@ -2039,7 +2042,7 @@ begin
   sfRectangleShape_setPosition(left, sfVector2f_create(X, Y + AThickness));
   sfRectangleShape_setSize(left, sfVector2f_create(AThickness, AHeight - 2 * AThickness));
   sfRectangleShape_setFillColor(left, AColor);
-  sfRenderWindow_drawRectangleShape(AWindow.Handle, left, nil);
+  sfRenderWindow_drawRectangleShape(AWindow, left, nil);
   sfRectangleShape_destroy(left);
 
   // Right
@@ -2047,7 +2050,7 @@ begin
   sfRectangleShape_setPosition(right, sfVector2f_create(X + AWidth - AThickness, Y + AThickness));
   sfRectangleShape_setSize(right, sfVector2f_create(AThickness, AHeight - 2 * AThickness));
   sfRectangleShape_setFillColor(right, AColor);
-  sfRenderWindow_drawRectangleShape(AWindow.Handle, right, nil);
+  sfRenderWindow_drawRectangleShape(AWindow, right, nil);
   sfRectangleShape_destroy(right);
 end;
 
@@ -2108,7 +2111,7 @@ begin
   sfCircleShape_setFillColor(circle, TRANSPARENT);
   sfCircleShape_setOutlineThickness(circle, AThickness);
   sfCircleShape_setOutlineColor(circle, AColor);
-  sfRenderWindow_drawCircleShape(AWindow.Handle, circle, nil);
+  sfRenderWindow_drawCircleShape(AWindow, circle, nil);
   sfCircleShape_destroy(circle);
 end;
 
@@ -2142,7 +2145,7 @@ begin
   sfConvexShape_setFillColor(triangle, TRANSPARENT);
   sfConvexShape_setOutlineThickness(triangle, AThickness);
   sfConvexShape_setOutlineColor(triangle, AOutlineColor);
-  sfRenderWindow_drawConvexShape(AWindow.Handle, triangle, nil);
+  sfRenderWindow_drawConvexShape(AWindow, triangle, nil);
   sfConvexShape_destroy(triangle);
 end;
 
@@ -2178,7 +2181,7 @@ begin
   sfConvexShape_setFillColor(polygon, Transparent);
   sfConvexShape_setOutlineThickness(polygon, AThickness);
   sfConvexShape_setOutlineColor(polygon, AOutlineColor);
-  sfRenderWindow_drawConvexShape(AWindow.Handle, polygon, nil);
+  sfRenderWindow_drawConvexShape(AWindow, polygon, nil);
   sfConvexShape_destroy(polygon);
 end;
 
@@ -2218,7 +2221,7 @@ begin
     vertex.texCoords.y := 0;
     sfVertexArray_append(line, vertex);
   end;
-  sfRenderWindow_drawVertexArray(AWindow.Handle, line, nil);
+  sfRenderWindow_drawVertexArray(AWindow, line, nil);
   sfVertexArray_destroy(line);
 end;
 
@@ -2784,8 +2787,6 @@ begin
   sfVideo.Volume := EnsureRange(AVolume, 0, 1);
   sfSoundStream_setVolume(sfVideo.AudioStream, PSFML.Common.UnitToScalarValue(sfVideo.Volume, 100));
 end;
-{$ENDREGION}
-
 
 {$REGION ' UNIT INIT '}
 initialization

@@ -125,6 +125,9 @@
         <DCCReference Include="UZipFile.pas"/>
         <DCCReference Include="UVideo.pas"/>
         <DCCReference Include="..\..\lib\PSFML.Common.pas"/>
+        <DCCReference Include="..\..\lib\PSFML.Audio.pas"/>
+        <DCCReference Include="UAudio.pas"/>
+        <DCCReference Include="..\..\lib\PSFML.Math.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
