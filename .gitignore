@@ -88,3 +88,5 @@ src/extern/Win64x/*
 !src/extern/vendor/lib/*
 src/PSFML/resdata/PSFML.dll.txt
 src/PSFML/Win64x/*
+bin/*.rsp
+
