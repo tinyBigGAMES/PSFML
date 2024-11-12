@@ -1394,7 +1394,6 @@ begin
   Result.Timing.FrameRate := 0;
   Result.Timing.Clock := sfClock_create;
 
-
   Result.ClearRectangle := sfRectangleShape_create();
   sfRectangleShape_setPosition(Result.ClearRectangle, sfVector2f_create(0, 0));
   sfRectangleShape_setSize(Result.ClearRectangle, sfVector2f_create(AWidth, AHeight));
@@ -1882,16 +1881,6 @@ var
   LTexture: PsfTexture;
   LOffset: sfVector2u;
 begin
-  //TODO: fix
-  //Result := Mamba.Deps.sfRenderWindow_capture(renderWindow.Handle);
-  // Use a sfTexture and its sfTexture_updateFromRenderWindow(sfTexture*, const sfRenderWindow*, unsigned int, unsigned int) function and copy its contents into an sfImage instead.
-  {
-  sf::Vector2u windowSize = window.getSize();
-  sf::Texture texture;
-  texture.create(windowSize.x, windowSize.y);
-  texture.update(window);
-  sf::Image screenshot = texture.copyToImage()
-  }
   Result := nil;
   if not Assigned(renderWindow) then Exit;
 
@@ -1914,7 +1903,6 @@ begin
   Result := GetDpiForWindow(HWND(sfRenderWindow_getSystemHandle(AWindow)));
 end;
 
-
 function sfRenderWindow_scaleToDPI(const AWindow: PsfRenderWindow; const ABaseWidth, ABaseHeight: Cardinal; const ACenter: Boolean; const ADefaultDPI: Integer=96): Boolean;
 var
   LDpi: UINT;
@@ -1931,7 +1919,6 @@ begin
   LDpi := GetDpiForWindow(HWND(sfRenderWindow_getSystemHandle(AWindow)));
 
   // get window size
-  //LSize := sfRenderWindow_getSize(AWindow);
   LSize.x := ABaseWidth;
   LSize.y := ABaseHeight;
 
@@ -1971,7 +1958,6 @@ procedure sfRenderWindow_scaleOnDPIChange(const AWindow: PsfRenderWindow);
 begin
   if sfRenderWindow_getDPI(AWindow) <> AWindow.Dpi then
   begin
-    //sfRenderWindow_scaleToDPI(AWindow, AWindow.Mode.width, AWindow.Mode.height, False, 96);
     sfRenderWindow_scaleToDPI(AWindow, Round(AWindow.Size.x), Round(AWindow.Size.y), False, 96);
   end;
 end;
@@ -2096,7 +2082,6 @@ begin
 
   Y := Y + sfFont_GetLineSpacing(LFont, LSize);
 end;
-
 
 procedure sfRenderWindow_drawCircle(const AWindow: PsfRenderWindow; const X, Y, ARadius, AThickness: Single; const AColor: sfColor);
 var
@@ -2281,16 +2266,11 @@ begin
 
   if LHorizontalSpacing then
     begin
-      //LViewPort.width := LViewRatio / LWindowRatio;
-      //LViewPort.left := (1 - LViewPort.width) / 2.0;
-
       LViewPort.size.x := LViewRatio / LWindowRatio;
       LViewPort.position.x := (1 - LViewPort.size.x) / 2.0;
     end
   else
     begin
-      //LViewPort.height := LWindowRatio / LViewRatio;
-      //LViewPort.top := (1 - LViewPort.height) / 2.0;
       LViewPort.size.y := LWindowRatio / LViewRatio;
       LViewPort.position.y := (1 - LViewPort.size.y) / 2.0;
     end;
@@ -2350,8 +2330,6 @@ begin
   if not Assigned(AText) then Exit;
   PSFML.sfText_setUnicodeString(AText, PsfChar32(WideStringToUCS4String(AString)));
 end;
-
-
 
 { sfTexture }
 function sfTexture_createFromRes(const AInstance: HINST; const AResName: string; const AArea: PsfIntRect): PsfTexture;
@@ -2451,7 +2429,6 @@ type
     CPlmBufferSize = 1024*1;
     CSampleBuffSize  = 2304;
     Channels = 2;
-    //BufferSize = 44100 * Channels * sizeof(SmallInt);
     BufferSize = 44100;
   public
     Image: PsfImage;
@@ -2661,7 +2638,6 @@ end;
 
 procedure sfVideo_destroy();
 begin
-
   sfVideo.Status := vsStopped;
 
   if Assigned(sfVideo.AudioStream) then

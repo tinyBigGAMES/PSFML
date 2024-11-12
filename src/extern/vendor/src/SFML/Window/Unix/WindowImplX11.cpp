@@ -88,8 +88,6 @@ std::bitset<256>                      isKeyFiltered;
 std::recursive_mutex                  allWindowsMutex;
 sf::String                            windowManagerName;
 
-sf::String wmAbsPosGood[] = {"Enlightenment", "FVWM", "i3"};
-
 constexpr unsigned long eventMask = FocusChangeMask | ButtonPressMask | ButtonReleaseMask | ButtonMotionMask |
                                     PointerMotionMask | KeyPressMask | KeyReleaseMask | StructureNotifyMask |
                                     EnterWindowMask | LeaveWindowMask | VisibilityChangeMask | PropertyChangeMask;
@@ -365,9 +363,10 @@ bool isWMAbsolutePositionGood()
     if (!ewmhSupported())
         return false;
 
-    return std::any_of(std::begin(wmAbsPosGood),
-                       std::end(wmAbsPosGood),
-                       [&](const sf::String& name) { return name == windowManagerName; });
+    static const std::array<sf::String, 3> wmAbsPosGood = {"Enlightenment", "FVWM", "i3"};
+    return std::any_of(wmAbsPosGood.begin(),
+                       wmAbsPosGood.end(),
+                       [](const sf::String& name) { return name == windowManagerName; });
 }
 
 // Initialize raw mouse input
@@ -569,8 +568,7 @@ m_cursorGrabbed(m_fullscreen)
     // change our window's decorations and functions according to the requested style)
     if (!m_fullscreen)
     {
-        const Atom wmHintsAtom = getAtom("_MOTIF_WM_HINTS", false);
-        if (wmHintsAtom)
+        if (const Atom wmHintsAtom = getAtom("_MOTIF_WM_HINTS", false))
         {
             // NOLINTBEGIN(readability-identifier-naming)
             // Disable naming check so these better match the contents of the Motif library
@@ -974,10 +972,9 @@ void WindowImplX11::setIcon(Vector2u size, const std::uint8_t* pixels)
     // X11 wants BGRA pixels: swap red and blue channels
     // Note: this memory will be freed by X11Ptr<XImage> deleter
     // NOLINTBEGIN(cppcoreguidelines-no-malloc)
-    auto* iconPixels = static_cast<std::uint8_t*>(
-        std::malloc(static_cast<std::size_t>(size.x) * static_cast<std::size_t>(size.y) * 4));
+    auto* iconPixels = static_cast<std::uint8_t*>(std::malloc(std::size_t{size.x} * std::size_t{size.y} * 4));
     // NOLINTEND(cppcoreguidelines-no-malloc)
-    for (std::size_t i = 0; i < static_cast<std::size_t>(size.x) * static_cast<std::size_t>(size.y); ++i)
+    for (std::size_t i = 0; i < std::size_t{size.x} * std::size_t{size.y}; ++i)
     {
         iconPixels[i * 4 + 0] = pixels[i * 4 + 2];
         iconPixels[i * 4 + 1] = pixels[i * 4 + 1];
@@ -1019,7 +1016,7 @@ void WindowImplX11::setIcon(Vector2u size, const std::uint8_t* pixels)
             {
                 if (i * 8 + k < size.x)
                 {
-                    const std::uint8_t opacity = (pixels[(i * 8 + k + j * size.x) * 4 + 3] > 0) ? 1 : 0;
+                    const std::uint8_t opacity = pixels[(i * 8 + k + j * size.x) * 4 + 3] > 0;
                     maskPixels[i + j * pitch] |= static_cast<std::uint8_t>(opacity << k);
                 }
             }
@@ -1052,7 +1049,7 @@ void WindowImplX11::setIcon(Vector2u size, const std::uint8_t* pixels)
     *ptr++ = size.y;
 #pragma GCC diagnostic pop
 
-    for (std::size_t i = 0; i < static_cast<std::size_t>(size.x) * static_cast<std::size_t>(size.y); ++i)
+    for (std::size_t i = 0; i < std::size_t{size.x} * std::size_t{size.y}; ++i)
     {
         *ptr++ = static_cast<unsigned long>(
             (pixels[i * 4 + 2] << 0) | (pixels[i * 4 + 1] << 8) | (pixels[i * 4 + 0] << 16) | (pixels[i * 4 + 3] << 24));
@@ -1431,9 +1428,7 @@ void WindowImplX11::switchToFullscreen()
 
     if (ewmhSupported())
     {
-        const Atom netWmBypassCompositor = getAtom("_NET_WM_BYPASS_COMPOSITOR");
-
-        if (netWmBypassCompositor)
+        if (const Atom netWmBypassCompositor = getAtom("_NET_WM_BYPASS_COMPOSITOR"))
         {
             constexpr unsigned long bypassCompositor = 1;
 
@@ -1841,13 +1836,13 @@ bool WindowImplX11::processEvent(XEvent& windowEvent)
             {
                 if (m_inputContext)
                 {
-                    Status       status = 0;
-                    std::uint8_t keyBuffer[64];
+                    Status                       status = 0;
+                    std::array<std::uint8_t, 64> keyBuffer{};
 
                     const int length = Xutf8LookupString(m_inputContext,
                                                          &windowEvent.xkey,
-                                                         reinterpret_cast<char*>(keyBuffer),
-                                                         sizeof(keyBuffer),
+                                                         reinterpret_cast<char*>(keyBuffer.data()),
+                                                         keyBuffer.size(),
                                                          nullptr,
                                                          &status);
 
@@ -1861,10 +1856,10 @@ bool WindowImplX11::processEvent(XEvent& windowEvent)
                         // There might be more than 1 characters in this event,
                         // so we must iterate it
                         std::uint32_t unicode = 0;
-                        std::uint8_t* iter    = keyBuffer;
-                        while (iter < keyBuffer + length)
+                        std::uint8_t* iter    = keyBuffer.data();
+                        while (iter < keyBuffer.data() + length)
                         {
-                            iter = Utf8::decode(iter, keyBuffer + length, unicode, 0);
+                            iter = Utf8::decode(iter, keyBuffer.data() + length, unicode, 0);
                             if (unicode != 0)
                                 pushEvent(Event::TextEntered{unicode});
                         }
@@ -1873,8 +1868,8 @@ bool WindowImplX11::processEvent(XEvent& windowEvent)
                 else
                 {
                     static XComposeStatus status;
-                    char                  keyBuffer[16];
-                    if (XLookupString(&windowEvent.xkey, keyBuffer, sizeof(keyBuffer), nullptr, &status))
+                    std::array<char, 16>  keyBuffer{};
+                    if (XLookupString(&windowEvent.xkey, keyBuffer.data(), keyBuffer.size(), nullptr, &status))
                         pushEvent(Event::TextEntered{static_cast<std::uint32_t>(keyBuffer[0])});
                 }
             }

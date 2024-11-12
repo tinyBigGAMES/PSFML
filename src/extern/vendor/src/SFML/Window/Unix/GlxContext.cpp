@@ -84,7 +84,7 @@ int handleXError(::Display*, XErrorEvent*)
 class GlxErrorHandler
 {
 public:
-    GlxErrorHandler(::Display* display) : m_display(display)
+    explicit GlxErrorHandler(::Display* display) : m_display(display)
     {
         glxErrorOccurred  = false;
         m_previousHandler = XSetErrorHandler(handleXError);
@@ -263,15 +263,15 @@ void GlxContext::setVerticalSyncEnabled(bool enabled)
     // which would require us to link in an additional library
     if (SF_GLAD_GLX_EXT_swap_control)
     {
-        glXSwapIntervalEXT(m_display.get(), m_pbuffer ? m_pbuffer : m_window, enabled ? 1 : 0);
+        glXSwapIntervalEXT(m_display.get(), m_pbuffer ? m_pbuffer : m_window, enabled);
     }
     else if (SF_GLAD_GLX_MESA_swap_control)
     {
-        result = glXSwapIntervalMESA(enabled ? 1 : 0);
+        result = glXSwapIntervalMESA(enabled);
     }
     else if (SF_GLAD_GLX_SGI_swap_control)
     {
-        result = glXSwapIntervalSGI(enabled ? 1 : 0);
+        result = glXSwapIntervalSGI(enabled);
     }
     else
     {
@@ -299,9 +299,9 @@ XVisualInfo GlxContext::selectBestVisual(::Display* display, unsigned int bitsPe
     const int screen = DefaultScreen(display);
 
     // Retrieve all the visuals
-    int        count   = 0;
-    const auto visuals = X11Ptr<XVisualInfo[]>(XGetVisualInfo(display, 0, nullptr, &count));
-    if (visuals)
+    int count = 0;
+    // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays,modernize-avoid-c-arrays)
+    if (const auto visuals = X11Ptr<XVisualInfo[]>(XGetVisualInfo(display, 0, nullptr, &count)))
     {
         // Evaluate all the returned visuals, and pick the best one
         int         bestScore  = 0x7FFFFFFF;
@@ -478,8 +478,9 @@ void GlxContext::createSurface(GlxContext* shared, Vector2u size, unsigned int b
             // We don't supply attributes to match against, since
             // the visual we are matching against was already
             // deemed suitable in selectBestVisual()
-            int        nbConfigs = 0;
-            const auto configs   = X11Ptr<GLXFBConfig[]>(
+            int nbConfigs = 0;
+            // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays,modernize-avoid-c-arrays)
+            const auto configs = X11Ptr<GLXFBConfig[]>(
                 glXChooseFBConfig(m_display.get(), DefaultScreen(m_display.get()), nullptr, &nbConfigs));
 
             for (std::size_t i = 0; configs && (i < static_cast<std::size_t>(nbConfigs)); ++i)
@@ -498,7 +499,7 @@ void GlxContext::createSurface(GlxContext* shared, Vector2u size, unsigned int b
 
             if (config)
             {
-                std::array attributes =
+                const std::array attributes =
                     {GLX_PBUFFER_WIDTH, static_cast<int>(size.x), GLX_PBUFFER_HEIGHT, static_cast<int>(size.y), 0, 0};
 
                 m_pbuffer = glXCreatePbuffer(m_display.get(), *config, attributes.data());
@@ -563,7 +564,7 @@ void GlxContext::createContext(GlxContext* shared)
 
         glXQueryDrawable(m_display.get(), m_pbuffer, GLX_FBCONFIG_ID, &fbConfigId);
 
-        std::array attributes = {GLX_FBCONFIG_ID, static_cast<int>(fbConfigId), 0, 0};
+        const std::array attributes = {GLX_FBCONFIG_ID, static_cast<int>(fbConfigId), 0, 0};
 
         int        count    = 0;
         const auto fbconfig = X11Ptr<GLXFBConfig>(
@@ -618,8 +619,9 @@ void GlxContext::createContext(GlxContext* shared)
         // We don't supply attributes to match against, since
         // the visual we are matching against was already
         // deemed suitable in selectBestVisual()
-        int        nbConfigs = 0;
-        const auto configs   = X11Ptr<GLXFBConfig[]>(
+        int nbConfigs = 0;
+        // NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays,modernize-avoid-c-arrays)
+        const auto configs = X11Ptr<GLXFBConfig[]>(
             glXChooseFBConfig(m_display.get(), DefaultScreen(m_display.get()), nullptr, &nbConfigs));
 
         for (std::size_t i = 0; configs && (i < static_cast<std::size_t>(nbConfigs)); ++i)

@@ -25,7 +25,6 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <CSFML/ConvertEvent.hpp>
 #include <CSFML/Graphics/CircleShapeStruct.hpp>
 #include <CSFML/Graphics/ConvertColor.hpp>
 #include <CSFML/Graphics/ConvertRect.hpp>
@@ -43,6 +42,7 @@
 #include <CSFML/Graphics/VertexBufferStruct.hpp>
 #include <CSFML/System/ConvertVector2.hpp>
 #include <CSFML/Window/ConvertContextSettings.hpp>
+#include <CSFML/Window/ConvertEvent.hpp>
 #include <CSFML/Window/ConvertVideoMode.hpp>
 #include <CSFML/Window/CursorStruct.hpp>
 
@@ -145,7 +145,7 @@ bool sfRenderWindow_pollEvent(sfRenderWindow* renderWindow, sfEvent* event)
 {
     assert(renderWindow);
     assert(event);
-    return convertEvent(renderWindow->pollEvent(), event);
+    return convertEvent(renderWindow->pollEvent(), *event);
 }
 
 
@@ -154,7 +154,7 @@ bool sfRenderWindow_waitEvent(sfRenderWindow* renderWindow, sfTime timeout, sfEv
 {
     assert(renderWindow);
     assert(event);
-    return convertEvent(renderWindow->waitEvent(sf::microseconds(timeout.microseconds)), event);
+    return convertEvent(renderWindow->waitEvent(sf::microseconds(timeout.microseconds)), *event);
 }
 
 

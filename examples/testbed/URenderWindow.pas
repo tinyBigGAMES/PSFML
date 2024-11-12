@@ -83,6 +83,13 @@ begin
 
       sfRenderWindow_drawFilledRect(LWindow, LWindow.Size.x-50, 0, 50, 50, RED);
 
+
+      sfRenderWindow_drawFilledRect(LWindow, 100, 100, 50, 50, RED);
+      sfRenderWindow_drawFilledRect(LWindow, 110, 110, 50, 50, BLACK);
+      sfRenderWindow_drawFilledRect(LWindow, 120, 120, 50, 50, GREEN);
+      sfRenderWindow_drawFilledRect(LWindow, 130, 130, 50, 50, BLUE);
+
+
       LHudPos := sfVector2f_Create(3, 3);
       sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, WHITE, '%d fps', [sfRenderWindow_GetFrameRate(LWindow)]);
       sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN, 'ESC   - Quit', []);

@@ -30,6 +30,8 @@
 #include <CSFML/Graphics/Export.h>
 
 #include <CSFML/Graphics/BlendMode.h>
+#include <CSFML/Graphics/CoordinateType.h>
+#include <CSFML/Graphics/StencilMode.h>
 #include <CSFML/Graphics/Transform.h>
 #include <CSFML/Graphics/Types.h>
 
@@ -40,10 +42,12 @@
 ////////////////////////////////////////////////////////////
 typedef struct
 {
-    sfBlendMode      blendMode; ///< Blending mode
-    sfTransform      transform; ///< Transform
-    const sfTexture* texture;   ///< Texture
-    const sfShader*  shader;    ///< Shader
+    sfBlendMode      blendMode;      ///< Blending mode
+    sfStencilMode    stencilMode;    //!< Stencil mode
+    sfTransform      transform;      ///< Transform
+    sfCoordinateType coordinateType; //!< Texture coordinate type
+    const sfTexture* texture;        ///< Texture
+    const sfShader*  shader;         ///< Shader
 } sfRenderStates;
 
 ////////////////////////////////////////////////////////////

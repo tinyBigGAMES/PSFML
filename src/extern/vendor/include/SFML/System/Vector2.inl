@@ -49,8 +49,9 @@ constexpr Vector2<T>::Vector2(T x, T y) : x(x), y(y)
 ////////////////////////////////////////////////////////////
 template <typename T>
 template <typename U>
-constexpr Vector2<T>::Vector2(Vector2<U> vector) : x(static_cast<T>(vector.x)), y(static_cast<T>(vector.y))
+constexpr Vector2<T>::operator Vector2<U>() const
 {
+    return Vector2<U>(static_cast<U>(x), static_cast<U>(y));
 }
 
 
@@ -210,18 +211,7 @@ constexpr bool operator==(Vector2<T> left, Vector2<T> right)
 template <typename T>
 constexpr bool operator!=(Vector2<T> left, Vector2<T> right)
 {
-    return (left.x != right.x) || (left.y != right.y);
+    return !(left == right);
 }
-
-
-////////////////////////////////////////////////////////////
-// Static member data
-////////////////////////////////////////////////////////////
-
-template <typename T>
-const Vector2<T> Vector2<T>::UnitX(static_cast<T>(1), static_cast<T>(0));
-
-template <typename T>
-const Vector2<T> Vector2<T>::UnitY(static_cast<T>(0), static_cast<T>(1));
 
 } // namespace sf

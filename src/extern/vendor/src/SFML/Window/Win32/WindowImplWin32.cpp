@@ -36,6 +36,7 @@
 // dbt.h is lowercase here, as a cross-compile on linux with mingw-w64
 // expects lowercase, and a native compile on windows, whether via msvc
 // or mingw-w64 addresses files in a case insensitive manner.
+#include <array>
 #include <dbt.h>
 #include <ostream>
 #include <vector>
@@ -64,14 +65,12 @@ unsigned int               handleCount      = 0; // All window handles
 const wchar_t*             className        = L"SFML_Window";
 sf::priv::WindowImplWin32* fullscreenWindow = nullptr;
 
-const GUID guidDevinterfaceHid = {0x4d1e55b2, 0xf16f, 0x11cf, {0x88, 0xcb, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30}};
+constexpr GUID guidDevinterfaceHid = {0x4d1e55b2, 0xf16f, 0x11cf, {0x88, 0xcb, 0x00, 0x11, 0x11, 0x00, 0x00, 0x30}};
 
 void setProcessDpiAware()
 {
     // Try SetProcessDpiAwareness first
-    HINSTANCE shCoreDll = LoadLibrary(L"Shcore.dll");
-
-    if (shCoreDll)
+    if (const HINSTANCE shCoreDll = LoadLibrary(L"Shcore.dll"))
     {
         enum ProcessDpiAwareness
         {
@@ -109,9 +108,7 @@ void setProcessDpiAware()
 
     // Fall back to SetProcessDPIAware if SetProcessDpiAwareness
     // is not available on this system
-    HINSTANCE user32Dll = LoadLibrary(L"user32.dll");
-
-    if (user32Dll)
+    if (const HINSTANCE user32Dll = LoadLibrary(L"user32.dll"))
     {
         using SetProcessDPIAwareFuncType = BOOL(WINAPI*)();
         auto setProcessDPIAwareFunc      = reinterpret_cast<SetProcessDPIAwareFuncType>(
@@ -867,8 +864,8 @@ void WindowImplWin32::processEvent(UINT message, WPARAM wParam, LPARAM lParam)
                     if ((character >= 0xDC00) && (character <= 0xDFFF))
                     {
                         // Convert the UTF-16 surrogate pair to a single UTF-32 value
-                        std::uint16_t utf16[] = {m_surrogate, static_cast<std::uint16_t>(character)};
-                        sf::Utf16::toUtf32(utf16, utf16 + 2, &character);
+                        const std::array utf16 = {m_surrogate, static_cast<std::uint16_t>(character)};
+                        sf::Utf16::toUtf32(utf16.begin(), utf16.end(), &character);
                         m_surrogate = 0;
                     }
 

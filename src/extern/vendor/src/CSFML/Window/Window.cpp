@@ -25,9 +25,9 @@
 ////////////////////////////////////////////////////////////
 // Headers
 ////////////////////////////////////////////////////////////
-#include <CSFML/ConvertEvent.hpp>
 #include <CSFML/System/ConvertVector2.hpp>
 #include <CSFML/Window/ConvertContextSettings.hpp>
+#include <CSFML/Window/ConvertEvent.hpp>
 #include <CSFML/Window/ConvertVideoMode.hpp>
 #include <CSFML/Window/CursorStruct.hpp>
 #include <CSFML/Window/Window.h>
@@ -114,7 +114,7 @@ bool sfWindow_pollEvent(sfWindow* window, sfEvent* event)
 {
     assert(window);
     assert(event);
-    return convertEvent(window->pollEvent(), event);
+    return convertEvent(window->pollEvent(), *event);
 }
 
 
@@ -123,7 +123,7 @@ bool sfWindow_waitEvent(sfWindow* window, sfTime timeout, sfEvent* event)
 {
     assert(window);
     assert(event);
-    return convertEvent(window->waitEvent(sf::microseconds(timeout.microseconds)), event);
+    return convertEvent(window->waitEvent(sf::microseconds(timeout.microseconds)), *event);
 }
 
 

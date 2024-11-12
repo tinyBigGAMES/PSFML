@@ -31,9 +31,6 @@
 
 #include <SFML/Window/Vulkan.hpp>
 
-#include <cstdlib>
-#include <cstring>
-
 
 ////////////////////////////////////////////////////////////
 bool sfVulkan_isAvailable(bool requireGraphics)
@@ -52,7 +49,7 @@ sfVulkanFunctionPointer sfVulkan_getFunction(const char* name)
 ////////////////////////////////////////////////////////////
 const char* const* sfVulkan_getGraphicsRequiredInstanceExtensions(size_t* count)
 {
-    static std::vector<const char*> extensions = sf::Vulkan::getGraphicsRequiredInstanceExtensions();
+    static const std::vector<const char*> extensions = sf::Vulkan::getGraphicsRequiredInstanceExtensions();
 
     if (count)
         *count = extensions.size();

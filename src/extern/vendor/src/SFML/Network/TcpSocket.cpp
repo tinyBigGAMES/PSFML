@@ -45,11 +45,11 @@
 
 namespace
 {
-// Define the low-level send/receive flags, which depend on the OS
+// Low-level send/receive flags (OS-dependent)
 #ifdef SFML_SYSTEM_LINUX
-const int flags = MSG_NOSIGNAL;
+constexpr int flags = MSG_NOSIGNAL;
 #else
-const int flags = 0;
+constexpr int flags = 0;
 #endif
 } // namespace
 
@@ -402,7 +402,7 @@ Socket::Status TcpSocket::receive(Packet& packet)
     while (m_pendingPacket.data.size() < packetSize)
     {
         // Receive a chunk of data
-        const std::size_t sizeToGet = std::min(packetSize - m_pendingPacket.data.size(), sizeof(buffer));
+        const std::size_t sizeToGet = std::min(packetSize - m_pendingPacket.data.size(), buffer.size());
         const Status      status    = receive(buffer.data(), sizeToGet, received);
         if (status != Status::Done)
             return status;

@@ -45,7 +45,7 @@ namespace sf
 {
 struct SoundStream::Impl : priv::MiniaudioUtils::SoundBase
 {
-    Impl(SoundStream* ownerPtr) :
+    explicit Impl(SoundStream* ownerPtr) :
     SoundBase(vtable, [](void* ptr) { static_cast<Impl*>(ptr)->initialize(); }),
     owner(ownerPtr)
     {
@@ -86,7 +86,7 @@ struct SoundStream::Impl : priv::MiniaudioUtils::SoundBase
             err() << "Failed to seek sound to frame 0: " << ma_result_description(result) << std::endl;
     }
 
-    static ma_result read(ma_data_source* dataSource, void* framesOut, ma_uint64 frameCount, ma_uint64* framesRead)
+    static ma_result read(ma_data_source* dataSource, void* framesOut, std::uint64_t frameCount, std::uint64_t* framesRead)
     {
         auto& impl  = *static_cast<Impl*>(dataSource);
         auto* owner = impl.owner;
@@ -109,8 +109,8 @@ struct SoundStream::Impl : priv::MiniaudioUtils::SoundBase
         if (!impl.sampleBuffer.empty())
         {
             // Determine how many frames we can read
-            *framesRead = std::min<ma_uint64>(frameCount,
-                                              (impl.sampleBuffer.size() - impl.sampleBufferCursor) / impl.channelCount);
+            *framesRead = std::min<std::uint64_t>(frameCount,
+                                                  (impl.sampleBuffer.size() - impl.sampleBufferCursor) / impl.channelCount);
 
             const auto sampleCount = *framesRead * impl.channelCount;
 
@@ -146,7 +146,7 @@ struct SoundStream::Impl : priv::MiniaudioUtils::SoundBase
         return MA_SUCCESS;
     }
 
-    static ma_result seek(ma_data_source* dataSource, ma_uint64 frameIndex)
+    static ma_result seek(ma_data_source* dataSource, std::uint64_t frameIndex)
     {
         auto& impl  = *static_cast<Impl*>(dataSource);
         auto* owner = impl.owner;
@@ -170,8 +170,8 @@ struct SoundStream::Impl : priv::MiniaudioUtils::SoundBase
 
     static ma_result getFormat(ma_data_source* dataSource,
                                ma_format*      format,
-                               ma_uint32*      channels,
-                               ma_uint32*      sampleRate,
+                               std::uint32_t*  channels,
+                               std::uint32_t*  sampleRate,
                                ma_channel*,
                                size_t)
     {
@@ -185,7 +185,7 @@ struct SoundStream::Impl : priv::MiniaudioUtils::SoundBase
         return MA_SUCCESS;
     }
 
-    static ma_result getCursor(ma_data_source* dataSource, ma_uint64* cursor)
+    static ma_result getCursor(ma_data_source* dataSource, std::uint64_t* cursor)
     {
         auto& impl = *static_cast<Impl*>(dataSource);
         *cursor    = impl.channelCount ? impl.samplesProcessed / impl.channelCount : 0;
@@ -193,7 +193,7 @@ struct SoundStream::Impl : priv::MiniaudioUtils::SoundBase
         return MA_SUCCESS;
     }
 
-    static ma_result getLength(ma_data_source*, ma_uint64* length)
+    static ma_result getLength(ma_data_source*, std::uint64_t* length)
     {
         *length = 0;
 
@@ -211,15 +211,15 @@ struct SoundStream::Impl : priv::MiniaudioUtils::SoundBase
     // Member data
     ////////////////////////////////////////////////////////////
     static constexpr ma_data_source_vtable vtable{read, seek, getFormat, getCursor, getLength, setLooping, /* flags */ 0};
-    SoundStream*                           owner;        //!< Owning SoundStream object
-    std::vector<std::int16_t>              sampleBuffer; //!< Our temporary sample buffer
-    std::size_t               sampleBufferCursor{};      //!< The current read position in the temporary sample buffer
-    std::uint64_t             samplesProcessed{};        //!< Number of samples processed since beginning of the stream
-    unsigned int              channelCount{};            //!< Number of channels (1 = mono, 2 = stereo, ...)
-    unsigned int              sampleRate{};              //!< Frequency (samples / second)
-    std::vector<SoundChannel> channelMap;                //!< The map of position in sample frame to sound channel
-    bool                      loop{};                    //!< Loop flag (true to loop, false to play once)
-    bool                      streaming{true};           //!< True if we are still streaming samples from the source
+    SoundStream*              owner;                //!< Owning SoundStream object
+    std::vector<std::int16_t> sampleBuffer;         //!< Our temporary sample buffer
+    std::size_t               sampleBufferCursor{}; //!< The current read position in the temporary sample buffer
+    std::uint64_t             samplesProcessed{};   //!< Number of samples processed since beginning of the stream
+    unsigned int              channelCount{};       //!< Number of channels (1 = mono, 2 = stereo, ...)
+    unsigned int              sampleRate{};         //!< Frequency (samples / second)
+    std::vector<SoundChannel> channelMap;           //!< The map of position in sample frame to sound channel
+    bool                      loop{};               //!< Loop flag (`true` to loop, `false` to play once)
+    bool                      streaming{true};      //!< `true` if we are still streaming samples from the source
 };
 
 

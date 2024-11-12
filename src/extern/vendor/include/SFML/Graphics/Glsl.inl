@@ -30,6 +30,8 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Glsl.hpp> // NOLINT(misc-header-include-cycle)
 
+#include <array>
+
 #include <cstddef>
 
 
@@ -74,7 +76,7 @@ struct Matrix
     ////////////////////////////////////////////////////////////
     explicit Matrix(const float* pointer)
     {
-        copyMatrix(pointer, Columns * Rows, array);
+        copyMatrix(pointer, Columns * Rows, array.data());
     }
 
     ////////////////////////////////////////////////////////////
@@ -91,7 +93,7 @@ struct Matrix
         copyMatrix(transform, *this);
     }
 
-    float array[Columns * Rows]{}; //!< Array holding matrix data
+    std::array<float, Columns * Rows> array{}; //!< Array holding matrix data
 };
 
 ////////////////////////////////////////////////////////////
@@ -128,18 +130,13 @@ struct Vector4
 #endif
 
     ////////////////////////////////////////////////////////////
-    /// \brief Conversion constructor
-    ///
-    /// \param other 4D vector of different type
+    /// \brief Converts the vector to another type of vector
     ///
     ////////////////////////////////////////////////////////////
     template <typename U>
-    constexpr explicit Vector4(const Vector4<U>& other) :
-    x(static_cast<T>(other.x)),
-    y(static_cast<T>(other.y)),
-    z(static_cast<T>(other.z)),
-    w(static_cast<T>(other.w))
+    constexpr explicit operator Vector4<U>() const
     {
+        return Vector4<U>(static_cast<U>(x), static_cast<U>(y), static_cast<U>(z), static_cast<U>(w));
     }
 
     ////////////////////////////////////////////////////////////

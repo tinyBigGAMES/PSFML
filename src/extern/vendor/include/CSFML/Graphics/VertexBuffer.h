@@ -69,7 +69,7 @@ typedef enum
 /// \return A new sfVertexBuffer object
 ///
 ////////////////////////////////////////////////////////////
-CSFML_GRAPHICS_API sfVertexBuffer* sfVertexBuffer_create(unsigned int vertexCount, sfPrimitiveType type, sfVertexBufferUsage usage);
+CSFML_GRAPHICS_API sfVertexBuffer* sfVertexBuffer_create(size_t vertexCount, sfPrimitiveType type, sfVertexBufferUsage usage);
 
 ////////////////////////////////////////////////////////////
 /// \brief Copy an existing vertex buffer
@@ -174,7 +174,7 @@ CSFML_GRAPHICS_API unsigned int sfVertexBuffer_getNativeHandle(sfVertexBuffer* v
 /// This function defines how the vertices must be interpreted
 /// when it's time to draw them.
 ///
-/// The default primitive type is sf::Points.
+/// The default primitive type is sfPoints.
 ///
 /// \param vertexBuffer Vertex buffer object
 /// \param type Type of primitive
@@ -248,7 +248,7 @@ CSFML_GRAPHICS_API void sfVertexBuffer_bind(const sfVertexBuffer* vertexBuffer);
 ///
 /// This function should always be called before using
 /// the vertex buffer features. If it returns false, then
-/// any attempt to use sf::VertexBuffer will fail.
+/// any attempt to use sfVertexBuffer will fail.
 ///
 /// \return True if vertex buffers are supported, false otherwise
 ///

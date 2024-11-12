@@ -37,20 +37,12 @@ namespace
 // Helper function for converting a SFML address to a CSFML one
 [[nodiscard]] sfIpAddress fromSFMLAddress(std::optional<sf::IpAddress> address)
 {
-    sfIpAddress result = {0};
+    if (!address)
+        return sfIpAddress_None;
 
-    if (address)
-    {
-        strncpy(result.address, address->toString().c_str(), 15);
-    }
-
+    sfIpAddress result{};
+    std::strncpy(result.address, address->toString().c_str(), 15);
     return result;
-}
-
-// Helper function for converting a CSFML address to a SFML one
-[[nodiscard]] std::optional<sf::IpAddress> toSFMLAddress(sfIpAddress address)
-{
-    return sf::IpAddress::resolve(address.address);
 }
 } // namespace
 
@@ -97,14 +89,14 @@ sfIpAddress sfIpAddress_fromInteger(uint32_t address)
 void sfIpAddress_toString(sfIpAddress address, char* string)
 {
     if (string)
-        strcpy(string, address.address);
+        std::strcpy(string, address.address);
 }
 
 
 ////////////////////////////////////////////////////////////
 uint32_t sfIpAddress_toInteger(sfIpAddress address)
 {
-    auto sfmlAddress = toSFMLAddress(address);
+    const auto sfmlAddress = sf::IpAddress::resolve(address.address);
     return sfmlAddress ? sfmlAddress->toInteger() : 0;
 }
 

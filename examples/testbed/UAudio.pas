@@ -201,25 +201,16 @@ begin
               sfRenderWindow_toggleFullscreen(LWindow);
             end;
 
-          sfKeyNum1:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[1], 1, False);
-
-          sfKeyNum2:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[2], 1, False);
-
-          sfKeyNum3:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[3], 1, False);
-
-          sfKeyNum4:  sfAudio_playSound(0, FSamples[0], 1, True);
-
-          sfKeyNum5:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[4], 1, False);
-
-          sfKeyNum6:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[5], 1, False);
-
-          sfKeyNum7:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[6], 1, False);
-
-          sfKeyNum8:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[7], 1, False);
-
-          sfKeyNum9:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[8], 1, False);
-
-          sfKeyNum0:  sfAudio_stopChannel(0);
+            sfKeyNum1:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[1], 1, False);
+            sfKeyNum2:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[2], 1, False);
+            sfKeyNum3:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[3], 1, False);
+            sfKeyNum4:  sfAudio_playSound(0, FSamples[0], 1, True);
+            sfKeyNum5:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[4], 1, False);
+            sfKeyNum6:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[5], 1, False);
+            sfKeyNum7:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[6], 1, False);
+            sfKeyNum8:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[7], 1, False);
+            sfKeyNum9:  sfAudio_playSound(sfAudioDynamicChannel, FSamples[8], 1, False);
+            sfKeyNum0:  sfAudio_stopChannel(0);
 
           end;
         end;

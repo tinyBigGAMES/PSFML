@@ -130,6 +130,14 @@ const
   sfTriangleFan = 5;
 
 type
+  sfCoordinateType = Integer;
+  PsfCoordinateType = ^sfCoordinateType;
+
+const
+  sfCoordinateTypeNormalized = 0;
+  sfCoordinateTypePixels = 1;
+
+type
   sfStencilComparison = Integer;
   PsfStencilComparison = ^sfStencilComparison;
 
@@ -281,6 +289,8 @@ const
   sfKeyF14 = 98;
   sfKeyF15 = 99;
   sfKeyPause = 100;
+
+const
   sfKeyCount = 101;
 
 type
@@ -435,6 +445,8 @@ const
   sfScanLaunchApplication2 = 143;
   sfScanLaunchMail = 144;
   sfScanLaunchMediaSelect = 145;
+
+const
   sfScancodeCount = 146;
 
 type
@@ -445,8 +457,10 @@ const
   sfMouseLeft = 0;
   sfMouseRight = 1;
   sfMouseMiddle = 2;
-  sfMouseXButton1 = 3;
-  sfMouseXButton2 = 4;
+  sfMouseButtonExtra1 = 3;
+  sfMouseButtonExtra2 = 4;
+
+const
   sfMouseButtonCount = 5;
 
 type
@@ -468,6 +482,8 @@ const
   sfSensorGravity = 3;
   sfSensorUserAcceleration = 4;
   sfSensorOrientation = 5;
+
+const
   sfSensorCount = 6;
 
 type
@@ -538,14 +554,6 @@ const
   sfTextItalic = 2;
   sfTextUnderlined = 4;
   sfTextStrikeThrough = 8;
-
-type
-  sfTextureCoordinateType = Integer;
-  PsfTextureCoordinateType = ^sfTextureCoordinateType;
-
-const
-  sfTextureNormalized = 0;
-  sfTexturePixels = 1;
 
 type
   sfVertexBufferUsage = Integer;
@@ -723,9 +731,9 @@ type
   PsfTransform = ^sfTransform;
   PsfFontInfo = ^sfFontInfo;
   PsfGlyph = ^sfGlyph;
-  PsfRenderStates = ^sfRenderStates;
   PsfStencilValue = ^sfStencilValue;
   PsfStencilMode = ^sfStencilMode;
+  PsfRenderStates = ^sfRenderStates;
   PsfVertex = ^sfVertex;
   PsfJoystickIdentification = ^sfJoystickIdentification;
   PsfKeyEvent = ^sfKeyEvent;
@@ -928,13 +936,6 @@ type
     textureRect: sfIntRect;
   end;
 
-  sfRenderStates = record
-    blendMode: sfBlendMode;
-    transform: sfTransform;
-    texture: PsfTexture;
-    shader: PsfShader;
-  end;
-
   sfStencilValue = record
     value: Cardinal;
   end;
@@ -945,6 +946,15 @@ type
     stencilReference: sfStencilValue;
     stencilMask: sfStencilValue;
     stencilOnly: Boolean;
+  end;
+
+  sfRenderStates = record
+    blendMode: sfBlendMode;
+    stencilMode: sfStencilMode;
+    transform: sfTransform;
+    coordinateType: sfCoordinateType;
+    texture: PsfTexture;
+    shader: PsfShader;
   end;
 
   sfVertex = record
@@ -3372,7 +3382,7 @@ procedure sfTexture_swap(left: PsfTexture; right: PsfTexture); cdecl;
 function sfTexture_getNativeHandle(const texture: PsfTexture): Cardinal; cdecl;
   external PSFML_DLL name _PU + 'sfTexture_getNativeHandle';
 
-procedure sfTexture_bind(const texture: PsfTexture; &type: sfTextureCoordinateType); cdecl;
+procedure sfTexture_bind(const texture: PsfTexture; &type: sfCoordinateType); cdecl;
   external PSFML_DLL name _PU + 'sfTexture_bind';
 
 function sfTexture_getMaximumSize(): Cardinal; cdecl;
@@ -3459,7 +3469,7 @@ function sfVertexArray_getPrimitiveType(vertexArray: PsfVertexArray): sfPrimitiv
 function sfVertexArray_getBounds(vertexArray: PsfVertexArray): sfFloatRect; cdecl;
   external PSFML_DLL name _PU + 'sfVertexArray_getBounds';
 
-function sfVertexBuffer_create(vertexCount: Cardinal; &type: sfPrimitiveType; usage: sfVertexBufferUsage): PsfVertexBuffer; cdecl;
+function sfVertexBuffer_create(vertexCount: NativeUInt; &type: sfPrimitiveType; usage: sfVertexBufferUsage): PsfVertexBuffer; cdecl;
   external PSFML_DLL name _PU + 'sfVertexBuffer_create';
 
 function sfVertexBuffer_copy(const vertexBuffer: PsfVertexBuffer): PsfVertexBuffer; cdecl;

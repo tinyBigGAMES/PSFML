@@ -80,10 +80,10 @@ bool CursorImpl::loadFromPixelsARGB(const std::uint8_t* pixels, Vector2u size, V
 {
     // Create cursor image, convert from RGBA to ARGB.
     const auto cursorImage = X11Ptr<XcursorImage>(XcursorImageCreate(static_cast<int>(size.x), static_cast<int>(size.y)));
-    cursorImage->xhot      = hotspot.x;
-    cursorImage->yhot      = hotspot.y;
+    cursorImage->xhot = hotspot.x;
+    cursorImage->yhot = hotspot.y;
 
-    const std::size_t numPixels = static_cast<std::size_t>(size.x) * static_cast<std::size_t>(size.y);
+    const std::size_t numPixels = std::size_t{size.x} * std::size_t{size.y};
     for (std::size_t pixelIndex = 0; pixelIndex < numPixels; ++pixelIndex)
     {
         cursorImage->pixels[pixelIndex] = static_cast<std::uint32_t>(
@@ -120,14 +120,14 @@ bool CursorImpl::loadFromPixelsMonochrome(const std::uint8_t* pixels, Vector2u s
             const std::size_t bitIndex   = i % 8;
 
             // Turn on pixel that are not transparent
-            const std::uint8_t opacity = pixels[pixelIndex * 4 + 3] > 0 ? 1 : 0;
+            const std::uint8_t opacity = pixels[pixelIndex * 4 + 3] > 0;
             mask[byteIndex] |= static_cast<std::uint8_t>(opacity << bitIndex);
 
             // Choose between black/background & white/foreground color for each pixel,
             // based on the pixel color intensity: on average, if a channel is "active"
             // at 50%, the bit is white.
             const int intensity = (pixels[pixelIndex * 4 + 0] + pixels[pixelIndex * 4 + 1] + pixels[pixelIndex * 4 + 2]) / 3;
-            const std::uint8_t bit = intensity > 128 ? 1 : 0;
+            const std::uint8_t bit = intensity > 128;
             data[byteIndex] |= static_cast<std::uint8_t>(bit << bitIndex);
         }
     }

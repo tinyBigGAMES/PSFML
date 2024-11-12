@@ -2,69 +2,75 @@
 
 [![Chat on Discord](https://img.shields.io/discord/754884471324672040.svg?logo=discord)](https://discord.gg/tPWjMwK) [![Twitter Follow](https://img.shields.io/twitter/follow/tinyBigGAMES?style=social)](https://twitter.com/tinyBigGAMES)
 
-**PSFML** is Pascal binding for the **Simple and Fast Multimedia Library (SFML)**, allowing  Pascal developers with an easy way to use SFML’s multimedia features directly in their projects. Whether you are building games, interactive applications, or multimedia tools, PSFML enables seamless integration with SFML, bringing its robust functionality to the Pascal ecosystem.
+**PSFML** is a Pascal binding for the **⚡ Simple and Fast Multimedia Library (SFML)**, providing Pascal developers with a straightforward way to utilize SFML’s multimedia features directly in their projects. Whether building 🎮 games, 🤖 interactive applications, or 🎥 multimedia tools, PSFML integrates smoothly with SFML, bringing robust multimedia functionality to the Pascal ecosystem.
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Getting Started](#getting-started)
-  - [Requirements](#requirements)
-  - [Installation](#installation)
-- [Usage](#usage)
-  - [Basic Example](#basic-example)
-- [Extensions](#extensions)
-- [Contributing](#contributing)
-- [License](#license)
+## 📋 Table of Contents
+- [📖 Introduction](#introduction)
+- [✨ Features](#features)
+- [🚀 Getting Started](#getting-started)
+  - [📌 Requirements](#requirements)
+  - [⚙️ Installation](#installation)
+- [📐 Usage](#usage)
+  - [💡 Basic Example](#basic-example)
+- [🛠️ Extensions](#extensions)
+  - [🗜️ ZipFile Support](#zipfile-support)
+  - [📼 MPEG-1 Video Playback](#mpeg-1-video-playback)
+  - [📄 Enhanced InputStream](#enhanced-inputstream)
+- [🤝 Contributing](#contributing)
+- [📄 License](#license)
+- [🆘 Support](#support)
 
-## Introduction
+## 📖 Introduction
 
-PSFML leverages the power of **SFML** and makes it accessible to Pascal programmers. With PSFML, you can create windowed applications, manage graphics, handle real-time user input, play audio, and even stream video. Built to work on **Windows** (Windows 10 and higher) and compatible with [Delphi](https://www.embarcadero.com/products/Delphi).
+PSFML leverages the power of **SFML** and makes it accessible to Pascal programmers. With PSFML, you can create 🪟 windowed applications, manage 🖼️ graphics, handle real-time user input 🎮, play 🔊 audio, and even stream 📹 video. PSFML is built specifically to work on **💻 Windows** (Windows 10 and higher) and is fully compatible with [Delphi](https://www.embarcadero.com/products/delphi).
 
-### Why PSFML?
+### 🤔 Why PSFML?
 
-- **Pascal-First**: PSFML is developed specifically for Pascal developers, providing a natural and intuitive API.
-- **Minimal DLL Requirement**: Simply include `PSFML.dll` with your project to keep distribution size small, eliminating the need for managing multiple external DLLs.
-- **Compiler Support**: Supports **Delphi** (Community Edition and higher), and works on **Windows 64-bit** (tested on **Windows 11**, developed in Delphi 12.2).
-- **Latest SFML**: In sync with latest **SFML** release, so you can use all the latest features of the library.
+- **📝 Pascal-Focused**: PSFML is designed explicitly for Pascal developers, offering a familiar and intuitive API that fits naturally into existing Pascal workflows.
+- **📦 Minimal Distribution Overhead**: Only the `PSFML.dll` is needed to get started, keeping deployment simple and reducing potential dependency issues.
+- **🛠️ Modern Compiler Support**: Supports **Delphi** (Community Edition and higher), targeting **Windows 64-bit** environments. PSFML has been tested on **Windows 11** and developed using Delphi 12.2.
+- **🆕 Up-to-Date with SFML**: Always kept in sync with the latest **SFML** version, ensuring access to all the latest features and fixes.
 
-## Features
+## ✨ Features
 
-- **Core SFML Integration**: Use SFML’s core features directly from Pascal, including window management, real-time rendering, audio playback, and network communication.
-- **Extensions**: 
-  - **ZipFile**: Standard compression and encryption support, allowing you to handle archived content seamlessly.
-  - **Video Playback (MPEG-1)**: Stream and play videos within your applications.
-  - **Enhanced InputStream**: Works with **ZipFile**, enabling smooth file handling.
-  - **HighDPI**: Routines that allows you to scale the render window size based on the desktop DPI value and automatically when the DPI value changes.
-  - **More**: Additional extensions will be added in future updates.
-- **Optimized for Windows**: Developed and tested on **Windows 11** with **Delphi 12.2**, PSFML is designed to be stable and performant for game and multimedia applications.
+- **🔑 Core SFML Integration**: Full access to SFML’s core features for Pascal developers, including 🪟 window management, 🖼️ rendering, 🎮 input handling, 🔊 audio playback, and 🌐 network communication.
+- **🛠️ Extension Support**: Includes several valuable extensions that add capabilities beyond the base SFML functionality.
+  - **🗜️ ZipFile Support**: Standard compression and encryption to manage archived resources like assets or save data seamlessly.
+  - **📼 MPEG-1 Video Playback**: Support for video playback, useful for creating 🎮 game cutscenes or multimedia features.
+  - **📄 Enhanced InputStream**: Built to work with **ZipFile** and other input sources, providing flexible options for handling data streams.
+  - **📏 High-DPI Awareness**: Automatically adjusts the rendering window size based on the desktop DPI value to maintain consistent visual quality on different displays.
+  - **🔮 Future Extensions**: Additional features will be added in future updates, enhancing the library's utility.
+- **⚡ Optimized for Windows**: Developed with a focus on **Windows 11** using **Delphi 12.2** to provide a stable, performant foundation for 🎮 game and multimedia applications.
 
-## Getting Started
+## 🚀 Getting Started
 
-### Requirements
+### 📌 Requirements
 
-- **Delphi CE** or a higher edition (files in `lib` folder). **C++ Builder 12.2** is required to build the sources (files in `src` folder).
-- **Windows 10** or higher (64-bit).
+- **Delphi CE** or a higher edition for development (files in the `lib` folder).
+- **C++ Builder 12.2** is required to build the sources (files in the `src` folder).
+- **💻 Windows 10** or higher (64-bit).
 
-### Installation
+### ⚙️ Installation
 
-1. Download the latest version of [PSFML](https://github.com/tinyBigGAMES/PSFML/archive/refs/heads/main.zip).
-2. Extract the contents to your project directory.
-3. Add the **PSFML** `lib` folder to your **Library Path**.
-4. In your project, include `PSFML` in your `uses` section. To take advantage of extensions, you must also add `PSFML.Ext` after `PSFML` in your `uses` section.
-5. Refer to the `examples` folder for detailed usage instructions and examples on how to utilize PSFML effectively.
-6. Make sure to run the `ZipFile01` example first to generate the `data.zip` file required by the other examples.
+1. 📥 Download the latest version of [PSFML](https://github.com/tinyBigGAMES/PSFML/archive/refs/heads/main.zip).
+2. 📂 Extract the contents to your project directory.
+3. ➕ Add the **PSFML** `lib` folder to your **Library Path** in Delphi.
+4. 📝 In your project, include `PSFML` in the `uses` clause. To leverage the extensions, add `PSFML.Ext` after `PSFML` in the `uses` clause.
+5. 📁 Refer to the `examples` folder for detailed usage instructions and demonstrations of the PSFML library in action.
+6. ▶️ It is recommended to run the `ZipFile01` example initially to generate the `data.zip` file required by other examples.
 
-## Usage
+## 📐 Usage
 
-### Basic Example
+### 💡 Basic Example
 
-Here’s a simple example of how to create a window and handle real-time user input using **PSFML**:
+Below is a simple example of how to create a 🪟 window and handle real-time user input 🎮 using **PSFML**:
 
-```Pascal  
+```pascal
 uses
   System.SysUtils,
-  PSFML,     // add core SFML
-  PSFML.Ext; // add extensions. Must always come AFTER PSFML
+  PSFML,     // core SFML
+  PSFML.Ext; // extensions; must always come AFTER PSFML
+
 var
   LWindow: PsfRenderWindow;
   LEvent: sfEvent;
@@ -85,93 +91,77 @@ begin
 
   while sfRenderWindow_isOpen(LWindow) do
   begin
-
     while sfRenderWindow_pollEvent(LWindow, @LEvent) do
     begin
       case LEvent.&type of
         sfEvtClosed:
-        begin
           sfRenderWindow_close(LWindow);
-        end;
 
         sfEvtResized:
-        begin
           sfRenderWindow_resizeFrame(LWindow, LEvent.size.width, LEvent.size.height);
-        end;
 
         sfEvtKeyReleased:
-        begin
-          case LEvent.key.code of
-            sfKeyEscape:
-            begin
-              sfRenderWindow_close(LWindow);
-            end;
-          end;
-        end;
+          if LEvent.key.code = sfKeyEscape then
+            sfRenderWindow_close(LWindow);
       end;
     end;
 
     sfRenderWindow_startFrame(LWindow);
 
-      sfRenderWindow_drawFilledRect(LWindow, LWindow.Size.x-50, 0, 50, 50, RED);
+    sfRenderWindow_drawFilledRect(LWindow, LWindow.Size.x - 50, 0, 50, 50, RED);
 
-      LHudPos := sfVector2f_Create(3, 3);
-      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, WHITE,
-        '%d fps', [sfRenderWindow_GetFrameRate(LWindow)]);
-      sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN,
-        'ESC - Quit', []);
+    LHudPos := sfVector2f_Create(3, 3);
+    sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, WHITE,
+      '%d fps', [sfRenderWindow_GetFrameRate(LWindow)]);
+    sfRenderWindow_DrawTextVarY(LWindow, LText[0], LHudPos.x, LHudPos.y, DARKGREEN,
+      'ESC - Quit', []);
 
     sfRenderWindow_endFrame(LWindow);
-
     sfRenderWindow_display(LWindow);
   end;
 
   sfText_Destroy(LText[0]);
   sfFont_Destroy(LFont[0]);
-
   sfRenderWindow_destroy(LWindow);
 end.
 ```
 
-This code opens a window, listens for a close event, displays a font and updates the display, giving you a starting point for any real-time application.
+This example demonstrates basic 🪟 window creation, event polling, and drawing 📝 text, providing a starting point for any real-time application.
 
-## Extensions
+## 🛠️ Extensions
 
-### ZipFile Support
+### 🗜️ ZipFile Support
 
-PSFML includes built-in support for compressed and encrypted zip files using **ZipFile**. You can easily extract resources, such as textures or sounds, directly from a zip archive within your game or application.
+PSFML includes integrated support for working with compressed and encrypted zip files using **ZipFile**. This extension allows you to load resources like 🖼️ textures, 🔊 sounds, and other data directly from a zip archive.
 
-### Video Playback (MPEG-1)
+### 📼 MPEG-1 Video Playback
 
-Play **MPEG-1** video files within your application using the video playback extension. This feature is particularly useful for cutscenes or background video.
+The video playback extension allows for **MPEG-1** video file streaming, ideal for in-game cutscenes or multimedia presentations.
 
-### Enhanced InputStream
+### 📄 Enhanced InputStream
 
-The **Enhanced InputStream** works seamlessly with **ZipFile**, allowing you to access archived files and stream them in real-time.
+The **Enhanced InputStream** offers improved capabilities for streaming files, especially when used in conjunction with **ZipFile**, making it easier to work with archived content.
 
-## Contributing
+## 🤝 Contributing
 
-Contributions to **PSFML** are welcome! If you’d like to contribute to this project, feel free to submit issues or pull requests on our [GitHub repository](https://github.com/tinyBigGAMES/PSFML).
+Contributions to **PSFML** are highly encouraged. If you'd like to contribute to the project, please submit issues or pull requests on our [GitHub repository](https://github.com/tinyBigGAMES/PSFML).
 
 <a href="https://github.com/tinyBigGAMES/PSFML/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=tinyBigGAMES/PSFML&max=500&columns=20&anon=1" />
 </a>
 
-## License
+## 📄 License
 
-**PSFML** is licensed under the **BSD-3-Clause License**, which permits redistribution and use in source and binary forms, with or without modification, under specific conditions. See the [LICENSE](https://github.com/tinyBigGAMES/PSFML?tab=BSD-3-Clause-1-ov-file#BSD-3-Clause-1-ov-file) file for more details.
+**PSFML** is distributed under the **BSD-3-Clause License**, allowing for redistribution and use in both source and binary forms, with or without modification, under specific conditions. See the [LICENSE](https://github.com/tinyBigGAMES/PSFML?tab=BSD-3-Clause-1-ov-file#BSD-3-Clause-1-ov-file) file for more details.
 
-### Support
+## 🆘 Support
 
-- <a href="https://github.com/tinyBigGAMES/PSFML/issues" target="_blank">Issues</a>
-- <a href="https://github.com/tinyBigGAMES/PSFML/discussions" target="_blank">Discussions</a>
-- <a href="https://www.sfml-dev.org/" target="_blank">SFML website</a>
-- <a href="https://www.youtube.com/results?search_query=SFML&sp=CAI%253D" target="_blank">SFML on YouTube</a>
+- [🐛 Issues](https://github.com/tinyBigGAMES/PSFML/issues)
+- [💬 Discussions](https://github.com/tinyBigGAMES/PSFML/discussions)
+- [🌐 SFML Website](https://www.sfml-dev.org/)
+- [📺 SFML on YouTube](https://www.youtube.com/results?search_query=SFML&sp=CAI%253D)
 
 <p align="center">
-<img src="media/delphi.png" alt="Delphi">
+  <img src="media/delphi.png" alt="Delphi">
 </p>
-<h5 align="center">
-
-Made with :heart: in Delphi
-</h5>
+<h5 align="center">Made with ❤️ in Delphi</h5>

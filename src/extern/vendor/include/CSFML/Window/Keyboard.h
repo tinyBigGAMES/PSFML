@@ -142,10 +142,12 @@ typedef enum
     sfKeyF14,          ///< The F14 key
     sfKeyF15,          ///< The F15 key
     sfKeyPause,        ///< The Pause key
-
-    sfKeyCount, ///< Keep last -- the total number of keyboard keys
 } sfKeyCode;
 
+enum
+{
+    sfKeyCount = sfKeyPause + 1 ///< The total number of keyboard keys
+};
 
 ////////////////////////////////////////////////////////////
 /// \brief Scancodes
@@ -310,10 +312,12 @@ typedef enum
     sfScanLaunchApplication2, //!< Keyboard Launch Application 2 key
     sfScanLaunchMail,         //!< Keyboard Launch Mail key
     sfScanLaunchMediaSelect,  //!< Keyboard Launch Media Select key
-
-    sfScancodeCount //!< Keep last -- the total number of scancodes
 } sfScancode;
 
+enum
+{
+    sfScancodeCount = sfScanLaunchMediaSelect + 1 //!< The total number of scancodes
+};
 
 ////////////////////////////////////////////////////////////
 /// \brief Check if a key is pressed

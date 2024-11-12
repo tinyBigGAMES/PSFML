@@ -39,14 +39,17 @@
 ////////////////////////////////////////////////////////////
 typedef enum
 {
-    sfMouseLeft,     ///< The left mouse button
-    sfMouseRight,    ///< The right mouse button
-    sfMouseMiddle,   ///< The middle (wheel) mouse button
-    sfMouseXButton1, ///< The first extra mouse button
-    sfMouseXButton2, ///< The second extra mouse button
-
-    sfMouseButtonCount ///< Keep last -- the total number of mouse buttons
+    sfMouseLeft,         ///< The left mouse button
+    sfMouseRight,        ///< The right mouse button
+    sfMouseMiddle,       ///< The middle (wheel) mouse button
+    sfMouseButtonExtra1, ///< The first extra mouse button
+    sfMouseButtonExtra2, ///< The second extra mouse button
 } sfMouseButton;
+
+enum
+{
+    sfMouseButtonCount = sfMouseButtonExtra2 + 1 ///< The total number of mouse buttons
+};
 
 ////////////////////////////////////////////////////////////
 /// \brief Mouse wheels

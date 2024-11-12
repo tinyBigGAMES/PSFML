@@ -364,10 +364,6 @@
             <VirtualFolder>{0AD2C393-B826-4849-9AE5-EF482B66E5F5}</VirtualFolder>
             <BuildOrder>81</BuildOrder>
         </CppCompile>
-        <CppCompile Include="vendor\src\SFML\System\Exception.cpp">
-            <VirtualFolder>{0AD2C393-B826-4849-9AE5-EF482B66E5F5}</VirtualFolder>
-            <BuildOrder>82</BuildOrder>
-        </CppCompile>
         <CppCompile Include="vendor\src\SFML\System\FileInputStream.cpp">
             <VirtualFolder>{0AD2C393-B826-4849-9AE5-EF482B66E5F5}</VirtualFolder>
             <BuildOrder>83</BuildOrder>
@@ -617,13 +613,13 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\psfml_dll\lib\sfml.lib" Configuration="Release" Class="ProjectOutput">
+                <DeployFile LocalName="..\psfml_dll\sfml.lib" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64x">
                         <RemoteName>sfml.lib</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\psfml_dll\sfml.lib" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName=".\vendor\lib\sfml.lib" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win64x">
                         <RemoteName>sfml.lib</RemoteName>
                         <Overwrite>true</Overwrite>

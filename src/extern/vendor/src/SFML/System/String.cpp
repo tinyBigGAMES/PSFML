@@ -48,8 +48,7 @@ void U8StringCharTraits::assign(char_type& c1, char_type c2) noexcept
 ////////////////////////////////////////////////////////////
 U8StringCharTraits::char_type* U8StringCharTraits::assign(char_type* s, std::size_t n, char_type c)
 {
-    return reinterpret_cast<U8StringCharTraits::char_type*>(
-        std::char_traits<char>::assign(reinterpret_cast<char*>(s), n, static_cast<char>(c)));
+    return reinterpret_cast<char_type*>(std::char_traits<char>::assign(reinterpret_cast<char*>(s), n, static_cast<char>(c)));
 }
 
 
@@ -100,7 +99,7 @@ std::size_t U8StringCharTraits::length(const char_type* s)
 ////////////////////////////////////////////////////////////
 const U8StringCharTraits::char_type* U8StringCharTraits::find(const char_type* s, std::size_t n, const char_type& c)
 {
-    return reinterpret_cast<const U8StringCharTraits::char_type*>(
+    return reinterpret_cast<const char_type*>(
         std::char_traits<char>::find(reinterpret_cast<const char*>(s), n, static_cast<char>(c)));
 }
 
@@ -141,23 +140,20 @@ U8StringCharTraits::int_type U8StringCharTraits::not_eof(int_type i) noexcept
 
 
 ////////////////////////////////////////////////////////////
-String::String(char ansiChar, const std::locale& locale)
+String::String(char ansiChar, const std::locale& locale) : m_string(1, Utf32::decodeAnsi(ansiChar, locale))
 {
-    m_string += Utf32::decodeAnsi(ansiChar, locale);
 }
 
 
 ////////////////////////////////////////////////////////////
-String::String(wchar_t wideChar)
+String::String(wchar_t wideChar) : m_string(1, Utf32::decodeWide(wideChar))
 {
-    m_string += Utf32::decodeWide(wideChar);
 }
 
 
 ////////////////////////////////////////////////////////////
-String::String(char32_t utf32Char)
+String::String(char32_t utf32Char) : m_string(1, utf32Char)
 {
-    m_string += utf32Char;
 }
 
 
@@ -208,10 +204,8 @@ String::String(const std::wstring& wideString)
 
 
 ////////////////////////////////////////////////////////////
-String::String(const char32_t* utf32String)
+String::String(const char32_t* utf32String) : m_string(utf32String ? utf32String : U"")
 {
-    if (utf32String)
-        m_string = utf32String;
 }
 
 

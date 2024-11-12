@@ -141,12 +141,12 @@ void Image::resize(Vector2u size, Color color)
     if (size.x && size.y)
     {
         // Create a new pixel buffer first for exception safety's sake
-        std::vector<std::uint8_t> newPixels(static_cast<std::size_t>(size.x) * static_cast<std::size_t>(size.y) * 4);
+        std::vector<std::uint8_t> newPixels(std::size_t{size.x} * std::size_t{size.y} * 4);
 
         // Fill it with the specified color
         std::uint8_t* ptr = newPixels.data();
         std::uint8_t* end = ptr + newPixels.size();
-        while (ptr < end)
+        while (ptr != end)
         {
             *ptr++ = color.r;
             *ptr++ = color.g;
@@ -213,12 +213,10 @@ bool Image::loadFromFile(const std::filesystem::path& filename)
     m_pixels.clear();
 
     // Load the image and get a pointer to the pixels in memory
-    int        width    = 0;
-    int        height   = 0;
-    int        channels = 0;
-    const auto ptr      = StbPtr(stbi_load(filename.string().c_str(), &width, &height, &channels, STBI_rgb_alpha));
-
-    if (ptr)
+    int width    = 0;
+    int height   = 0;
+    int channels = 0;
+    if (const auto ptr = StbPtr(stbi_load(filename.string().c_str(), &width, &height, &channels, STBI_rgb_alpha)))
     {
         // Assign the image properties
         m_size = Vector2u(Vector2i(width, height));
@@ -251,10 +249,8 @@ bool Image::loadFromMemory(const void* data, std::size_t size)
         int         height   = 0;
         int         channels = 0;
         const auto* buffer   = static_cast<const unsigned char*>(data);
-        const auto  ptr      = StbPtr(
-            stbi_load_from_memory(buffer, static_cast<int>(size), &width, &height, &channels, STBI_rgb_alpha));
-
-        if (ptr)
+        if (const auto ptr = StbPtr(
+                stbi_load_from_memory(buffer, static_cast<int>(size), &width, &height, &channels, STBI_rgb_alpha)))
         {
             // Assign the image properties
             m_size = Vector2u(Vector2i(width, height));
@@ -296,12 +292,10 @@ bool Image::loadFromStream(InputStream& stream)
     callbacks.eof  = eof;
 
     // Load the image and get a pointer to the pixels in memory
-    int        width    = 0;
-    int        height   = 0;
-    int        channels = 0;
-    const auto ptr = StbPtr(stbi_load_from_callbacks(&callbacks, &stream, &width, &height, &channels, STBI_rgb_alpha));
-
-    if (ptr)
+    int width    = 0;
+    int height   = 0;
+    int channels = 0;
+    if (const auto ptr = StbPtr(stbi_load_from_callbacks(&callbacks, &stream, &width, &height, &channels, STBI_rgb_alpha)))
     {
         // Assign the image properties
         m_size = Vector2u(Vector2i(width, height));
@@ -424,7 +418,7 @@ void Image::createMaskFromColor(Color color, std::uint8_t alpha)
         // Replace the alpha of the pixels that match the transparent color
         std::uint8_t* ptr = m_pixels.data();
         std::uint8_t* end = ptr + m_pixels.size();
-        while (ptr < end)
+        while (ptr != end)
         {
             if ((ptr[0] == color.r) && (ptr[1] == color.g) && (ptr[2] == color.b) && (ptr[3] == color.a))
                 ptr[3] = alpha;
@@ -474,7 +468,7 @@ bool Image::copy(const Image& source, Vector2u dest, const IntRect& sourceRect, 
     const unsigned int dstStride = m_size.x * 4;
 
     const std::uint8_t* srcPixels = source.m_pixels.data() + (srcRect.position.x + srcRect.position.y * source.m_size.x) * 4;
-    std::uint8_t*       dstPixels = m_pixels.data() + (dest.x + dest.y * m_size.x) * 4;
+    std::uint8_t* dstPixels = m_pixels.data() + (dest.x + dest.y * m_size.x) * 4;
 
     // Copy the pixels
     if (applyAlpha)
