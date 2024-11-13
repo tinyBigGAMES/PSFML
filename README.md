@@ -20,18 +20,18 @@
 - [📄 License](#license)
 - [🆘 Support](#support)
 
-## 📖 Introduction
+## Introduction
 
 PSFML leverages the power of **SFML** and makes it accessible to Pascal programmers. With PSFML, you can create 🪟 windowed applications, manage 🖼️ graphics, handle real-time user input 🎮, play 🔊 audio, and even stream 📹 video. PSFML is built specifically to work on **💻 Windows** (Windows 10 and higher) and is fully compatible with [Delphi](https://www.embarcadero.com/products/delphi).
 
-### 🤔 Why PSFML?
+### Why PSFML?
 
 - **📝 Pascal-Focused**: PSFML is designed explicitly for Pascal developers, offering a familiar and intuitive API that fits naturally into existing Pascal workflows.
 - **📦 Minimal Distribution Overhead**: All library dependencies are embedded within the executable, ensuring a streamlined deployment process that eliminates external dependencies and minimizes potential compatibility issues.
 - **🛠️ Modern Compiler Support**: PSFML is compatible with **Delphi Community Edition** and higher, enabling seamless integration for Delphi developers targeting **Windows 64-bit**. While Delphi CE allows for immediate use of PSFML, **RAD Studio 12.2** is required to rebuild the library if customization or modification is needed. PSFML has been rigorously tested on **Windows 11**, ensuring stability and performance for professional-grade applications. 
 - **🆕 Up-to-Date with SFML**: Always kept in sync with the latest **SFML** version, ensuring access to all the latest features and fixes.
 
-## ✨ Features
+## Features
 
 - **🔑 Core SFML Integration**: Full access to SFML’s core features for Pascal developers, including 🪟 window management, 🖼️ rendering, 🎮 input handling, 🔊 audio playback, and 🌐 network communication.
 - **🛠️ Extension Support**: Includes several valuable extensions that add capabilities beyond the base SFML functionality.
@@ -42,15 +42,15 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
   - **🔮 Future Extensions**: Additional features will be added in future updates, enhancing the library's utility.
 - **⚡ Optimized for Windows**: Developed with a focus on **Windows 11** using **Delphi 12.2** to provide a stable, performant foundation for 🎮 game and multimedia applications.
 
-## 🚀 Getting Started
+## Getting Started
 
-### 📌 Requirements
+### Requirements
 
 - **Delphi CE** or a higher edition for development (files in the `lib` folder).
 - **C++ Builder 12.2** or a higher edition is required to build the sources (files in the `src` folder).
 - **💻 Windows 10** or higher (64-bit).
 
-### ⚙️ Installation
+### Installation
 
 1. 📥 Download the latest version of [PSFML](https://github.com/tinyBigGAMES/PSFML/archive/refs/heads/main.zip).
 2. 📂 Extract the contents to your project directory.
@@ -59,9 +59,9 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
 5. 📁 Refer to the `examples` folder for detailed usage instructions and demonstrations of the PSFML library in action.
 6. ▶️ It is recommended to run the `ZipFile01` example initially to generate the `data.zip` file required by other examples.
 
-## 📐 Usage
+## Usage
 
-### 💡 Basic Example
+### Basic Example
 
 Below is a simple example of how to create a 🪟 window and handle real-time user input 🎮 using **PSFML**:
 
@@ -128,21 +128,21 @@ end.
 
 This example demonstrates basic 🪟 window creation, event polling, and drawing 📝 text, providing a starting point for any real-time application.
 
-## 🛠️ Extensions
+## Extensions
 
-### 🗜️ ZipFile Support
+### ZipFile Support
 
 PSFML includes integrated support for working with compressed and encrypted zip files using **ZipFile**. This extension allows you to load resources like 🖼️ textures, 🔊 sounds, and other data directly from a zip archive.
 
-### 📼 MPEG-1 Video Playback
+### MPEG-1 Video Playback
 
 The video playback extension allows for **MPEG-1** video file streaming, ideal for in-game cutscenes or multimedia presentations.
 
-### 📄 Enhanced InputStream
+### Enhanced InputStream
 
 The **Enhanced InputStream** offers improved capabilities for streaming files, especially when used in conjunction with **ZipFile**, making it easier to work with archived content.
 
-## 🤝 Contributing
+## Contributing
 
 Contributions to **PSFML** are highly encouraged. If you'd like to contribute to the project, please submit issues or pull requests on our [GitHub repository](https://github.com/tinyBigGAMES/PSFML).
 
@@ -150,11 +150,11 @@ Contributions to **PSFML** are highly encouraged. If you'd like to contribute to
   <img src="https://contrib.rocks/image?repo=tinyBigGAMES/PSFML&max=500&columns=20&anon=1" />
 </a>
 
-## 📄 License
+## License
 
 **PSFML** is distributed under the **BSD-3-Clause License**, allowing for redistribution and use in both source and binary forms, with or without modification, under specific conditions. See the [LICENSE](https://github.com/tinyBigGAMES/PSFML?tab=BSD-3-Clause-1-ov-file#BSD-3-Clause-1-ov-file) file for more details.
 
-## 🆘 Support
+## Support
 
 - [🐛 Issues](https://github.com/tinyBigGAMES/PSFML/issues)
 - [💬 Discussions](https://github.com/tinyBigGAMES/PSFML/discussions)
