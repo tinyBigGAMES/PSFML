@@ -606,8 +606,6 @@ procedure sfVideo_setVolume(const AVolume: Single); cdecl;
 
 implementation
 
-{$R PSFML.Ext.res}
-
 uses
   WinApi.MMSystem;
 

@@ -1172,6 +1172,7 @@ begin
   Result := LVolume;
 end;
 
+{$REGION ' UNIT INIT '}
 initialization
 var
   I: Integer;
@@ -1189,7 +1190,7 @@ end;
 
 finalization
 begin
-
 end;
+{$ENDREGION}
 
 end.

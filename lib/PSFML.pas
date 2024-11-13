@@ -18,13 +18,10 @@ unit PSFML;
 
 interface
 
-const
-  {$IF Defined(WIN64)}
-  PSFML_DLL = 'PSFML.dll';
-  _PU = '';
-  {$ELSE}
-    {$MESSAGE Error 'Unsupported platform'}
-  {$ENDIF}
+uses
+  System.SysUtils,
+  System.Classes,
+  WinApi.Windows;
 
 const
   CSFML_VERSION_MAJOR = 3;
@@ -1294,3045 +1291,2105 @@ const
   PLM_DEMUX_PACKET_AUDIO_4: Integer = $C3;
   PLM_DEMUX_PACKET_VIDEO_1: Integer = $E0;
 
-procedure sfListener_setGlobalVolume(volume: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfListener_setGlobalVolume';
-
-function sfListener_getGlobalVolume(): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfListener_getGlobalVolume';
-
-procedure sfListener_setPosition(position: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfListener_setPosition';
-
-function sfListener_getPosition(): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfListener_getPosition';
-
-procedure sfListener_setDirection(direction: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfListener_setDirection';
-
-function sfListener_getDirection(): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfListener_getDirection';
-
-procedure sfListener_setVelocity(velocity: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfListener_setVelocity';
-
-function sfListener_getVelocity(): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfListener_getVelocity';
-
-procedure sfListener_setCone(cone: sfListenerCone); cdecl;
-  external PSFML_DLL name _PU + 'sfListener_setCone';
-
-function sfListener_getCone(): sfListenerCone; cdecl;
-  external PSFML_DLL name _PU + 'sfListener_getCone';
-
-procedure sfListener_setUpVector(upVector: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfListener_setUpVector';
-
-function sfListener_getUpVector(): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfListener_getUpVector';
-
-function sfTime_asSeconds(time: sfTime): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfTime_asSeconds';
-
-function sfTime_asMilliseconds(time: sfTime): Int32; cdecl;
-  external PSFML_DLL name _PU + 'sfTime_asMilliseconds';
-
-function sfTime_asMicroseconds(time: sfTime): Int64; cdecl;
-  external PSFML_DLL name _PU + 'sfTime_asMicroseconds';
-
-function sfSeconds(amount: Single): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfSeconds';
-
-function sfMilliseconds(amount: Int32): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfMilliseconds';
-
-function sfMicroseconds(amount: Int64): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfMicroseconds';
-
-function sfMusic_createFromFile(const filename: PUTF8Char): PsfMusic; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_createFromFile';
-
-function sfMusic_createFromMemory(const data: Pointer; sizeInBytes: NativeUInt): PsfMusic; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_createFromMemory';
-
-function sfMusic_createFromStream(stream: PsfInputStream): PsfMusic; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_createFromStream';
-
-procedure sfMusic_destroy(const music: PsfMusic); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_destroy';
-
-procedure sfMusic_setLooping(music: PsfMusic; loop: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setLooping';
-
-function sfMusic_isLooping(const music: PsfMusic): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_isLooping';
-
-procedure sfMusic_setEffectProcessor(music: PsfMusic; effectProcessor: sfEffectProcessor); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setEffectProcessor';
-
-function sfMusic_getDuration(const music: PsfMusic): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getDuration';
-
-function sfMusic_getLoopPoints(const music: PsfMusic): sfTimeSpan; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getLoopPoints';
-
-procedure sfMusic_setLoopPoints(music: PsfMusic; timePoints: sfTimeSpan); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setLoopPoints';
-
-procedure sfMusic_play(music: PsfMusic); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_play';
-
-procedure sfMusic_pause(music: PsfMusic); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_pause';
-
-procedure sfMusic_stop(music: PsfMusic); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_stop';
-
-function sfMusic_getChannelCount(const music: PsfMusic): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getChannelCount';
-
-function sfMusic_getSampleRate(const music: PsfMusic): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getSampleRate';
-
-function sfMusic_getChannelMap(const music: PsfMusic; count: PNativeUInt): PsfSoundChannel; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getChannelMap';
-
-function sfMusic_getStatus(const music: PsfMusic): sfSoundStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getStatus';
-
-function sfMusic_getPlayingOffset(const music: PsfMusic): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getPlayingOffset';
-
-procedure sfMusic_setPitch(music: PsfMusic; pitch: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setPitch';
-
-procedure sfMusic_setPan(music: PsfMusic; pan: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setPan';
-
-procedure sfMusic_setVolume(music: PsfMusic; volume: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setVolume';
-
-procedure sfMusic_setSpatializationEnabled(music: PsfMusic; enabled: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setSpatializationEnabled';
-
-procedure sfMusic_setPosition(music: PsfMusic; position: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setPosition';
-
-procedure sfMusic_setDirection(music: PsfMusic; direction: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setDirection';
-
-procedure sfMusic_setCone(music: PsfMusic; cone: sfSoundSourceCone); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setCone';
-
-procedure sfMusic_setVelocity(music: PsfMusic; velocity: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setVelocity';
-
-procedure sfMusic_setDopplerFactor(music: PsfMusic; factor: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setDopplerFactor';
-
-procedure sfMusic_setDirectionalAttenuationFactor(music: PsfMusic; factor: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setDirectionalAttenuationFactor';
-
-procedure sfMusic_setRelativeToListener(music: PsfMusic; relative: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setRelativeToListener';
-
-procedure sfMusic_setMinDistance(music: PsfMusic; distance: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setMinDistance';
-
-procedure sfMusic_setMaxDistance(music: PsfMusic; distance: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setMaxDistance';
-
-procedure sfMusic_setMinGain(music: PsfMusic; gain: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setMinGain';
-
-procedure sfMusic_setMaxGain(music: PsfMusic; gain: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setMaxGain';
-
-procedure sfMusic_setAttenuation(music: PsfMusic; attenuation: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setAttenuation';
-
-procedure sfMusic_setPlayingOffset(music: PsfMusic; timeOffset: sfTime); cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_setPlayingOffset';
-
-function sfMusic_getPitch(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getPitch';
-
-function sfMusic_getPan(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getPan';
-
-function sfMusic_isSpatializationEnabled(const music: PsfMusic): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_isSpatializationEnabled';
-
-function sfMusic_getVolume(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getVolume';
-
-function sfMusic_getPosition(const music: PsfMusic): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getPosition';
-
-function sfMusic_getDirection(const music: PsfMusic): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getDirection';
-
-function sfMusic_getCone(const music: PsfMusic): sfSoundSourceCone; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getCone';
-
-function sfMusic_getVelocity(const music: PsfMusic): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getVelocity';
-
-function sfMusic_getDopplerFactor(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getDopplerFactor';
-
-function sfMusic_getDirectionalAttenuationFactor(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getDirectionalAttenuationFactor';
-
-function sfMusic_isRelativeToListener(const music: PsfMusic): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_isRelativeToListener';
-
-function sfMusic_getMinDistance(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getMinDistance';
-
-function sfMusic_getMaxDistance(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getMaxDistance';
-
-function sfMusic_getMinGain(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getMinGain';
-
-function sfMusic_getMaxGain(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getMaxGain';
-
-function sfMusic_getAttenuation(const music: PsfMusic): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfMusic_getAttenuation';
-
-function sfSound_create(const buffer: PsfSoundBuffer): PsfSound; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_create';
-
-function sfSound_copy(const sound: PsfSound): PsfSound; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_copy';
-
-procedure sfSound_destroy(const sound: PsfSound); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_destroy';
-
-procedure sfSound_play(sound: PsfSound); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_play';
-
-procedure sfSound_pause(sound: PsfSound); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_pause';
-
-procedure sfSound_stop(sound: PsfSound); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_stop';
-
-procedure sfSound_setBuffer(sound: PsfSound; const buffer: PsfSoundBuffer); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setBuffer';
-
-function sfSound_getBuffer(const sound: PsfSound): PsfSoundBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getBuffer';
-
-procedure sfSound_setLooping(sound: PsfSound; loop: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setLooping';
-
-function sfSound_isLooping(const sound: PsfSound): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_isLooping';
-
-function sfSound_getStatus(const sound: PsfSound): sfSoundStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getStatus';
-
-procedure sfSound_setPitch(sound: PsfSound; pitch: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setPitch';
-
-procedure sfSound_setPan(sound: PsfSound; pan: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setPan';
-
-procedure sfSound_setVolume(sound: PsfSound; volume: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setVolume';
-
-procedure sfSound_setSpatializationEnabled(sound: PsfSound; enabled: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setSpatializationEnabled';
-
-procedure sfSound_setPosition(sound: PsfSound; position: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setPosition';
-
-procedure sfSound_setDirection(sound: PsfSound; direction: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setDirection';
-
-procedure sfSound_setCone(sound: PsfSound; cone: sfSoundSourceCone); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setCone';
-
-procedure sfSound_setVelocity(sound: PsfSound; velocity: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setVelocity';
-
-procedure sfSound_setDopplerFactor(sound: PsfSound; factor: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setDopplerFactor';
-
-procedure sfSound_setDirectionalAttenuationFactor(sound: PsfSound; factor: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setDirectionalAttenuationFactor';
-
-procedure sfSound_setRelativeToListener(sound: PsfSound; relative: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setRelativeToListener';
-
-procedure sfSound_setMinDistance(sound: PsfSound; distance: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setMinDistance';
-
-procedure sfSound_setMaxDistance(sound: PsfSound; distance: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setMaxDistance';
-
-procedure sfSound_setMinGain(sound: PsfSound; gain: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setMinGain';
-
-procedure sfSound_setMaxGain(sound: PsfSound; gain: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setMaxGain';
-
-procedure sfSound_setAttenuation(sound: PsfSound; attenuation: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setAttenuation';
-
-procedure sfSound_setPlayingOffset(sound: PsfSound; timeOffset: sfTime); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setPlayingOffset';
-
-procedure sfSound_setEffectProcessor(sound: PsfSound; effectProcessor: sfEffectProcessor); cdecl;
-  external PSFML_DLL name _PU + 'sfSound_setEffectProcessor';
-
-function sfSound_getPitch(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getPitch';
-
-function sfSound_getPan(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getPan';
-
-function sfSound_getVolume(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getVolume';
-
-function sfSound_isSpatializationEnabled(const sound: PsfSound): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_isSpatializationEnabled';
-
-function sfSound_getPosition(const sound: PsfSound): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getPosition';
-
-function sfSound_getDirection(const sound: PsfSound): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getDirection';
-
-function sfSound_getCone(const sound: PsfSound): sfSoundSourceCone; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getCone';
-
-function sfSound_getVelocity(const sound: PsfSound): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getVelocity';
-
-function sfSound_getDopplerFactor(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getDopplerFactor';
-
-function sfSound_getDirectionalAttenuationFactor(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getDirectionalAttenuationFactor';
-
-function sfSound_isRelativeToListener(const sound: PsfSound): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_isRelativeToListener';
-
-function sfSound_getMinDistance(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getMinDistance';
-
-function sfSound_getMaxDistance(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getMaxDistance';
-
-function sfSound_getMinGain(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getMinGain';
-
-function sfSound_getMaxGain(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getMaxGain';
-
-function sfSound_getAttenuation(const sound: PsfSound): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getAttenuation';
-
-function sfSound_getPlayingOffset(const sound: PsfSound): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfSound_getPlayingOffset';
-
-function sfSoundBuffer_createFromFile(const filename: PUTF8Char): PsfSoundBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_createFromFile';
-
-function sfSoundBuffer_createFromMemory(const data: Pointer; sizeInBytes: NativeUInt): PsfSoundBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_createFromMemory';
-
-function sfSoundBuffer_createFromStream(stream: PsfInputStream): PsfSoundBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_createFromStream';
-
-function sfSoundBuffer_createFromSamples(const samples: PInt16; sampleCount: UInt64; channelCount: Cardinal; sampleRate: Cardinal; channelMapData: PsfSoundChannel; channelMapSize: NativeUInt): PsfSoundBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_createFromSamples';
-
-function sfSoundBuffer_copy(const soundBuffer: PsfSoundBuffer): PsfSoundBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_copy';
-
-procedure sfSoundBuffer_destroy(const soundBuffer: PsfSoundBuffer); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_destroy';
-
-function sfSoundBuffer_saveToFile(const soundBuffer: PsfSoundBuffer; const filename: PUTF8Char): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_saveToFile';
-
-function sfSoundBuffer_getSamples(const soundBuffer: PsfSoundBuffer): PInt16; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_getSamples';
-
-function sfSoundBuffer_getSampleCount(const soundBuffer: PsfSoundBuffer): UInt64; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_getSampleCount';
-
-function sfSoundBuffer_getSampleRate(const soundBuffer: PsfSoundBuffer): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_getSampleRate';
-
-function sfSoundBuffer_getChannelCount(const soundBuffer: PsfSoundBuffer): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_getChannelCount';
-
-function sfSoundBuffer_getChannelMap(const soundBuffer: PsfSoundBuffer; count: PNativeUInt): PsfSoundChannel; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_getChannelMap';
-
-function sfSoundBuffer_getDuration(const soundBuffer: PsfSoundBuffer): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBuffer_getDuration';
-
-function sfSoundBufferRecorder_create(): PsfSoundBufferRecorder; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_create';
-
-procedure sfSoundBufferRecorder_destroy(const soundBufferRecorder: PsfSoundBufferRecorder); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_destroy';
-
-function sfSoundBufferRecorder_start(soundBufferRecorder: PsfSoundBufferRecorder; sampleRate: Cardinal): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_start';
-
-procedure sfSoundBufferRecorder_stop(soundBufferRecorder: PsfSoundBufferRecorder); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_stop';
-
-function sfSoundBufferRecorder_getSampleRate(const soundBufferRecorder: PsfSoundBufferRecorder): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_getSampleRate';
-
-function sfSoundBufferRecorder_getBuffer(const soundBufferRecorder: PsfSoundBufferRecorder): PsfSoundBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_getBuffer';
-
-function sfSoundBufferRecorder_setDevice(soundBufferRecorder: PsfSoundBufferRecorder; const name: PUTF8Char): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_setDevice';
-
-function sfSoundBufferRecorder_getDevice(soundBufferRecorder: PsfSoundBufferRecorder): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_getDevice';
-
-procedure sfSoundBufferRecorder_setChannelCount(soundBufferRecorder: PsfSoundBufferRecorder; channelCount: Cardinal); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_setChannelCount';
-
-function sfSoundBufferRecorder_getChannelCount(const soundBufferRecorder: PsfSoundBufferRecorder): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundBufferRecorder_getChannelCount';
-
-function sfSoundRecorder_create(onStart: sfSoundRecorderStartCallback; onProcess: sfSoundRecorderProcessCallback; onStop: sfSoundRecorderStopCallback; userData: Pointer): PsfSoundRecorder; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_create';
-
-procedure sfSoundRecorder_destroy(const soundRecorder: PsfSoundRecorder); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_destroy';
-
-function sfSoundRecorder_start(soundRecorder: PsfSoundRecorder; sampleRate: Cardinal): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_start';
-
-procedure sfSoundRecorder_stop(soundRecorder: PsfSoundRecorder); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_stop';
-
-function sfSoundRecorder_getSampleRate(const soundRecorder: PsfSoundRecorder): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_getSampleRate';
-
-function sfSoundRecorder_isAvailable(): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_isAvailable';
-
-function sfSoundRecorder_getAvailableDevices(count: PNativeUInt): PPUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_getAvailableDevices';
-
-function sfSoundRecorder_getDefaultDevice(): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_getDefaultDevice';
-
-function sfSoundRecorder_setDevice(soundRecorder: PsfSoundRecorder; const name: PUTF8Char): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_setDevice';
-
-function sfSoundRecorder_getDevice(soundRecorder: PsfSoundRecorder): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_getDevice';
-
-procedure sfSoundRecorder_setChannelCount(soundRecorder: PsfSoundRecorder; channelCount: Cardinal); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_setChannelCount';
-
-function sfSoundRecorder_getChannelCount(const soundRecorder: PsfSoundRecorder): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_getChannelCount';
-
-function sfSoundRecorder_getChannelMap(const soundRecorder: PsfSoundRecorder; count: PNativeUInt): PsfSoundChannel; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundRecorder_getChannelMap';
-
-function sfSoundStream_create(onGetData: sfSoundStreamGetDataCallback; onSeek: sfSoundStreamSeekCallback; channelCount: Cardinal; sampleRate: Cardinal; channelMapData: PsfSoundChannel; channelMapSize: NativeUInt; userData: Pointer): PsfSoundStream; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_create';
-
-procedure sfSoundStream_destroy(const soundStream: PsfSoundStream); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_destroy';
-
-procedure sfSoundStream_play(soundStream: PsfSoundStream); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_play';
-
-procedure sfSoundStream_pause(soundStream: PsfSoundStream); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_pause';
-
-procedure sfSoundStream_stop(soundStream: PsfSoundStream); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_stop';
-
-function sfSoundStream_getStatus(const soundStream: PsfSoundStream): sfSoundStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getStatus';
-
-function sfSoundStream_getChannelCount(const soundStream: PsfSoundStream): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getChannelCount';
-
-function sfSoundStream_getSampleRate(const soundStream: PsfSoundStream): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getSampleRate';
-
-function sfSoundStream_getChannelMap(const soundStream: PsfSoundStream; count: PNativeUInt): PsfSoundChannel; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getChannelMap';
-
-procedure sfSoundStream_setPitch(soundStream: PsfSoundStream; pitch: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setPitch';
-
-procedure sfSoundStream_setPan(soundStream: PsfSoundStream; pan: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setPan';
-
-procedure sfSoundStream_setVolume(soundStream: PsfSoundStream; volume: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setVolume';
-
-procedure sfSoundStream_setSpatializationEnabled(soundStream: PsfSoundStream; enabled: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setSpatializationEnabled';
-
-procedure sfSoundStream_setPosition(soundStream: PsfSoundStream; position: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setPosition';
-
-procedure sfSoundStream_setDirection(soundStream: PsfSoundStream; direction: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setDirection';
-
-procedure sfSoundStream_setCone(soundStream: PsfSoundStream; cone: sfSoundSourceCone); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setCone';
-
-procedure sfSoundStream_setVelocity(soundStream: PsfSoundStream; velocity: sfVector3f); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setVelocity';
-
-procedure sfSoundStream_setDopplerFactor(soundStream: PsfSoundStream; factor: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setDopplerFactor';
-
-procedure sfSoundStream_setDirectionalAttenuationFactor(soundStream: PsfSoundStream; factor: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setDirectionalAttenuationFactor';
-
-procedure sfSoundStream_setRelativeToListener(soundStream: PsfSoundStream; relative: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setRelativeToListener';
-
-procedure sfSoundStream_setMinDistance(soundStream: PsfSoundStream; distance: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setMinDistance';
-
-procedure sfSoundStream_setMaxDistance(soundStream: PsfSoundStream; distance: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setMaxDistance';
-
-procedure sfSoundStream_setMinGain(soundStream: PsfSoundStream; gain: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setMinGain';
-
-procedure sfSoundStream_setMaxGain(soundStream: PsfSoundStream; gain: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setMaxGain';
-
-procedure sfSoundStream_setAttenuation(soundStream: PsfSoundStream; attenuation: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setAttenuation';
-
-procedure sfSoundStream_setPlayingOffset(soundStream: PsfSoundStream; timeOffset: sfTime); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setPlayingOffset';
-
-procedure sfSoundStream_setLooping(soundStream: PsfSoundStream; loop: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setLooping';
-
-function sfSoundStream_getPitch(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getPitch';
-
-function sfSoundStream_getPan(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getPan';
-
-function sfSoundStream_getVolume(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getVolume';
-
-function sfSoundStream_isSpatializationEnabled(const soundStream: PsfSoundStream): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_isSpatializationEnabled';
-
-function sfSoundStream_getPosition(const soundStream: PsfSoundStream): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getPosition';
-
-function sfSoundStream_getDirection(const soundStream: PsfSoundStream): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getDirection';
-
-function sfSoundStream_getCone(const soundStream: PsfSoundStream): sfSoundSourceCone; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getCone';
-
-function sfSoundStream_getVelocity(const soundStream: PsfSoundStream): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getVelocity';
-
-function sfSoundStream_getDopplerFactor(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getDopplerFactor';
-
-function sfSoundStream_getDirectionalAttenuationFactor(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getDirectionalAttenuationFactor';
-
-function sfSoundStream_isRelativeToListener(const soundStream: PsfSoundStream): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_isRelativeToListener';
-
-function sfSoundStream_getMinDistance(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getMinDistance';
-
-function sfSoundStream_getMaxDistance(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getMaxDistance';
-
-function sfSoundStream_getMinGain(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getMinGain';
-
-function sfSoundStream_getMaxGain(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getMaxGain';
-
-function sfSoundStream_getAttenuation(const soundStream: PsfSoundStream): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getAttenuation';
-
-function sfSoundStream_isLooping(const soundStream: PsfSoundStream): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_isLooping';
-
-procedure sfSoundStream_setEffectProcessor(soundStream: PsfSoundStream; effectProcessor: sfEffectProcessor); cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_setEffectProcessor';
-
-function sfSoundStream_getPlayingOffset(const soundStream: PsfSoundStream): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfSoundStream_getPlayingOffset';
-
-function sfBuffer_create(): PsfBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfBuffer_create';
-
-procedure sfBuffer_destroy(const buffer: PsfBuffer); cdecl;
-  external PSFML_DLL name _PU + 'sfBuffer_destroy';
-
-function sfBuffer_getSize(const buffer: PsfBuffer): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfBuffer_getSize';
-
-function sfBuffer_getData(const buffer: PsfBuffer): PUInt8; cdecl;
-  external PSFML_DLL name _PU + 'sfBuffer_getData';
-
-function sfClock_create(): PsfClock; cdecl;
-  external PSFML_DLL name _PU + 'sfClock_create';
-
-function sfClock_copy(const clock: PsfClock): PsfClock; cdecl;
-  external PSFML_DLL name _PU + 'sfClock_copy';
-
-procedure sfClock_destroy(const clock: PsfClock); cdecl;
-  external PSFML_DLL name _PU + 'sfClock_destroy';
-
-function sfClock_getElapsedTime(const clock: PsfClock): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfClock_getElapsedTime';
-
-function sfClock_isRunning(const clock: PsfClock): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfClock_isRunning';
-
-procedure sfClock_start(clock: PsfClock); cdecl;
-  external PSFML_DLL name _PU + 'sfClock_start';
-
-procedure sfClock_stop(clock: PsfClock); cdecl;
-  external PSFML_DLL name _PU + 'sfClock_stop';
-
-function sfClock_restart(clock: PsfClock): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfClock_restart';
-
-function sfClock_reset(clock: PsfClock): sfTime; cdecl;
-  external PSFML_DLL name _PU + 'sfClock_reset';
-
-procedure sfSleep(duration: sfTime); cdecl;
-  external PSFML_DLL name _PU + 'sfSleep';
-
-function sfColor_fromRGB(red: UInt8; green: UInt8; blue: UInt8): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfColor_fromRGB';
-
-function sfColor_fromRGBA(red: UInt8; green: UInt8; blue: UInt8; alpha: UInt8): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfColor_fromRGBA';
-
-function sfColor_fromInteger(color: UInt32): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfColor_fromInteger';
-
-function sfColor_toInteger(color: sfColor): UInt32; cdecl;
-  external PSFML_DLL name _PU + 'sfColor_toInteger';
-
-function sfColor_add(color1: sfColor; color2: sfColor): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfColor_add';
-
-function sfColor_subtract(color1: sfColor; color2: sfColor): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfColor_subtract';
-
-function sfColor_modulate(color1: sfColor; color2: sfColor): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfColor_modulate';
-
-function sfFloatRect_contains(const rect: PsfFloatRect; point: sfVector2f): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfFloatRect_contains';
-
-function sfIntRect_contains(const rect: PsfIntRect; point: sfVector2i): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfIntRect_contains';
-
-function sfFloatRect_intersects(const rect1: PsfFloatRect; const rect2: PsfFloatRect; intersection: PsfFloatRect): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfFloatRect_intersects';
-
-function sfIntRect_intersects(const rect1: PsfIntRect; const rect2: PsfIntRect; intersection: PsfIntRect): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfIntRect_intersects';
-
-function sfTransform_fromMatrix(a00: Single; a01: Single; a02: Single; a10: Single; a11: Single; a12: Single; a20: Single; a21: Single; a22: Single): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_fromMatrix';
-
-procedure sfTransform_getMatrix(const transform: PsfTransform; matrix: PSingle); cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_getMatrix';
-
-function sfTransform_getInverse(const transform: PsfTransform): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_getInverse';
-
-function sfTransform_transformPoint(const transform: PsfTransform; point: sfVector2f): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_transformPoint';
-
-function sfTransform_transformRect(const transform: PsfTransform; rectangle: sfFloatRect): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_transformRect';
-
-procedure sfTransform_combine(transform: PsfTransform; const other: PsfTransform); cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_combine';
-
-procedure sfTransform_translate(transform: PsfTransform; offset: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_translate';
-
-procedure sfTransform_rotate(transform: PsfTransform; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_rotate';
-
-procedure sfTransform_rotateWithCenter(transform: PsfTransform; angle: Single; center: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_rotateWithCenter';
-
-procedure sfTransform_scale(transform: PsfTransform; scale: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_scale';
-
-procedure sfTransform_scaleWithCenter(transform: PsfTransform; scale: sfVector2f; center: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_scaleWithCenter';
-
-function sfTransform_equal(left: PsfTransform; right: PsfTransform): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfTransform_equal';
-
-function sfCircleShape_create(): PsfCircleShape; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_create';
-
-function sfCircleShape_copy(const shape: PsfCircleShape): PsfCircleShape; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_copy';
-
-procedure sfCircleShape_destroy(const shape: PsfCircleShape); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_destroy';
-
-procedure sfCircleShape_setPosition(shape: PsfCircleShape; position: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setPosition';
-
-procedure sfCircleShape_setRotation(shape: PsfCircleShape; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setRotation';
-
-procedure sfCircleShape_setScale(shape: PsfCircleShape; scale: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setScale';
-
-procedure sfCircleShape_setOrigin(shape: PsfCircleShape; origin: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setOrigin';
-
-function sfCircleShape_getPosition(const shape: PsfCircleShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getPosition';
-
-function sfCircleShape_getRotation(const shape: PsfCircleShape): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getRotation';
-
-function sfCircleShape_getScale(const shape: PsfCircleShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getScale';
-
-function sfCircleShape_getOrigin(const shape: PsfCircleShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getOrigin';
-
-procedure sfCircleShape_move(shape: PsfCircleShape; offset: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_move';
-
-procedure sfCircleShape_rotate(shape: PsfCircleShape; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_rotate';
-
-procedure sfCircleShape_scale(shape: PsfCircleShape; factors: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_scale';
-
-function sfCircleShape_getTransform(const shape: PsfCircleShape): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getTransform';
-
-function sfCircleShape_getInverseTransform(const shape: PsfCircleShape): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getInverseTransform';
-
-procedure sfCircleShape_setTexture(shape: PsfCircleShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setTexture';
-
-procedure sfCircleShape_setTextureRect(shape: PsfCircleShape; rect: sfIntRect); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setTextureRect';
-
-procedure sfCircleShape_setFillColor(shape: PsfCircleShape; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setFillColor';
-
-procedure sfCircleShape_setOutlineColor(shape: PsfCircleShape; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setOutlineColor';
-
-procedure sfCircleShape_setOutlineThickness(shape: PsfCircleShape; thickness: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setOutlineThickness';
-
-function sfCircleShape_getTexture(const shape: PsfCircleShape): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getTexture';
-
-function sfCircleShape_getTextureRect(const shape: PsfCircleShape): sfIntRect; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getTextureRect';
-
-function sfCircleShape_getFillColor(const shape: PsfCircleShape): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getFillColor';
-
-function sfCircleShape_getOutlineColor(const shape: PsfCircleShape): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getOutlineColor';
-
-function sfCircleShape_getOutlineThickness(const shape: PsfCircleShape): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getOutlineThickness';
-
-function sfCircleShape_getPointCount(const shape: PsfCircleShape): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getPointCount';
-
-function sfCircleShape_getPoint(const shape: PsfCircleShape; index: NativeUInt): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getPoint';
-
-function sfCircleShape_getGeometricCenter(const shape: PsfCircleShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getGeometricCenter';
-
-procedure sfCircleShape_setRadius(shape: PsfCircleShape; radius: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setRadius';
-
-function sfCircleShape_getRadius(const shape: PsfCircleShape): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getRadius';
-
-procedure sfCircleShape_setPointCount(shape: PsfCircleShape; count: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_setPointCount';
-
-function sfCircleShape_getLocalBounds(const shape: PsfCircleShape): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getLocalBounds';
-
-function sfCircleShape_getGlobalBounds(const shape: PsfCircleShape): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfCircleShape_getGlobalBounds';
-
-function sfConvexShape_create(): PsfConvexShape; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_create';
-
-function sfConvexShape_copy(const shape: PsfConvexShape): PsfConvexShape; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_copy';
-
-procedure sfConvexShape_destroy(const shape: PsfConvexShape); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_destroy';
-
-procedure sfConvexShape_setPosition(shape: PsfConvexShape; position: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setPosition';
-
-procedure sfConvexShape_setRotation(shape: PsfConvexShape; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setRotation';
-
-procedure sfConvexShape_setScale(shape: PsfConvexShape; scale: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setScale';
-
-procedure sfConvexShape_setOrigin(shape: PsfConvexShape; origin: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setOrigin';
-
-function sfConvexShape_getPosition(const shape: PsfConvexShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getPosition';
-
-function sfConvexShape_getRotation(const shape: PsfConvexShape): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getRotation';
-
-function sfConvexShape_getScale(const shape: PsfConvexShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getScale';
-
-function sfConvexShape_getOrigin(const shape: PsfConvexShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getOrigin';
-
-procedure sfConvexShape_move(shape: PsfConvexShape; offset: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_move';
-
-procedure sfConvexShape_rotate(shape: PsfConvexShape; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_rotate';
-
-procedure sfConvexShape_scale(shape: PsfConvexShape; factors: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_scale';
-
-function sfConvexShape_getTransform(const shape: PsfConvexShape): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getTransform';
-
-function sfConvexShape_getInverseTransform(const shape: PsfConvexShape): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getInverseTransform';
-
-procedure sfConvexShape_setTexture(shape: PsfConvexShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setTexture';
-
-procedure sfConvexShape_setTextureRect(shape: PsfConvexShape; rect: sfIntRect); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setTextureRect';
-
-procedure sfConvexShape_setFillColor(shape: PsfConvexShape; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setFillColor';
-
-procedure sfConvexShape_setOutlineColor(shape: PsfConvexShape; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setOutlineColor';
-
-procedure sfConvexShape_setOutlineThickness(shape: PsfConvexShape; thickness: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setOutlineThickness';
-
-function sfConvexShape_getTexture(const shape: PsfConvexShape): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getTexture';
-
-function sfConvexShape_getTextureRect(const shape: PsfConvexShape): sfIntRect; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getTextureRect';
-
-function sfConvexShape_getFillColor(const shape: PsfConvexShape): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getFillColor';
-
-function sfConvexShape_getOutlineColor(const shape: PsfConvexShape): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getOutlineColor';
-
-function sfConvexShape_getOutlineThickness(const shape: PsfConvexShape): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getOutlineThickness';
-
-function sfConvexShape_getPointCount(const shape: PsfConvexShape): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getPointCount';
-
-function sfConvexShape_getPoint(const shape: PsfConvexShape; index: NativeUInt): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getPoint';
-
-function sfConvexShape_getGeometricCenter(const shape: PsfConvexShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getGeometricCenter';
-
-procedure sfConvexShape_setPointCount(shape: PsfConvexShape; count: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setPointCount';
-
-procedure sfConvexShape_setPoint(shape: PsfConvexShape; index: NativeUInt; point: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_setPoint';
-
-function sfConvexShape_getLocalBounds(const shape: PsfConvexShape): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getLocalBounds';
-
-function sfConvexShape_getGlobalBounds(const shape: PsfConvexShape): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfConvexShape_getGlobalBounds';
-
-function sfFont_createFromFile(const filename: PUTF8Char): PsfFont; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_createFromFile';
-
-function sfFont_createFromMemory(const data: Pointer; sizeInBytes: NativeUInt): PsfFont; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_createFromMemory';
-
-function sfFont_createFromStream(stream: PsfInputStream): PsfFont; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_createFromStream';
-
-function sfFont_copy(const font: PsfFont): PsfFont; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_copy';
-
-procedure sfFont_destroy(const font: PsfFont); cdecl;
-  external PSFML_DLL name _PU + 'sfFont_destroy';
-
-function sfFont_getGlyph(const font: PsfFont; codePoint: UInt32; characterSize: Cardinal; bold: Boolean; outlineThickness: Single): sfGlyph; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_getGlyph';
-
-function sfFont_hasGlyph(const font: PsfFont; codePoint: UInt32): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_hasGlyph';
-
-function sfFont_getKerning(const font: PsfFont; first: UInt32; second: UInt32; characterSize: Cardinal): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_getKerning';
-
-function sfFont_getBoldKerning(const font: PsfFont; first: UInt32; second: UInt32; characterSize: Cardinal): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_getBoldKerning';
-
-function sfFont_getLineSpacing(const font: PsfFont; characterSize: Cardinal): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_getLineSpacing';
-
-function sfFont_getUnderlinePosition(const font: PsfFont; characterSize: Cardinal): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_getUnderlinePosition';
-
-function sfFont_getUnderlineThickness(const font: PsfFont; characterSize: Cardinal): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_getUnderlineThickness';
-
-function sfFont_getTexture(font: PsfFont; characterSize: Cardinal): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_getTexture';
-
-procedure sfFont_setSmooth(font: PsfFont; smooth: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfFont_setSmooth';
-
-function sfFont_isSmooth(const font: PsfFont): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_isSmooth';
-
-function sfFont_getInfo(const font: PsfFont): sfFontInfo; cdecl;
-  external PSFML_DLL name _PU + 'sfFont_getInfo';
-
-function sfImage_create(size: sfVector2u): PsfImage; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_create';
-
-function sfImage_createFromColor(size: sfVector2u; color: sfColor): PsfImage; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_createFromColor';
-
-function sfImage_createFromPixels(size: sfVector2u; const pixels: PUInt8): PsfImage; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_createFromPixels';
-
-function sfImage_createFromFile(const filename: PUTF8Char): PsfImage; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_createFromFile';
-
-function sfImage_createFromMemory(const data: Pointer; size: NativeUInt): PsfImage; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_createFromMemory';
-
-function sfImage_createFromStream(stream: PsfInputStream): PsfImage; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_createFromStream';
-
-function sfImage_copy(const image: PsfImage): PsfImage; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_copy';
-
-procedure sfImage_destroy(const image: PsfImage); cdecl;
-  external PSFML_DLL name _PU + 'sfImage_destroy';
-
-function sfImage_saveToFile(const image: PsfImage; const filename: PUTF8Char): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_saveToFile';
-
-function sfImage_saveToMemory(const image: PsfImage; output: PsfBuffer; const format: PUTF8Char): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_saveToMemory';
-
-function sfImage_getSize(const image: PsfImage): sfVector2u; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_getSize';
-
-procedure sfImage_createMaskFromColor(image: PsfImage; color: sfColor; alpha: UInt8); cdecl;
-  external PSFML_DLL name _PU + 'sfImage_createMaskFromColor';
-
-function sfImage_copyImage(image: PsfImage; const source: PsfImage; dest: sfVector2u; sourceRect: sfIntRect; applyAlpha: Boolean): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_copyImage';
-
-procedure sfImage_setPixel(image: PsfImage; coords: sfVector2u; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfImage_setPixel';
-
-function sfImage_getPixel(const image: PsfImage; coords: sfVector2u): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_getPixel';
-
-function sfImage_getPixelsPtr(const image: PsfImage): PUInt8; cdecl;
-  external PSFML_DLL name _PU + 'sfImage_getPixelsPtr';
-
-procedure sfImage_flipHorizontally(image: PsfImage); cdecl;
-  external PSFML_DLL name _PU + 'sfImage_flipHorizontally';
-
-procedure sfImage_flipVertically(image: PsfImage); cdecl;
-  external PSFML_DLL name _PU + 'sfImage_flipVertically';
-
-function sfRectangleShape_create(): PsfRectangleShape; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_create';
-
-function sfRectangleShape_copy(const shape: PsfRectangleShape): PsfRectangleShape; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_copy';
-
-procedure sfRectangleShape_destroy(const shape: PsfRectangleShape); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_destroy';
-
-procedure sfRectangleShape_setPosition(shape: PsfRectangleShape; position: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setPosition';
-
-procedure sfRectangleShape_setRotation(shape: PsfRectangleShape; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setRotation';
-
-procedure sfRectangleShape_setScale(shape: PsfRectangleShape; scale: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setScale';
-
-procedure sfRectangleShape_setOrigin(shape: PsfRectangleShape; origin: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setOrigin';
-
-function sfRectangleShape_getPosition(const shape: PsfRectangleShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getPosition';
-
-function sfRectangleShape_getRotation(const shape: PsfRectangleShape): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getRotation';
-
-function sfRectangleShape_getScale(const shape: PsfRectangleShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getScale';
-
-function sfRectangleShape_getOrigin(const shape: PsfRectangleShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getOrigin';
-
-procedure sfRectangleShape_move(shape: PsfRectangleShape; offset: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_move';
-
-procedure sfRectangleShape_rotate(shape: PsfRectangleShape; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_rotate';
-
-procedure sfRectangleShape_scale(shape: PsfRectangleShape; factors: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_scale';
-
-function sfRectangleShape_getTransform(const shape: PsfRectangleShape): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getTransform';
-
-function sfRectangleShape_getInverseTransform(const shape: PsfRectangleShape): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getInverseTransform';
-
-procedure sfRectangleShape_setTexture(shape: PsfRectangleShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setTexture';
-
-procedure sfRectangleShape_setTextureRect(shape: PsfRectangleShape; rect: sfIntRect); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setTextureRect';
-
-procedure sfRectangleShape_setFillColor(shape: PsfRectangleShape; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setFillColor';
-
-procedure sfRectangleShape_setOutlineColor(shape: PsfRectangleShape; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setOutlineColor';
-
-procedure sfRectangleShape_setOutlineThickness(shape: PsfRectangleShape; thickness: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setOutlineThickness';
-
-function sfRectangleShape_getTexture(const shape: PsfRectangleShape): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getTexture';
-
-function sfRectangleShape_getTextureRect(const shape: PsfRectangleShape): sfIntRect; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getTextureRect';
-
-function sfRectangleShape_getFillColor(const shape: PsfRectangleShape): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getFillColor';
-
-function sfRectangleShape_getOutlineColor(const shape: PsfRectangleShape): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getOutlineColor';
-
-function sfRectangleShape_getOutlineThickness(const shape: PsfRectangleShape): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getOutlineThickness';
-
-function sfRectangleShape_getPointCount(const shape: PsfRectangleShape): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getPointCount';
-
-function sfRectangleShape_getPoint(const shape: PsfRectangleShape; index: NativeUInt): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getPoint';
-
-function sfRectangleShape_getGeometricCenter(const shape: PsfRectangleShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getGeometricCenter';
-
-procedure sfRectangleShape_setSize(shape: PsfRectangleShape; size: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_setSize';
-
-function sfRectangleShape_getSize(const shape: PsfRectangleShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getSize';
-
-function sfRectangleShape_getLocalBounds(const shape: PsfRectangleShape): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getLocalBounds';
-
-function sfRectangleShape_getGlobalBounds(const shape: PsfRectangleShape): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfRectangleShape_getGlobalBounds';
-
-function sfJoystick_isConnected(joystick: Cardinal): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfJoystick_isConnected';
-
-function sfJoystick_getButtonCount(joystick: Cardinal): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfJoystick_getButtonCount';
-
-function sfJoystick_hasAxis(joystick: Cardinal; axis: sfJoystickAxis): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfJoystick_hasAxis';
-
-function sfJoystick_isButtonPressed(joystick: Cardinal; button: Cardinal): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfJoystick_isButtonPressed';
-
-function sfJoystick_getAxisPosition(joystick: Cardinal; axis: sfJoystickAxis): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfJoystick_getAxisPosition';
-
-function sfJoystick_getIdentification(joystick: Cardinal): sfJoystickIdentification; cdecl;
-  external PSFML_DLL name _PU + 'sfJoystick_getIdentification';
-
-procedure sfJoystick_update(); cdecl;
-  external PSFML_DLL name _PU + 'sfJoystick_update';
-
-function sfKeyboard_isKeyPressed(key: sfKeyCode): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfKeyboard_isKeyPressed';
-
-function sfKeyboard_isScancodePressed(code: sfScancode): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfKeyboard_isScancodePressed';
-
-function sfKeyboard_localize(code: sfScancode): sfKeyCode; cdecl;
-  external PSFML_DLL name _PU + 'sfKeyboard_localize';
-
-function sfKeyboard_delocalize(key: sfKeyCode): sfScancode; cdecl;
-  external PSFML_DLL name _PU + 'sfKeyboard_delocalize';
-
-function sfKeyboard_getDescription(code: sfScancode): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfKeyboard_getDescription';
-
-procedure sfKeyboard_setVirtualKeyboardVisible(visible: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfKeyboard_setVirtualKeyboardVisible';
-
-function sfMouse_isButtonPressed(button: sfMouseButton): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfMouse_isButtonPressed';
-
-function sfMouse_getPosition(const relativeTo: PsfWindow): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfMouse_getPosition';
-
-procedure sfMouse_setPosition(position: sfVector2i; const relativeTo: PsfWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfMouse_setPosition';
-
-function sfMouse_getPositionWindowBase(const relativeTo: PsfWindowBase): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfMouse_getPositionWindowBase';
-
-procedure sfMouse_setPositionWindowBase(position: sfVector2i; const relativeTo: PsfWindowBase); cdecl;
-  external PSFML_DLL name _PU + 'sfMouse_setPositionWindowBase';
-
-function sfSensor_isAvailable(sensor: sfSensorType): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSensor_isAvailable';
-
-procedure sfSensor_setEnabled(sensor: sfSensorType; enabled: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfSensor_setEnabled';
-
-function sfSensor_getValue(sensor: sfSensorType): sfVector3f; cdecl;
-  external PSFML_DLL name _PU + 'sfSensor_getValue';
-
-function sfVideoMode_getDesktopMode(): sfVideoMode; cdecl;
-  external PSFML_DLL name _PU + 'sfVideoMode_getDesktopMode';
-
-function sfVideoMode_getFullscreenModes(count: PNativeUInt): PsfVideoMode; cdecl;
-  external PSFML_DLL name _PU + 'sfVideoMode_getFullscreenModes';
-
-function sfVideoMode_isValid(mode: sfVideoMode): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfVideoMode_isValid';
-
-function sfVulkan_isAvailable(requireGraphics: Boolean): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfVulkan_isAvailable';
-
-function sfVulkan_getFunction(const name: PUTF8Char): sfVulkanFunctionPointer; cdecl;
-  external PSFML_DLL name _PU + 'sfVulkan_getFunction';
-
-function sfVulkan_getGraphicsRequiredInstanceExtensions(count: PNativeUInt): PPUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfVulkan_getGraphicsRequiredInstanceExtensions';
-
-function sfWindowBase_create(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState): PsfWindowBase; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_create';
-
-function sfWindowBase_createUnicode(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState): PsfWindowBase; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_createUnicode';
-
-function sfWindowBase_createFromHandle(handle: sfWindowHandle): PsfWindowBase; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_createFromHandle';
-
-procedure sfWindowBase_destroy(const windowBase: PsfWindowBase); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_destroy';
-
-procedure sfWindowBase_close(windowBase: PsfWindowBase); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_close';
-
-function sfWindowBase_isOpen(const windowBase: PsfWindowBase): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_isOpen';
-
-function sfWindowBase_pollEvent(windowBase: PsfWindowBase; event: PsfEvent): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_pollEvent';
-
-function sfWindowBase_waitEvent(windowBase: PsfWindowBase; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_waitEvent';
-
-function sfWindowBase_getPosition(const windowBase: PsfWindowBase): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_getPosition';
-
-procedure sfWindowBase_setPosition(windowBase: PsfWindowBase; position: sfVector2i); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setPosition';
-
-function sfWindowBase_getSize(const windowBase: PsfWindowBase): sfVector2u; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_getSize';
-
-procedure sfWindowBase_setSize(windowBase: PsfWindowBase; size: sfVector2u); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setSize';
-
-procedure sfWindowBase_setTitle(windowBase: PsfWindowBase; const title: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setTitle';
-
-procedure sfWindowBase_setUnicodeTitle(windowBase: PsfWindowBase; const title: PsfChar32); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setUnicodeTitle';
-
-procedure sfWindowBase_setIcon(windowBase: PsfWindowBase; size: sfVector2u; const pixels: PUInt8); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setIcon';
-
-procedure sfWindowBase_setVisible(windowBase: PsfWindowBase; visible: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setVisible';
-
-procedure sfWindowBase_setMouseCursorVisible(windowBase: PsfWindowBase; visible: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setMouseCursorVisible';
-
-procedure sfWindowBase_setMouseCursorGrabbed(windowBase: PsfWindowBase; grabbed: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setMouseCursorGrabbed';
-
-procedure sfWindowBase_setMouseCursor(windowBase: PsfWindowBase; const cursor: PsfCursor); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setMouseCursor';
-
-procedure sfWindowBase_setKeyRepeatEnabled(windowBase: PsfWindowBase; enabled: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setKeyRepeatEnabled';
-
-procedure sfWindowBase_setJoystickThreshold(windowBase: PsfWindowBase; threshold: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_setJoystickThreshold';
-
-procedure sfWindowBase_requestFocus(windowBase: PsfWindowBase); cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_requestFocus';
-
-function sfWindowBase_hasFocus(const windowBase: PsfWindowBase): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_hasFocus';
-
-function sfWindowBase_getNativeHandle(const windowBase: PsfWindowBase): sfWindowHandle; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_getNativeHandle';
-
-function sfWindowBase_createVulkanSurface(windowBase: PsfWindowBase; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindowBase_createVulkanSurface';
-
-function sfWindow_create(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfWindow; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_create';
-
-function sfWindow_createUnicode(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfWindow; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_createUnicode';
-
-function sfWindow_createFromHandle(handle: sfWindowHandle; const settings: PsfContextSettings): PsfWindow; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_createFromHandle';
-
-procedure sfWindow_destroy(const window: PsfWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_destroy';
-
-procedure sfWindow_close(window: PsfWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_close';
-
-function sfWindow_isOpen(const window: PsfWindow): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_isOpen';
-
-function sfWindow_getSettings(const window: PsfWindow): sfContextSettings; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_getSettings';
-
-function sfWindow_pollEvent(window: PsfWindow; event: PsfEvent): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_pollEvent';
-
-function sfWindow_waitEvent(window: PsfWindow; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_waitEvent';
-
-function sfWindow_getPosition(const window: PsfWindow): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_getPosition';
-
-procedure sfWindow_setPosition(window: PsfWindow; position: sfVector2i); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setPosition';
-
-function sfWindow_getSize(const window: PsfWindow): sfVector2u; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_getSize';
-
-procedure sfWindow_setSize(window: PsfWindow; size: sfVector2u); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setSize';
-
-procedure sfWindow_setTitle(window: PsfWindow; const title: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setTitle';
-
-procedure sfWindow_setUnicodeTitle(window: PsfWindow; const title: PsfChar32); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setUnicodeTitle';
-
-procedure sfWindow_setIcon(window: PsfWindow; size: sfVector2u; const pixels: PUInt8); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setIcon';
-
-procedure sfWindow_setVisible(window: PsfWindow; visible: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setVisible';
-
-procedure sfWindow_setVerticalSyncEnabled(window: PsfWindow; enabled: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setVerticalSyncEnabled';
-
-procedure sfWindow_setMouseCursorVisible(window: PsfWindow; visible: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setMouseCursorVisible';
-
-procedure sfWindow_setMouseCursorGrabbed(window: PsfWindow; grabbed: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setMouseCursorGrabbed';
-
-procedure sfWindow_setMouseCursor(window: PsfWindow; const cursor: PsfCursor); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setMouseCursor';
-
-procedure sfWindow_setKeyRepeatEnabled(window: PsfWindow; enabled: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setKeyRepeatEnabled';
-
-procedure sfWindow_setFramerateLimit(window: PsfWindow; limit: Cardinal); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setFramerateLimit';
-
-procedure sfWindow_setJoystickThreshold(window: PsfWindow; threshold: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setJoystickThreshold';
-
-function sfWindow_setActive(window: PsfWindow; active: Boolean): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_setActive';
-
-procedure sfWindow_requestFocus(window: PsfWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_requestFocus';
-
-function sfWindow_hasFocus(const window: PsfWindow): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_hasFocus';
-
-procedure sfWindow_display(window: PsfWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_display';
-
-function sfWindow_getNativeHandle(const window: PsfWindow): sfWindowHandle; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_getNativeHandle';
-
-function sfWindow_createVulkanSurface(window: PsfWindow; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfWindow_createVulkanSurface';
-
-function sfRenderTexture_create(size: sfVector2u; const settings: PsfContextSettings): PsfRenderTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_create';
-
-procedure sfRenderTexture_destroy(const renderTexture: PsfRenderTexture); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_destroy';
-
-function sfRenderTexture_getSize(const renderTexture: PsfRenderTexture): sfVector2u; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_getSize';
-
-function sfRenderTexture_isSrgb(const renderTexture: PsfRenderTexture): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_isSrgb';
-
-function sfRenderTexture_setActive(renderTexture: PsfRenderTexture; active: Boolean): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_setActive';
-
-procedure sfRenderTexture_display(renderTexture: PsfRenderTexture); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_display';
-
-procedure sfRenderTexture_clear(renderTexture: PsfRenderTexture; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_clear';
-
-procedure sfRenderTexture_clearStencil(renderTexture: PsfRenderTexture; stencilValue: sfStencilValue); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_clearStencil';
-
-procedure sfRenderTexture_clearColorAndStencil(renderTexture: PsfRenderTexture; color: sfColor; stencilValue: sfStencilValue); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_clearColorAndStencil';
-
-procedure sfRenderTexture_setView(renderTexture: PsfRenderTexture; const view: PsfView); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_setView';
-
-function sfRenderTexture_getView(const renderTexture: PsfRenderTexture): PsfView; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_getView';
-
-function sfRenderTexture_getDefaultView(const renderTexture: PsfRenderTexture): PsfView; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_getDefaultView';
-
-function sfRenderTexture_getViewport(const renderTexture: PsfRenderTexture; const view: PsfView): sfIntRect; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_getViewport';
-
-function sfRenderTexture_getScissor(const renderTexture: PsfRenderTexture; const view: PsfView): sfIntRect; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_getScissor';
-
-function sfRenderTexture_mapPixelToCoords(const renderTexture: PsfRenderTexture; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_mapPixelToCoords';
-
-function sfRenderTexture_mapCoordsToPixel(const renderTexture: PsfRenderTexture; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_mapCoordsToPixel';
-
-procedure sfRenderTexture_drawSprite(renderTexture: PsfRenderTexture; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawSprite';
-
-procedure sfRenderTexture_drawText(renderTexture: PsfRenderTexture; const &object: PsfText; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawText';
-
-procedure sfRenderTexture_drawShape(renderTexture: PsfRenderTexture; const &object: PsfShape; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawShape';
-
-procedure sfRenderTexture_drawCircleShape(renderTexture: PsfRenderTexture; const &object: PsfCircleShape; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawCircleShape';
-
-procedure sfRenderTexture_drawConvexShape(renderTexture: PsfRenderTexture; const &object: PsfConvexShape; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawConvexShape';
-
-procedure sfRenderTexture_drawRectangleShape(renderTexture: PsfRenderTexture; const &object: PsfRectangleShape; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawRectangleShape';
-
-procedure sfRenderTexture_drawVertexArray(renderTexture: PsfRenderTexture; const &object: PsfVertexArray; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawVertexArray';
-
-procedure sfRenderTexture_drawVertexBuffer(renderTexture: PsfRenderTexture; const &object: PsfVertexBuffer; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawVertexBuffer';
-
-procedure sfRenderTexture_drawVertexBufferRange(renderTexture: PsfRenderTexture; const &object: PsfVertexBuffer; firstVertex: NativeUInt; vertexCount: NativeUInt; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawVertexBufferRange';
-
-procedure sfRenderTexture_drawPrimitives(renderTexture: PsfRenderTexture; const vertices: PsfVertex; vertexCount: NativeUInt; &type: sfPrimitiveType; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_drawPrimitives';
-
-procedure sfRenderTexture_pushGLStates(renderTexture: PsfRenderTexture); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_pushGLStates';
-
-procedure sfRenderTexture_popGLStates(renderTexture: PsfRenderTexture); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_popGLStates';
-
-procedure sfRenderTexture_resetGLStates(renderTexture: PsfRenderTexture); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_resetGLStates';
-
-function sfRenderTexture_getTexture(const renderTexture: PsfRenderTexture): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_getTexture';
-
-function sfRenderTexture_getMaximumAntiAliasingLevel(): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_getMaximumAntiAliasingLevel';
-
-procedure sfRenderTexture_setSmooth(renderTexture: PsfRenderTexture; smooth: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_setSmooth';
-
-function sfRenderTexture_isSmooth(const renderTexture: PsfRenderTexture): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_isSmooth';
-
-procedure sfRenderTexture_setRepeated(renderTexture: PsfRenderTexture; repeated: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_setRepeated';
-
-function sfRenderTexture_isRepeated(const renderTexture: PsfRenderTexture): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_isRepeated';
-
-function sfRenderTexture_generateMipmap(renderTexture: PsfRenderTexture): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderTexture_generateMipmap';
-
-function sfRenderWindow_create(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_create';
-
-function sfRenderWindow_createUnicode(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_createUnicode';
-
-function sfRenderWindow_createFromHandle(handle: sfWindowHandle; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_createFromHandle';
-
-procedure sfRenderWindow_destroy(const renderWindow: PsfRenderWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_destroy';
-
-procedure sfRenderWindow_close(renderWindow: PsfRenderWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_close';
-
-function sfRenderWindow_isOpen(const renderWindow: PsfRenderWindow): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_isOpen';
-
-function sfRenderWindow_getSettings(const renderWindow: PsfRenderWindow): sfContextSettings; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_getSettings';
-
-function sfRenderWindow_pollEvent(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_pollEvent';
-
-function sfRenderWindow_waitEvent(renderWindow: PsfRenderWindow; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_waitEvent';
-
-function sfRenderWindow_getPosition(const renderWindow: PsfRenderWindow): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_getPosition';
-
-procedure sfRenderWindow_setPosition(renderWindow: PsfRenderWindow; position: sfVector2i); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setPosition';
-
-function sfRenderWindow_getSize(const renderWindow: PsfRenderWindow): sfVector2u; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_getSize';
-
-function sfRenderWindow_isSrgb(const renderWindow: PsfRenderWindow): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_isSrgb';
-
-procedure sfRenderWindow_setSize(renderWindow: PsfRenderWindow; size: sfVector2u); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setSize';
-
-procedure sfRenderWindow_setTitle(renderWindow: PsfRenderWindow; const title: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setTitle';
-
-procedure sfRenderWindow_setUnicodeTitle(renderWindow: PsfRenderWindow; const title: PsfChar32); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setUnicodeTitle';
-
-procedure sfRenderWindow_setIcon(renderWindow: PsfRenderWindow; size: sfVector2u; const pixels: PUInt8); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setIcon';
-
-procedure sfRenderWindow_setVisible(renderWindow: PsfRenderWindow; visible: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setVisible';
-
-procedure sfRenderWindow_setVerticalSyncEnabled(renderWindow: PsfRenderWindow; enabled: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setVerticalSyncEnabled';
-
-procedure sfRenderWindow_setMouseCursorVisible(renderWindow: PsfRenderWindow; show: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setMouseCursorVisible';
-
-procedure sfRenderWindow_setMouseCursorGrabbed(renderWindow: PsfRenderWindow; grabbed: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setMouseCursorGrabbed';
-
-procedure sfRenderWindow_setMouseCursor(renderWindow: PsfRenderWindow; const cursor: PsfCursor); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setMouseCursor';
-
-procedure sfRenderWindow_setKeyRepeatEnabled(renderWindow: PsfRenderWindow; enabled: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setKeyRepeatEnabled';
-
-procedure sfRenderWindow_setFramerateLimit(renderWindow: PsfRenderWindow; limit: Cardinal); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setFramerateLimit';
-
-procedure sfRenderWindow_setJoystickThreshold(renderWindow: PsfRenderWindow; threshold: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setJoystickThreshold';
-
-function sfRenderWindow_setActive(renderWindow: PsfRenderWindow; active: Boolean): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setActive';
-
-procedure sfRenderWindow_requestFocus(renderWindow: PsfRenderWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_requestFocus';
-
-function sfRenderWindow_hasFocus(const renderWindow: PsfRenderWindow): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_hasFocus';
-
-procedure sfRenderWindow_display(renderWindow: PsfRenderWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_display';
-
-function sfRenderWindow_getNativeHandle(const renderWindow: PsfRenderWindow): sfWindowHandle; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_getNativeHandle';
-
-procedure sfRenderWindow_clear(renderWindow: PsfRenderWindow; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_clear';
-
-procedure sfRenderWindow_clearStencil(renderWindow: PsfRenderWindow; stencilValue: sfStencilValue); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_clearStencil';
-
-procedure sfRenderWindow_clearColorAndStencil(renderWindow: PsfRenderWindow; color: sfColor; stencilValue: sfStencilValue); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_clearColorAndStencil';
-
-procedure sfRenderWindow_setView(renderWindow: PsfRenderWindow; const view: PsfView); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_setView';
-
-function sfRenderWindow_getView(const renderWindow: PsfRenderWindow): PsfView; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_getView';
-
-function sfRenderWindow_getDefaultView(const renderWindow: PsfRenderWindow): PsfView; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_getDefaultView';
-
-function sfRenderWindow_getViewport(const renderWindow: PsfRenderWindow; const view: PsfView): sfIntRect; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_getViewport';
-
-function sfRenderWindow_getScissor(const renderWindow: PsfRenderWindow; const view: PsfView): sfIntRect; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_getScissor';
-
-function sfRenderWindow_mapPixelToCoords(const renderWindow: PsfRenderWindow; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_mapPixelToCoords';
-
-function sfRenderWindow_mapCoordsToPixel(const renderWindow: PsfRenderWindow; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_mapCoordsToPixel';
-
-procedure sfRenderWindow_drawSprite(renderWindow: PsfRenderWindow; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawSprite';
-
-procedure sfRenderWindow_drawText(renderWindow: PsfRenderWindow; const &object: PsfText; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawText';
-
-procedure sfRenderWindow_drawShape(renderWindow: PsfRenderWindow; const &object: PsfShape; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawShape';
-
-procedure sfRenderWindow_drawCircleShape(renderWindow: PsfRenderWindow; const &object: PsfCircleShape; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawCircleShape';
-
-procedure sfRenderWindow_drawConvexShape(renderWindow: PsfRenderWindow; const &object: PsfConvexShape; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawConvexShape';
-
-procedure sfRenderWindow_drawRectangleShape(renderWindow: PsfRenderWindow; const &object: PsfRectangleShape; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawRectangleShape';
-
-procedure sfRenderWindow_drawVertexArray(renderWindow: PsfRenderWindow; const &object: PsfVertexArray; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawVertexArray';
-
-procedure sfRenderWindow_drawVertexBuffer(renderWindow: PsfRenderWindow; const &object: PsfVertexBuffer; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawVertexBuffer';
-
-procedure sfRenderWindow_drawVertexBufferRange(renderWindow: PsfRenderWindow; const &object: PsfVertexBuffer; firstVertex: NativeUInt; vertexCount: NativeUInt; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawVertexBufferRange';
-
-procedure sfRenderWindow_drawPrimitives(renderWindow: PsfRenderWindow; const vertices: PsfVertex; vertexCount: NativeUInt; &type: sfPrimitiveType; const states: PsfRenderStates); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_drawPrimitives';
-
-procedure sfRenderWindow_pushGLStates(renderWindow: PsfRenderWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_pushGLStates';
-
-procedure sfRenderWindow_popGLStates(renderWindow: PsfRenderWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_popGLStates';
-
-procedure sfRenderWindow_resetGLStates(renderWindow: PsfRenderWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_resetGLStates';
-
-function sfMouse_getPositionRenderWindow(const relativeTo: PsfRenderWindow): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfMouse_getPositionRenderWindow';
-
-procedure sfMouse_setPositionRenderWindow(position: sfVector2i; const relativeTo: PsfRenderWindow); cdecl;
-  external PSFML_DLL name _PU + 'sfMouse_setPositionRenderWindow';
-
-function sfTouch_getPositionRenderWindow(finger: Cardinal; const relativeTo: PsfRenderWindow): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfTouch_getPositionRenderWindow';
-
-function sfRenderWindow_createVulkanSurface(renderWindow: PsfRenderWindow; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfRenderWindow_createVulkanSurface';
-
-function sfShader_createFromFile(const vertexShaderFilename: PUTF8Char; const geometryShaderFilename: PUTF8Char; const fragmentShaderFilename: PUTF8Char): PsfShader; cdecl;
-  external PSFML_DLL name _PU + 'sfShader_createFromFile';
-
-function sfShader_createFromMemory(const vertexShader: PUTF8Char; const geometryShader: PUTF8Char; const fragmentShader: PUTF8Char): PsfShader; cdecl;
-  external PSFML_DLL name _PU + 'sfShader_createFromMemory';
-
-function sfShader_createFromStream(vertexShaderStream: PsfInputStream; geometryShaderStream: PsfInputStream; fragmentShaderStream: PsfInputStream): PsfShader; cdecl;
-  external PSFML_DLL name _PU + 'sfShader_createFromStream';
-
-procedure sfShader_destroy(const shader: PsfShader); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_destroy';
-
-procedure sfShader_setFloatUniform(shader: PsfShader; const name: PUTF8Char; x: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setFloatUniform';
-
-procedure sfShader_setVec2Uniform(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec2); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setVec2Uniform';
-
-procedure sfShader_setVec3Uniform(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec3); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setVec3Uniform';
-
-procedure sfShader_setVec4Uniform(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec4); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setVec4Uniform';
-
-procedure sfShader_setColorUniform(shader: PsfShader; const name: PUTF8Char; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setColorUniform';
-
-procedure sfShader_setIntUniform(shader: PsfShader; const name: PUTF8Char; x: Integer); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setIntUniform';
-
-procedure sfShader_setIvec2Uniform(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec2); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setIvec2Uniform';
-
-procedure sfShader_setIvec3Uniform(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec3); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setIvec3Uniform';
-
-procedure sfShader_setIvec4Uniform(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec4); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setIvec4Uniform';
-
-procedure sfShader_setIntColorUniform(shader: PsfShader; const name: PUTF8Char; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setIntColorUniform';
-
-procedure sfShader_setBoolUniform(shader: PsfShader; const name: PUTF8Char; x: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setBoolUniform';
-
-procedure sfShader_setBvec2Uniform(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec2); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setBvec2Uniform';
-
-procedure sfShader_setBvec3Uniform(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec3); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setBvec3Uniform';
-
-procedure sfShader_setBvec4Uniform(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec4); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setBvec4Uniform';
-
-procedure sfShader_setMat3Uniform(shader: PsfShader; const name: PUTF8Char; const matrix: PsfGlslMat3); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setMat3Uniform';
-
-procedure sfShader_setMat4Uniform(shader: PsfShader; const name: PUTF8Char; const matrix: PsfGlslMat4); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setMat4Uniform';
-
-procedure sfShader_setTextureUniform(shader: PsfShader; const name: PUTF8Char; const texture: PsfTexture); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setTextureUniform';
-
-procedure sfShader_setCurrentTextureUniform(shader: PsfShader; const name: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setCurrentTextureUniform';
-
-procedure sfShader_setFloatUniformArray(shader: PsfShader; const name: PUTF8Char; const scalarArray: PSingle; length: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setFloatUniformArray';
-
-procedure sfShader_setVec2UniformArray(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec2; length: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setVec2UniformArray';
-
-procedure sfShader_setVec3UniformArray(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec3; length: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setVec3UniformArray';
-
-procedure sfShader_setVec4UniformArray(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec4; length: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setVec4UniformArray';
-
-procedure sfShader_setMat3UniformArray(shader: PsfShader; const name: PUTF8Char; const matrixArray: PsfGlslMat3; length: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setMat3UniformArray';
-
-procedure sfShader_setMat4UniformArray(shader: PsfShader; const name: PUTF8Char; const matrixArray: PsfGlslMat4; length: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_setMat4UniformArray';
-
-function sfShader_getNativeHandle(const shader: PsfShader): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfShader_getNativeHandle';
-
-procedure sfShader_bind(const shader: PsfShader); cdecl;
-  external PSFML_DLL name _PU + 'sfShader_bind';
-
-function sfShader_isAvailable(): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfShader_isAvailable';
-
-function sfShader_isGeometryAvailable(): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfShader_isGeometryAvailable';
-
-function sfShape_create(getPointCount: sfShapeGetPointCountCallback; getPoint: sfShapeGetPointCallback; userData: Pointer): PsfShape; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_create';
-
-procedure sfShape_destroy(const shape: PsfShape); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_destroy';
-
-procedure sfShape_setPosition(shape: PsfShape; position: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_setPosition';
-
-procedure sfShape_setRotation(shape: PsfShape; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_setRotation';
-
-procedure sfShape_setScale(shape: PsfShape; scale: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_setScale';
-
-procedure sfShape_setOrigin(shape: PsfShape; origin: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_setOrigin';
-
-function sfShape_getPosition(const shape: PsfShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getPosition';
-
-function sfShape_getRotation(const shape: PsfShape): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getRotation';
-
-function sfShape_getScale(const shape: PsfShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getScale';
-
-function sfShape_getOrigin(const shape: PsfShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getOrigin';
-
-procedure sfShape_move(shape: PsfShape; offset: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_move';
-
-procedure sfShape_rotate(shape: PsfShape; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_rotate';
-
-procedure sfShape_scale(shape: PsfShape; factors: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_scale';
-
-function sfShape_getTransform(const shape: PsfShape): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getTransform';
-
-function sfShape_getInverseTransform(const shape: PsfShape): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getInverseTransform';
-
-procedure sfShape_setTexture(shape: PsfShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_setTexture';
-
-procedure sfShape_setTextureRect(shape: PsfShape; rect: sfIntRect); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_setTextureRect';
-
-procedure sfShape_setFillColor(shape: PsfShape; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_setFillColor';
-
-procedure sfShape_setOutlineColor(shape: PsfShape; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_setOutlineColor';
-
-procedure sfShape_setOutlineThickness(shape: PsfShape; thickness: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_setOutlineThickness';
-
-function sfShape_getTexture(const shape: PsfShape): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getTexture';
-
-function sfShape_getTextureRect(const shape: PsfShape): sfIntRect; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getTextureRect';
-
-function sfShape_getFillColor(const shape: PsfShape): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getFillColor';
-
-function sfShape_getOutlineColor(const shape: PsfShape): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getOutlineColor';
-
-function sfShape_getOutlineThickness(const shape: PsfShape): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getOutlineThickness';
-
-function sfShape_getPointCount(const shape: PsfShape): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getPointCount';
-
-function sfShape_getPoint(const shape: PsfShape; index: NativeUInt): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getPoint';
-
-function sfShape_getGeometricCenter(const shape: PsfShape): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getGeometricCenter';
-
-function sfShape_getLocalBounds(const shape: PsfShape): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getLocalBounds';
-
-function sfShape_getGlobalBounds(const shape: PsfShape): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfShape_getGlobalBounds';
-
-procedure sfShape_update(shape: PsfShape); cdecl;
-  external PSFML_DLL name _PU + 'sfShape_update';
-
-function sfSprite_create(const texture: PsfTexture): PsfSprite; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_create';
-
-function sfSprite_copy(const sprite: PsfSprite): PsfSprite; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_copy';
-
-procedure sfSprite_destroy(const sprite: PsfSprite); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_destroy';
-
-procedure sfSprite_setPosition(sprite: PsfSprite; position: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_setPosition';
-
-procedure sfSprite_setRotation(sprite: PsfSprite; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_setRotation';
-
-procedure sfSprite_setScale(sprite: PsfSprite; scale: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_setScale';
-
-procedure sfSprite_setOrigin(sprite: PsfSprite; origin: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_setOrigin';
-
-function sfSprite_getPosition(const sprite: PsfSprite): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getPosition';
-
-function sfSprite_getRotation(const sprite: PsfSprite): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getRotation';
-
-function sfSprite_getScale(const sprite: PsfSprite): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getScale';
-
-function sfSprite_getOrigin(const sprite: PsfSprite): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getOrigin';
-
-procedure sfSprite_move(sprite: PsfSprite; offset: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_move';
-
-procedure sfSprite_rotate(sprite: PsfSprite; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_rotate';
-
-procedure sfSprite_scale(sprite: PsfSprite; factors: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_scale';
-
-function sfSprite_getTransform(const sprite: PsfSprite): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getTransform';
-
-function sfSprite_getInverseTransform(const sprite: PsfSprite): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getInverseTransform';
-
-procedure sfSprite_setTexture(sprite: PsfSprite; const texture: PsfTexture; resetRect: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_setTexture';
-
-procedure sfSprite_setTextureRect(sprite: PsfSprite; rectangle: sfIntRect); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_setTextureRect';
-
-procedure sfSprite_setColor(sprite: PsfSprite; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_setColor';
-
-function sfSprite_getTexture(const sprite: PsfSprite): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getTexture';
-
-function sfSprite_getTextureRect(const sprite: PsfSprite): sfIntRect; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getTextureRect';
-
-function sfSprite_getColor(const sprite: PsfSprite): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getColor';
-
-function sfSprite_getLocalBounds(const sprite: PsfSprite): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getLocalBounds';
-
-function sfSprite_getGlobalBounds(const sprite: PsfSprite): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfSprite_getGlobalBounds';
-
-function sfText_create(const font: PsfFont): PsfText; cdecl;
-  external PSFML_DLL name _PU + 'sfText_create';
-
-function sfText_copy(const text: PsfText): PsfText; cdecl;
-  external PSFML_DLL name _PU + 'sfText_copy';
-
-procedure sfText_destroy(const text: PsfText); cdecl;
-  external PSFML_DLL name _PU + 'sfText_destroy';
-
-procedure sfText_setPosition(text: PsfText; position: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setPosition';
-
-procedure sfText_setRotation(text: PsfText; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setRotation';
-
-procedure sfText_setScale(text: PsfText; scale: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setScale';
-
-procedure sfText_setOrigin(text: PsfText; origin: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setOrigin';
-
-function sfText_getPosition(const text: PsfText): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getPosition';
-
-function sfText_getRotation(const text: PsfText): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getRotation';
-
-function sfText_getScale(const text: PsfText): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getScale';
-
-function sfText_getOrigin(const text: PsfText): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getOrigin';
-
-procedure sfText_move(text: PsfText; offset: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfText_move';
-
-procedure sfText_rotate(text: PsfText; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfText_rotate';
-
-procedure sfText_scale(text: PsfText; factors: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfText_scale';
-
-function sfText_getTransform(const text: PsfText): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getTransform';
-
-function sfText_getInverseTransform(const text: PsfText): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getInverseTransform';
-
-procedure sfText_setString(text: PsfText; const &string: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setString';
-
-procedure sfText_setUnicodeString(text: PsfText; const &string: PsfChar32); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setUnicodeString';
-
-procedure sfText_setFont(text: PsfText; const font: PsfFont); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setFont';
-
-procedure sfText_setCharacterSize(text: PsfText; size: Cardinal); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setCharacterSize';
-
-procedure sfText_setLineSpacing(text: PsfText; spacingFactor: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setLineSpacing';
-
-procedure sfText_setLetterSpacing(text: PsfText; spacingFactor: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setLetterSpacing';
-
-procedure sfText_setStyle(text: PsfText; style: UInt32); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setStyle';
-
-procedure sfText_setFillColor(text: PsfText; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setFillColor';
-
-procedure sfText_setOutlineColor(text: PsfText; color: sfColor); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setOutlineColor';
-
-procedure sfText_setOutlineThickness(text: PsfText; thickness: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfText_setOutlineThickness';
-
-function sfText_getString(const text: PsfText): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getString';
-
-function sfText_getUnicodeString(const text: PsfText): PsfChar32; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getUnicodeString';
-
-function sfText_getFont(const text: PsfText): PsfFont; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getFont';
-
-function sfText_getCharacterSize(const text: PsfText): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getCharacterSize';
-
-function sfText_getLetterSpacing(const text: PsfText): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getLetterSpacing';
-
-function sfText_getLineSpacing(const text: PsfText): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getLineSpacing';
-
-function sfText_getStyle(const text: PsfText): UInt32; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getStyle';
-
-function sfText_getFillColor(const text: PsfText): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getFillColor';
-
-function sfText_getOutlineColor(const text: PsfText): sfColor; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getOutlineColor';
-
-function sfText_getOutlineThickness(const text: PsfText): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getOutlineThickness';
-
-function sfText_findCharacterPos(const text: PsfText; index: NativeUInt): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfText_findCharacterPos';
-
-function sfText_getLocalBounds(const text: PsfText): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getLocalBounds';
-
-function sfText_getGlobalBounds(const text: PsfText): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfText_getGlobalBounds';
-
-function sfTexture_create(size: sfVector2u): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_create';
-
-function sfTexture_createSrgb(size: sfVector2u): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_createSrgb';
-
-function sfTexture_createFromFile(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_createFromFile';
-
-function sfTexture_createSrgbFromFile(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_createSrgbFromFile';
-
-function sfTexture_createFromMemory(const data: Pointer; sizeInBytes: NativeUInt; const area: PsfIntRect): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_createFromMemory';
-
-function sfTexture_createSrgbFromMemory(const data: Pointer; sizeInBytes: NativeUInt; const area: PsfIntRect): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_createSrgbFromMemory';
-
-function sfTexture_createFromStream(stream: PsfInputStream; const area: PsfIntRect): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_createFromStream';
-
-function sfTexture_createSrgbFromStream(stream: PsfInputStream; const area: PsfIntRect): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_createSrgbFromStream';
-
-function sfTexture_createFromImage(const image: PsfImage; const area: PsfIntRect): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_createFromImage';
-
-function sfTexture_createSrgbFromImage(const image: PsfImage; const area: PsfIntRect): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_createSrgbFromImage';
-
-function sfTexture_copy(const texture: PsfTexture): PsfTexture; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_copy';
-
-procedure sfTexture_destroy(const texture: PsfTexture); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_destroy';
-
-function sfTexture_getSize(const texture: PsfTexture): sfVector2u; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_getSize';
-
-function sfTexture_copyToImage(const texture: PsfTexture): PsfImage; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_copyToImage';
-
-procedure sfTexture_updateFromPixels(texture: PsfTexture; const pixels: PUInt8; size: sfVector2u; offset: sfVector2u); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_updateFromPixels';
-
-procedure sfTexture_updateFromTexture(destination: PsfTexture; const source: PsfTexture; offset: sfVector2u); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_updateFromTexture';
-
-procedure sfTexture_updateFromImage(texture: PsfTexture; const image: PsfImage; offset: sfVector2u); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_updateFromImage';
-
-procedure sfTexture_updateFromWindow(texture: PsfTexture; const window: PsfWindow; offset: sfVector2u); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_updateFromWindow';
-
-procedure sfTexture_updateFromRenderWindow(texture: PsfTexture; const renderWindow: PsfRenderWindow; offset: sfVector2u); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_updateFromRenderWindow';
-
-procedure sfTexture_setSmooth(texture: PsfTexture; smooth: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_setSmooth';
-
-function sfTexture_isSmooth(const texture: PsfTexture): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_isSmooth';
-
-function sfTexture_isSrgb(const texture: PsfTexture): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_isSrgb';
-
-procedure sfTexture_setRepeated(texture: PsfTexture; repeated: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_setRepeated';
-
-function sfTexture_isRepeated(const texture: PsfTexture): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_isRepeated';
-
-function sfTexture_generateMipmap(texture: PsfTexture): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_generateMipmap';
-
-procedure sfTexture_swap(left: PsfTexture; right: PsfTexture); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_swap';
-
-function sfTexture_getNativeHandle(const texture: PsfTexture): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_getNativeHandle';
-
-procedure sfTexture_bind(const texture: PsfTexture; &type: sfCoordinateType); cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_bind';
-
-function sfTexture_getMaximumSize(): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfTexture_getMaximumSize';
-
-function sfTransformable_create(): PsfTransformable; cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_create';
-
-function sfTransformable_copy(const transformable: PsfTransformable): PsfTransformable; cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_copy';
-
-procedure sfTransformable_destroy(const transformable: PsfTransformable); cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_destroy';
-
-procedure sfTransformable_setPosition(transformable: PsfTransformable; position: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_setPosition';
-
-procedure sfTransformable_setRotation(transformable: PsfTransformable; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_setRotation';
-
-procedure sfTransformable_setScale(transformable: PsfTransformable; scale: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_setScale';
-
-procedure sfTransformable_setOrigin(transformable: PsfTransformable; origin: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_setOrigin';
-
-function sfTransformable_getPosition(const transformable: PsfTransformable): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_getPosition';
-
-function sfTransformable_getRotation(const transformable: PsfTransformable): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_getRotation';
-
-function sfTransformable_getScale(const transformable: PsfTransformable): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_getScale';
-
-function sfTransformable_getOrigin(const transformable: PsfTransformable): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_getOrigin';
-
-procedure sfTransformable_move(transformable: PsfTransformable; offset: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_move';
-
-procedure sfTransformable_rotate(transformable: PsfTransformable; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_rotate';
-
-procedure sfTransformable_scale(transformable: PsfTransformable; factors: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_scale';
-
-function sfTransformable_getTransform(const transformable: PsfTransformable): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_getTransform';
-
-function sfTransformable_getInverseTransform(const transformable: PsfTransformable): sfTransform; cdecl;
-  external PSFML_DLL name _PU + 'sfTransformable_getInverseTransform';
-
-function sfVertexArray_create(): PsfVertexArray; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_create';
-
-function sfVertexArray_copy(const vertexArray: PsfVertexArray): PsfVertexArray; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_copy';
-
-procedure sfVertexArray_destroy(const vertexArray: PsfVertexArray); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_destroy';
-
-function sfVertexArray_getVertexCount(const vertexArray: PsfVertexArray): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_getVertexCount';
-
-function sfVertexArray_getVertex(vertexArray: PsfVertexArray; index: NativeUInt): PsfVertex; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_getVertex';
-
-procedure sfVertexArray_clear(vertexArray: PsfVertexArray); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_clear';
-
-procedure sfVertexArray_resize(vertexArray: PsfVertexArray; vertexCount: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_resize';
-
-procedure sfVertexArray_append(vertexArray: PsfVertexArray; vertex: sfVertex); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_append';
-
-procedure sfVertexArray_setPrimitiveType(vertexArray: PsfVertexArray; &type: sfPrimitiveType); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_setPrimitiveType';
-
-function sfVertexArray_getPrimitiveType(vertexArray: PsfVertexArray): sfPrimitiveType; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_getPrimitiveType';
-
-function sfVertexArray_getBounds(vertexArray: PsfVertexArray): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexArray_getBounds';
-
-function sfVertexBuffer_create(vertexCount: NativeUInt; &type: sfPrimitiveType; usage: sfVertexBufferUsage): PsfVertexBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_create';
-
-function sfVertexBuffer_copy(const vertexBuffer: PsfVertexBuffer): PsfVertexBuffer; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_copy';
-
-procedure sfVertexBuffer_destroy(const vertexBuffer: PsfVertexBuffer); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_destroy';
-
-function sfVertexBuffer_getVertexCount(const vertexBuffer: PsfVertexBuffer): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_getVertexCount';
-
-function sfVertexBuffer_update(vertexBuffer: PsfVertexBuffer; const vertices: PsfVertex; vertexCount: Cardinal; offset: Cardinal): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_update';
-
-function sfVertexBuffer_updateFromVertexBuffer(vertexBuffer: PsfVertexBuffer; const other: PsfVertexBuffer): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_updateFromVertexBuffer';
-
-procedure sfVertexBuffer_swap(left: PsfVertexBuffer; right: PsfVertexBuffer); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_swap';
-
-function sfVertexBuffer_getNativeHandle(vertexBuffer: PsfVertexBuffer): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_getNativeHandle';
-
-procedure sfVertexBuffer_setPrimitiveType(vertexBuffer: PsfVertexBuffer; &type: sfPrimitiveType); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_setPrimitiveType';
-
-function sfVertexBuffer_getPrimitiveType(const vertexBuffer: PsfVertexBuffer): sfPrimitiveType; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_getPrimitiveType';
-
-procedure sfVertexBuffer_setUsage(vertexBuffer: PsfVertexBuffer; usage: sfVertexBufferUsage); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_setUsage';
-
-function sfVertexBuffer_getUsage(const vertexBuffer: PsfVertexBuffer): sfVertexBufferUsage; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_getUsage';
-
-procedure sfVertexBuffer_bind(const vertexBuffer: PsfVertexBuffer); cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_bind';
-
-function sfVertexBuffer_isAvailable(): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfVertexBuffer_isAvailable';
-
-function sfView_create(): PsfView; cdecl;
-  external PSFML_DLL name _PU + 'sfView_create';
-
-function sfView_createFromRect(rectangle: sfFloatRect): PsfView; cdecl;
-  external PSFML_DLL name _PU + 'sfView_createFromRect';
-
-function sfView_copy(const view: PsfView): PsfView; cdecl;
-  external PSFML_DLL name _PU + 'sfView_copy';
-
-procedure sfView_destroy(const view: PsfView); cdecl;
-  external PSFML_DLL name _PU + 'sfView_destroy';
-
-procedure sfView_setCenter(view: PsfView; center: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfView_setCenter';
-
-procedure sfView_setSize(view: PsfView; size: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfView_setSize';
-
-procedure sfView_setRotation(view: PsfView; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfView_setRotation';
-
-procedure sfView_setViewport(view: PsfView; viewport: sfFloatRect); cdecl;
-  external PSFML_DLL name _PU + 'sfView_setViewport';
-
-procedure sfView_setScissor(view: PsfView; scissor: sfFloatRect); cdecl;
-  external PSFML_DLL name _PU + 'sfView_setScissor';
-
-function sfView_getCenter(const view: PsfView): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfView_getCenter';
-
-function sfView_getSize(const view: PsfView): sfVector2f; cdecl;
-  external PSFML_DLL name _PU + 'sfView_getSize';
-
-function sfView_getRotation(const view: PsfView): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfView_getRotation';
-
-function sfView_getViewport(const view: PsfView): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfView_getViewport';
-
-function sfView_getScissor(const view: PsfView): sfFloatRect; cdecl;
-  external PSFML_DLL name _PU + 'sfView_getScissor';
-
-procedure sfView_move(view: PsfView; offset: sfVector2f); cdecl;
-  external PSFML_DLL name _PU + 'sfView_move';
-
-procedure sfView_rotate(view: PsfView; angle: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfView_rotate';
-
-procedure sfView_zoom(view: PsfView; factor: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfView_zoom';
-
-function sfClipboard_getString(): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfClipboard_getString';
-
-function sfClipboard_getUnicodeString(): PsfChar32; cdecl;
-  external PSFML_DLL name _PU + 'sfClipboard_getUnicodeString';
-
-procedure sfClipboard_setString(const text: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfClipboard_setString';
-
-procedure sfClipboard_setUnicodeString(const text: PsfChar32); cdecl;
-  external PSFML_DLL name _PU + 'sfClipboard_setUnicodeString';
-
-function sfContext_create(): PsfContext; cdecl;
-  external PSFML_DLL name _PU + 'sfContext_create';
-
-procedure sfContext_destroy(const context: PsfContext); cdecl;
-  external PSFML_DLL name _PU + 'sfContext_destroy';
-
-function sfContext_isExtensionAvailable(const name: PUTF8Char): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfContext_isExtensionAvailable';
-
-function sfContext_setActive(context: PsfContext; active: Boolean): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfContext_setActive';
-
-function sfContext_getFunction(const name: PUTF8Char): sfGlFunctionPointer; cdecl;
-  external PSFML_DLL name _PU + 'sfContext_getFunction';
-
-function sfContext_getSettings(const context: PsfContext): sfContextSettings; cdecl;
-  external PSFML_DLL name _PU + 'sfContext_getSettings';
-
-function sfContext_getActiveContextId(): UInt64; cdecl;
-  external PSFML_DLL name _PU + 'sfContext_getActiveContextId';
-
-function sfCursor_createFromPixels(const pixels: PUInt8; size: sfVector2u; hotspot: sfVector2u): PsfCursor; cdecl;
-  external PSFML_DLL name _PU + 'sfCursor_createFromPixels';
-
-function sfCursor_createFromSystem(&type: sfCursorType): PsfCursor; cdecl;
-  external PSFML_DLL name _PU + 'sfCursor_createFromSystem';
-
-procedure sfCursor_destroy(const cursor: PsfCursor); cdecl;
-  external PSFML_DLL name _PU + 'sfCursor_destroy';
-
-function sfTouch_isDown(finger: Cardinal): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfTouch_isDown';
-
-function sfTouch_getPosition(finger: Cardinal; const relativeTo: PsfWindow): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfTouch_getPosition';
-
-function sfTouch_getPositionWindowBase(finger: Cardinal; const relativeTo: PsfWindowBase): sfVector2i; cdecl;
-  external PSFML_DLL name _PU + 'sfTouch_getPositionWindowBase';
-
-function sfIpAddress_fromString(const address: PUTF8Char): sfIpAddress; cdecl;
-  external PSFML_DLL name _PU + 'sfIpAddress_fromString';
-
-function sfIpAddress_fromBytes(byte0: UInt8; byte1: UInt8; byte2: UInt8; byte3: UInt8): sfIpAddress; cdecl;
-  external PSFML_DLL name _PU + 'sfIpAddress_fromBytes';
-
-function sfIpAddress_fromInteger(address: UInt32): sfIpAddress; cdecl;
-  external PSFML_DLL name _PU + 'sfIpAddress_fromInteger';
-
-procedure sfIpAddress_toString(address: sfIpAddress; &string: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfIpAddress_toString';
-
-function sfIpAddress_toInteger(address: sfIpAddress): UInt32; cdecl;
-  external PSFML_DLL name _PU + 'sfIpAddress_toInteger';
-
-function sfIpAddress_getLocalAddress(): sfIpAddress; cdecl;
-  external PSFML_DLL name _PU + 'sfIpAddress_getLocalAddress';
-
-function sfIpAddress_getPublicAddress(timeout: sfTime): sfIpAddress; cdecl;
-  external PSFML_DLL name _PU + 'sfIpAddress_getPublicAddress';
-
-procedure sfFtpListingResponse_destroy(const ftpListingResponse: PsfFtpListingResponse); cdecl;
-  external PSFML_DLL name _PU + 'sfFtpListingResponse_destroy';
-
-function sfFtpListingResponse_isOk(const ftpListingResponse: PsfFtpListingResponse): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpListingResponse_isOk';
-
-function sfFtpListingResponse_getStatus(const ftpListingResponse: PsfFtpListingResponse): sfFtpStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpListingResponse_getStatus';
-
-function sfFtpListingResponse_getMessage(const ftpListingResponse: PsfFtpListingResponse): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpListingResponse_getMessage';
-
-function sfFtpListingResponse_getCount(const ftpListingResponse: PsfFtpListingResponse): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpListingResponse_getCount';
-
-function sfFtpListingResponse_getName(const ftpListingResponse: PsfFtpListingResponse; index: NativeUInt): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpListingResponse_getName';
-
-procedure sfFtpDirectoryResponse_destroy(const ftpDirectoryResponse: PsfFtpDirectoryResponse); cdecl;
-  external PSFML_DLL name _PU + 'sfFtpDirectoryResponse_destroy';
-
-function sfFtpDirectoryResponse_isOk(const ftpDirectoryResponse: PsfFtpDirectoryResponse): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpDirectoryResponse_isOk';
-
-function sfFtpDirectoryResponse_getStatus(const ftpDirectoryResponse: PsfFtpDirectoryResponse): sfFtpStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpDirectoryResponse_getStatus';
-
-function sfFtpDirectoryResponse_getMessage(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpDirectoryResponse_getMessage';
-
-function sfFtpDirectoryResponse_getDirectory(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpDirectoryResponse_getDirectory';
-
-function sfFtpDirectoryResponse_getDirectoryUnicode(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PsfChar32; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpDirectoryResponse_getDirectoryUnicode';
-
-procedure sfFtpResponse_destroy(const ftpResponse: PsfFtpResponse); cdecl;
-  external PSFML_DLL name _PU + 'sfFtpResponse_destroy';
-
-function sfFtpResponse_isOk(const ftpResponse: PsfFtpResponse): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpResponse_isOk';
-
-function sfFtpResponse_getStatus(const ftpResponse: PsfFtpResponse): sfFtpStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpResponse_getStatus';
-
-function sfFtpResponse_getMessage(const ftpResponse: PsfFtpResponse): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfFtpResponse_getMessage';
-
-function sfFtp_create(): PsfFtp; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_create';
-
-procedure sfFtp_destroy(const ftp: PsfFtp); cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_destroy';
-
-function sfFtp_connect(ftp: PsfFtp; server: sfIpAddress; port: Word; timeout: sfTime): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_connect';
-
-function sfFtp_loginAnonymous(ftp: PsfFtp): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_loginAnonymous';
-
-function sfFtp_login(ftp: PsfFtp; const name: PUTF8Char; const password: PUTF8Char): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_login';
-
-function sfFtp_disconnect(ftp: PsfFtp): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_disconnect';
-
-function sfFtp_keepAlive(ftp: PsfFtp): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_keepAlive';
-
-function sfFtp_getWorkingDirectory(ftp: PsfFtp): PsfFtpDirectoryResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_getWorkingDirectory';
-
-function sfFtp_getDirectoryListing(ftp: PsfFtp; const directory: PUTF8Char): PsfFtpListingResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_getDirectoryListing';
-
-function sfFtp_changeDirectory(ftp: PsfFtp; const directory: PUTF8Char): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_changeDirectory';
-
-function sfFtp_parentDirectory(ftp: PsfFtp): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_parentDirectory';
-
-function sfFtp_createDirectory(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_createDirectory';
-
-function sfFtp_deleteDirectory(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_deleteDirectory';
-
-function sfFtp_renameFile(ftp: PsfFtp; const &file: PUTF8Char; const newName: PUTF8Char): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_renameFile';
-
-function sfFtp_deleteFile(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_deleteFile';
-
-function sfFtp_download(ftp: PsfFtp; const remoteFile: PUTF8Char; const localPath: PUTF8Char; mode: sfFtpTransferMode): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_download';
-
-function sfFtp_upload(ftp: PsfFtp; const localFile: PUTF8Char; const remotePath: PUTF8Char; mode: sfFtpTransferMode; append: Boolean): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_upload';
-
-function sfFtp_sendCommand(ftp: PsfFtp; const command: PUTF8Char; const parameter: PUTF8Char): PsfFtpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfFtp_sendCommand';
-
-function sfHttpRequest_create(): PsfHttpRequest; cdecl;
-  external PSFML_DLL name _PU + 'sfHttpRequest_create';
-
-procedure sfHttpRequest_destroy(const httpRequest: PsfHttpRequest); cdecl;
-  external PSFML_DLL name _PU + 'sfHttpRequest_destroy';
-
-procedure sfHttpRequest_setField(httpRequest: PsfHttpRequest; const field: PUTF8Char; const value: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfHttpRequest_setField';
-
-procedure sfHttpRequest_setMethod(httpRequest: PsfHttpRequest; method: sfHttpMethod); cdecl;
-  external PSFML_DLL name _PU + 'sfHttpRequest_setMethod';
-
-procedure sfHttpRequest_setUri(httpRequest: PsfHttpRequest; const uri: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfHttpRequest_setUri';
-
-procedure sfHttpRequest_setHttpVersion(httpRequest: PsfHttpRequest; major: Cardinal; minor: Cardinal); cdecl;
-  external PSFML_DLL name _PU + 'sfHttpRequest_setHttpVersion';
-
-procedure sfHttpRequest_setBody(httpRequest: PsfHttpRequest; const body: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfHttpRequest_setBody';
-
-procedure sfHttpResponse_destroy(const httpResponse: PsfHttpResponse); cdecl;
-  external PSFML_DLL name _PU + 'sfHttpResponse_destroy';
-
-function sfHttpResponse_getField(const httpResponse: PsfHttpResponse; const field: PUTF8Char): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfHttpResponse_getField';
-
-function sfHttpResponse_getStatus(const httpResponse: PsfHttpResponse): sfHttpStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfHttpResponse_getStatus';
-
-function sfHttpResponse_getMajorVersion(const httpResponse: PsfHttpResponse): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfHttpResponse_getMajorVersion';
-
-function sfHttpResponse_getMinorVersion(const httpResponse: PsfHttpResponse): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfHttpResponse_getMinorVersion';
-
-function sfHttpResponse_getBody(const httpResponse: PsfHttpResponse): PUTF8Char; cdecl;
-  external PSFML_DLL name _PU + 'sfHttpResponse_getBody';
-
-function sfHttp_create(): PsfHttp; cdecl;
-  external PSFML_DLL name _PU + 'sfHttp_create';
-
-procedure sfHttp_destroy(const http: PsfHttp); cdecl;
-  external PSFML_DLL name _PU + 'sfHttp_destroy';
-
-procedure sfHttp_setHost(http: PsfHttp; const host: PUTF8Char; port: Word); cdecl;
-  external PSFML_DLL name _PU + 'sfHttp_setHost';
-
-function sfHttp_sendRequest(http: PsfHttp; const request: PsfHttpRequest; timeout: sfTime): PsfHttpResponse; cdecl;
-  external PSFML_DLL name _PU + 'sfHttp_sendRequest';
-
-function sfPacket_create(): PsfPacket; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_create';
-
-function sfPacket_copy(const packet: PsfPacket): PsfPacket; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_copy';
-
-procedure sfPacket_destroy(const packet: PsfPacket); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_destroy';
-
-procedure sfPacket_append(packet: PsfPacket; const data: Pointer; sizeInBytes: NativeUInt); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_append';
-
-function sfPacket_getReadPosition(const packet: PsfPacket): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_getReadPosition';
-
-procedure sfPacket_clear(packet: PsfPacket); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_clear';
-
-function sfPacket_getData(const packet: PsfPacket): Pointer; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_getData';
-
-function sfPacket_getDataSize(const packet: PsfPacket): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_getDataSize';
-
-function sfPacket_endOfPacket(const packet: PsfPacket): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_endOfPacket';
-
-function sfPacket_canRead(const packet: PsfPacket): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_canRead';
-
-function sfPacket_readBool(packet: PsfPacket): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readBool';
-
-function sfPacket_readInt8(packet: PsfPacket): Int8; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readInt8';
-
-function sfPacket_readUint8(packet: PsfPacket): UInt8; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readUint8';
-
-function sfPacket_readInt16(packet: PsfPacket): Int16; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readInt16';
-
-function sfPacket_readUint16(packet: PsfPacket): UInt16; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readUint16';
-
-function sfPacket_readInt32(packet: PsfPacket): Int32; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readInt32';
-
-function sfPacket_readUint32(packet: PsfPacket): UInt32; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readUint32';
-
-function sfPacket_readFloat(packet: PsfPacket): Single; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readFloat';
-
-function sfPacket_readDouble(packet: PsfPacket): Double; cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readDouble';
-
-procedure sfPacket_readString(packet: PsfPacket; &string: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readString';
-
-procedure sfPacket_readWideString(packet: PsfPacket; &string: PWideChar); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_readWideString';
-
-procedure sfPacket_writeBool(packet: PsfPacket; p2: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeBool';
-
-procedure sfPacket_writeInt8(packet: PsfPacket; p2: Int8); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeInt8';
-
-procedure sfPacket_writeUint8(packet: PsfPacket; p2: UInt8); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeUint8';
-
-procedure sfPacket_writeInt16(packet: PsfPacket; p2: Int16); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeInt16';
-
-procedure sfPacket_writeUint16(packet: PsfPacket; p2: UInt16); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeUint16';
-
-procedure sfPacket_writeInt32(packet: PsfPacket; p2: Int32); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeInt32';
-
-procedure sfPacket_writeUint32(packet: PsfPacket; p2: UInt32); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeUint32';
-
-procedure sfPacket_writeFloat(packet: PsfPacket; p2: Single); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeFloat';
-
-procedure sfPacket_writeDouble(packet: PsfPacket; p2: Double); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeDouble';
-
-procedure sfPacket_writeString(packet: PsfPacket; const &string: PUTF8Char); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeString';
-
-procedure sfPacket_writeWideString(packet: PsfPacket; const &string: PWideChar); cdecl;
-  external PSFML_DLL name _PU + 'sfPacket_writeWideString';
-
-function sfSocketSelector_create(): PsfSocketSelector; cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_create';
-
-function sfSocketSelector_copy(const selector: PsfSocketSelector): PsfSocketSelector; cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_copy';
-
-procedure sfSocketSelector_destroy(const selector: PsfSocketSelector); cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_destroy';
-
-procedure sfSocketSelector_addTcpListener(selector: PsfSocketSelector; socket: PsfTcpListener); cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_addTcpListener';
-
-procedure sfSocketSelector_addTcpSocket(selector: PsfSocketSelector; socket: PsfTcpSocket); cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_addTcpSocket';
-
-procedure sfSocketSelector_addUdpSocket(selector: PsfSocketSelector; socket: PsfUdpSocket); cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_addUdpSocket';
-
-procedure sfSocketSelector_removeTcpListener(selector: PsfSocketSelector; socket: PsfTcpListener); cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_removeTcpListener';
-
-procedure sfSocketSelector_removeTcpSocket(selector: PsfSocketSelector; socket: PsfTcpSocket); cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_removeTcpSocket';
-
-procedure sfSocketSelector_removeUdpSocket(selector: PsfSocketSelector; socket: PsfUdpSocket); cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_removeUdpSocket';
-
-procedure sfSocketSelector_clear(selector: PsfSocketSelector); cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_clear';
-
-function sfSocketSelector_wait(selector: PsfSocketSelector; timeout: sfTime): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_wait';
-
-function sfSocketSelector_isTcpListenerReady(const selector: PsfSocketSelector; socket: PsfTcpListener): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_isTcpListenerReady';
-
-function sfSocketSelector_isTcpSocketReady(const selector: PsfSocketSelector; socket: PsfTcpSocket): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_isTcpSocketReady';
-
-function sfSocketSelector_isUdpSocketReady(const selector: PsfSocketSelector; socket: PsfUdpSocket): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfSocketSelector_isUdpSocketReady';
-
-function sfTcpListener_create(): PsfTcpListener; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpListener_create';
-
-procedure sfTcpListener_destroy(const listener: PsfTcpListener); cdecl;
-  external PSFML_DLL name _PU + 'sfTcpListener_destroy';
-
-procedure sfTcpListener_setBlocking(listener: PsfTcpListener; blocking: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfTcpListener_setBlocking';
-
-function sfTcpListener_isBlocking(const listener: PsfTcpListener): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpListener_isBlocking';
-
-function sfTcpListener_getLocalPort(const listener: PsfTcpListener): Word; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpListener_getLocalPort';
-
-function sfTcpListener_listen(listener: PsfTcpListener; port: Word; address: sfIpAddress): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpListener_listen';
-
-function sfTcpListener_accept(listener: PsfTcpListener; connected: PPsfTcpSocket): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpListener_accept';
-
-function sfTcpSocket_create(): PsfTcpSocket; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_create';
-
-procedure sfTcpSocket_destroy(const socket: PsfTcpSocket); cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_destroy';
-
-procedure sfTcpSocket_setBlocking(socket: PsfTcpSocket; blocking: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_setBlocking';
-
-function sfTcpSocket_isBlocking(const socket: PsfTcpSocket): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_isBlocking';
-
-function sfTcpSocket_getLocalPort(const socket: PsfTcpSocket): Word; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_getLocalPort';
-
-function sfTcpSocket_getRemoteAddress(const socket: PsfTcpSocket): sfIpAddress; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_getRemoteAddress';
-
-function sfTcpSocket_getRemotePort(const socket: PsfTcpSocket): Word; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_getRemotePort';
-
-function sfTcpSocket_connect(socket: PsfTcpSocket; remoteAddress: sfIpAddress; remotePort: Word; timeout: sfTime): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_connect';
-
-procedure sfTcpSocket_disconnect(socket: PsfTcpSocket); cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_disconnect';
-
-function sfTcpSocket_send(socket: PsfTcpSocket; const data: Pointer; size: NativeUInt): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_send';
-
-function sfTcpSocket_sendPartial(socket: PsfTcpSocket; const data: Pointer; size: NativeUInt; sent: PNativeUInt): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_sendPartial';
-
-function sfTcpSocket_receive(socket: PsfTcpSocket; data: Pointer; size: NativeUInt; received: PNativeUInt): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_receive';
-
-function sfTcpSocket_sendPacket(socket: PsfTcpSocket; packet: PsfPacket): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_sendPacket';
-
-function sfTcpSocket_receivePacket(socket: PsfTcpSocket; packet: PsfPacket): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfTcpSocket_receivePacket';
-
-function sfUdpSocket_create(): PsfUdpSocket; cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_create';
-
-procedure sfUdpSocket_destroy(const socket: PsfUdpSocket); cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_destroy';
-
-procedure sfUdpSocket_setBlocking(socket: PsfUdpSocket; blocking: Boolean); cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_setBlocking';
-
-function sfUdpSocket_isBlocking(const socket: PsfUdpSocket): Boolean; cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_isBlocking';
-
-function sfUdpSocket_getLocalPort(const socket: PsfUdpSocket): Word; cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_getLocalPort';
-
-function sfUdpSocket_bind(socket: PsfUdpSocket; port: Word; address: sfIpAddress): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_bind';
-
-procedure sfUdpSocket_unbind(socket: PsfUdpSocket); cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_unbind';
-
-function sfUdpSocket_send(socket: PsfUdpSocket; const data: Pointer; size: NativeUInt; remoteAddress: sfIpAddress; remotePort: Word): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_send';
-
-function sfUdpSocket_receive(socket: PsfUdpSocket; data: Pointer; size: NativeUInt; received: PNativeUInt; remoteAddress: PsfIpAddress; remotePort: PWord): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_receive';
-
-function sfUdpSocket_sendPacket(socket: PsfUdpSocket; packet: PsfPacket; remoteAddress: sfIpAddress; remotePort: Word): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_sendPacket';
-
-function sfUdpSocket_receivePacket(socket: PsfUdpSocket; packet: PsfPacket; remoteAddress: PsfIpAddress; remotePort: PWord): sfSocketStatus; cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_receivePacket';
-
-function sfUdpSocket_maxDatagramSize(): Cardinal; cdecl;
-  external PSFML_DLL name _PU + 'sfUdpSocket_maxDatagramSize';
-
-function crc32(crc: uLong; const buf: PBytef; len: uInt): uLong; cdecl;
-  external PSFML_DLL name _PU + 'crc32';
-
-function unzOpen64(const path: Pointer): unzFile; cdecl;
-  external PSFML_DLL name _PU + 'unzOpen64';
-
-function unzLocateFile(&file: unzFile; const szFileName: PUTF8Char; iCaseSensitivity: Integer): Integer; cdecl;
-  external PSFML_DLL name _PU + 'unzLocateFile';
-
-function unzClose(&file: unzFile): Integer; cdecl;
-  external PSFML_DLL name _PU + 'unzClose';
-
-function unzOpenCurrentFilePassword(&file: unzFile; const password: PUTF8Char): Integer; cdecl;
-  external PSFML_DLL name _PU + 'unzOpenCurrentFilePassword';
-
-function unzGetCurrentFileInfo64(&file: unzFile; pfile_info: Punz_file_info64; szFileName: PUTF8Char; fileNameBufferSize: uLong; extraField: Pointer; extraFieldBufferSize: uLong; szComment: PUTF8Char; commentBufferSize: uLong): Integer; cdecl;
-  external PSFML_DLL name _PU + 'unzGetCurrentFileInfo64';
-
-function unzReadCurrentFile(&file: unzFile; buf: voidp; len: Cardinal): Integer; cdecl;
-  external PSFML_DLL name _PU + 'unzReadCurrentFile';
-
-function unzCloseCurrentFile(&file: unzFile): Integer; cdecl;
-  external PSFML_DLL name _PU + 'unzCloseCurrentFile';
-
-function unztell64(&file: unzFile): UInt64; cdecl;
-  external PSFML_DLL name _PU + 'unztell64';
-
-function zipOpen64(const pathname: Pointer; append: Integer): zipFile; cdecl;
-  external PSFML_DLL name _PU + 'zipOpen64';
-
-function zipOpenNewFileInZip3_64(&file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong; zip64: Integer): Integer; cdecl;
-  external PSFML_DLL name _PU + 'zipOpenNewFileInZip3_64';
-
-function zipWriteInFileInZip(&file: zipFile; const buf: Pointer; len: Cardinal): Integer; cdecl;
-  external PSFML_DLL name _PU + 'zipWriteInFileInZip';
-
-function zipCloseFileInZip(&file: zipFile): Integer; cdecl;
-  external PSFML_DLL name _PU + 'zipCloseFileInZip';
-
-function zipClose(&file: zipFile; const global_comment: PUTF8Char): Integer; cdecl;
-  external PSFML_DLL name _PU + 'zipClose';
-
-function plm_create_with_filename(const filename: PUTF8Char): Pplm_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_create_with_filename';
-
-function plm_create_with_file(fh: PPointer; close_when_done: Integer): Pplm_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_create_with_file';
-
-function plm_create_with_memory(bytes: PUInt8; length: NativeUInt; free_when_done: Integer): Pplm_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_create_with_memory';
-
-function plm_create_with_buffer(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_create_with_buffer';
-
-procedure plm_destroy(self: Pplm_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_destroy';
-
-function plm_has_headers(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_has_headers';
-
-function plm_probe(self: Pplm_t; probesize: NativeUInt): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_probe';
-
-function plm_get_video_enabled(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_video_enabled';
-
-procedure plm_set_video_enabled(self: Pplm_t; enabled: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_set_video_enabled';
-
-function plm_get_num_video_streams(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_num_video_streams';
-
-function plm_get_width(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_width';
-
-function plm_get_height(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_height';
-
-function plm_get_pixel_aspect_ratio(self: Pplm_t): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_pixel_aspect_ratio';
-
-function plm_get_framerate(self: Pplm_t): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_framerate';
-
-function plm_get_audio_enabled(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_audio_enabled';
-
-procedure plm_set_audio_enabled(self: Pplm_t; enabled: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_set_audio_enabled';
-
-function plm_get_num_audio_streams(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_num_audio_streams';
-
-procedure plm_set_audio_stream(self: Pplm_t; stream_index: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_set_audio_stream';
-
-function plm_get_samplerate(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_samplerate';
-
-function plm_get_audio_lead_time(self: Pplm_t): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_audio_lead_time';
-
-procedure plm_set_audio_lead_time(self: Pplm_t; lead_time: Double); cdecl;
-  external PSFML_DLL name _PU + 'plm_set_audio_lead_time';
-
-function plm_get_time(self: Pplm_t): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_time';
-
-function plm_get_duration(self: Pplm_t): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_duration';
-
-procedure plm_rewind(self: Pplm_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_rewind';
-
-function plm_get_loop(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_get_loop';
-
-procedure plm_set_loop(self: Pplm_t; loop: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_set_loop';
-
-function plm_has_ended(self: Pplm_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_has_ended';
-
-procedure plm_set_video_decode_callback(self: Pplm_t; fp: plm_video_decode_callback; user: Pointer); cdecl;
-  external PSFML_DLL name _PU + 'plm_set_video_decode_callback';
-
-procedure plm_set_audio_decode_callback(self: Pplm_t; fp: plm_audio_decode_callback; user: Pointer); cdecl;
-  external PSFML_DLL name _PU + 'plm_set_audio_decode_callback';
-
-procedure plm_decode(self: Pplm_t; seconds: Double); cdecl;
-  external PSFML_DLL name _PU + 'plm_decode';
-
-function plm_decode_video(self: Pplm_t): Pplm_frame_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_decode_video';
-
-function plm_decode_audio(self: Pplm_t): Pplm_samples_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_decode_audio';
-
-function plm_seek(self: Pplm_t; time: Double; seek_exact: Integer): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_seek';
-
-function plm_seek_frame(self: Pplm_t; time: Double; seek_exact: Integer): Pplm_frame_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_seek_frame';
-
-function plm_buffer_create_with_filename(const filename: PUTF8Char): Pplm_buffer_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_create_with_filename';
-
-function plm_buffer_create_with_file(fh: PPointer; close_when_done: Integer): Pplm_buffer_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_create_with_file';
-
-function plm_buffer_create_with_memory(bytes: PUInt8; length: NativeUInt; free_when_done: Integer): Pplm_buffer_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_create_with_memory';
-
-function plm_buffer_create_with_capacity(capacity: NativeUInt): Pplm_buffer_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_create_with_capacity';
-
-function plm_buffer_create_for_appending(initial_capacity: NativeUInt): Pplm_buffer_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_create_for_appending';
-
-procedure plm_buffer_destroy(self: Pplm_buffer_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_destroy';
-
-function plm_buffer_write(self: Pplm_buffer_t; bytes: PUInt8; length: NativeUInt): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_write';
-
-procedure plm_buffer_signal_end(self: Pplm_buffer_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_signal_end';
-
-procedure plm_buffer_set_load_callback(self: Pplm_buffer_t; fp: plm_buffer_load_callback; user: Pointer); cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_set_load_callback';
-
-procedure plm_buffer_rewind(self: Pplm_buffer_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_rewind';
-
-function plm_buffer_get_size(self: Pplm_buffer_t): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_get_size';
-
-function plm_buffer_get_remaining(self: Pplm_buffer_t): NativeUInt; cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_get_remaining';
-
-function plm_buffer_has_ended(self: Pplm_buffer_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_buffer_has_ended';
-
-function plm_demux_create(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_demux_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_create';
-
-procedure plm_demux_destroy(self: Pplm_demux_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_destroy';
-
-function plm_demux_has_headers(self: Pplm_demux_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_has_headers';
-
-function plm_demux_probe(self: Pplm_demux_t; probesize: NativeUInt): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_probe';
-
-function plm_demux_get_num_video_streams(self: Pplm_demux_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_get_num_video_streams';
-
-function plm_demux_get_num_audio_streams(self: Pplm_demux_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_get_num_audio_streams';
-
-procedure plm_demux_rewind(self: Pplm_demux_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_rewind';
-
-function plm_demux_has_ended(self: Pplm_demux_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_has_ended';
-
-function plm_demux_seek(self: Pplm_demux_t; time: Double; &type: Integer; force_intra: Integer): Pplm_packet_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_seek';
-
-function plm_demux_get_start_time(self: Pplm_demux_t; &type: Integer): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_get_start_time';
-
-function plm_demux_get_duration(self: Pplm_demux_t; &type: Integer): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_get_duration';
-
-function plm_demux_decode(self: Pplm_demux_t): Pplm_packet_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_demux_decode';
-
-function plm_video_create_with_buffer(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_video_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_video_create_with_buffer';
-
-procedure plm_video_destroy(self: Pplm_video_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_video_destroy';
-
-function plm_video_has_header(self: Pplm_video_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_video_has_header';
-
-function plm_video_get_framerate(self: Pplm_video_t): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_video_get_framerate';
-
-function plm_video_get_pixel_aspect_ratio(self: Pplm_video_t): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_video_get_pixel_aspect_ratio';
-
-function plm_video_get_width(self: Pplm_video_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_video_get_width';
-
-function plm_video_get_height(self: Pplm_video_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_video_get_height';
-
-procedure plm_video_set_no_delay(self: Pplm_video_t; no_delay: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_video_set_no_delay';
-
-function plm_video_get_time(self: Pplm_video_t): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_video_get_time';
-
-procedure plm_video_set_time(self: Pplm_video_t; time: Double); cdecl;
-  external PSFML_DLL name _PU + 'plm_video_set_time';
-
-procedure plm_video_rewind(self: Pplm_video_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_video_rewind';
-
-function plm_video_has_ended(self: Pplm_video_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_video_has_ended';
-
-function plm_video_decode(self: Pplm_video_t): Pplm_frame_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_video_decode';
-
-procedure plm_frame_to_rgb(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_frame_to_rgb';
-
-procedure plm_frame_to_bgr(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_frame_to_bgr';
-
-procedure plm_frame_to_rgba(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_frame_to_rgba';
-
-procedure plm_frame_to_bgra(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_frame_to_bgra';
-
-procedure plm_frame_to_argb(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_frame_to_argb';
-
-procedure plm_frame_to_abgr(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
-  external PSFML_DLL name _PU + 'plm_frame_to_abgr';
-
-function plm_audio_create_with_buffer(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_audio_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_audio_create_with_buffer';
-
-procedure plm_audio_destroy(self: Pplm_audio_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_audio_destroy';
-
-function plm_audio_has_header(self: Pplm_audio_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_audio_has_header';
-
-function plm_audio_get_samplerate(self: Pplm_audio_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_audio_get_samplerate';
-
-function plm_audio_get_time(self: Pplm_audio_t): Double; cdecl;
-  external PSFML_DLL name _PU + 'plm_audio_get_time';
-
-procedure plm_audio_set_time(self: Pplm_audio_t; time: Double); cdecl;
-  external PSFML_DLL name _PU + 'plm_audio_set_time';
-
-procedure plm_audio_rewind(self: Pplm_audio_t); cdecl;
-  external PSFML_DLL name _PU + 'plm_audio_rewind';
-
-function plm_audio_has_ended(self: Pplm_audio_t): Integer; cdecl;
-  external PSFML_DLL name _PU + 'plm_audio_has_ended';
-
-function plm_audio_decode(self: Pplm_audio_t): Pplm_samples_t; cdecl;
-  external PSFML_DLL name _PU + 'plm_audio_decode';
-
-procedure redirect_cerr_to_callback(callback: cerr_callback; user_data: Pointer); cdecl;
-  external PSFML_DLL name _PU + 'redirect_cerr_to_callback';
-
-procedure restore_cerr(); cdecl;
-  external PSFML_DLL name _PU + 'restore_cerr';
+var
+  sfListener_setGlobalVolume: procedure(volume: Single); cdecl;
+  sfListener_getGlobalVolume: function(): Single; cdecl;
+  sfListener_setPosition: procedure(position: sfVector3f); cdecl;
+  sfListener_getPosition: function(): sfVector3f; cdecl;
+  sfListener_setDirection: procedure(direction: sfVector3f); cdecl;
+  sfListener_getDirection: function(): sfVector3f; cdecl;
+  sfListener_setVelocity: procedure(velocity: sfVector3f); cdecl;
+  sfListener_getVelocity: function(): sfVector3f; cdecl;
+  sfListener_setCone: procedure(cone: sfListenerCone); cdecl;
+  sfListener_getCone: function(): sfListenerCone; cdecl;
+  sfListener_setUpVector: procedure(upVector: sfVector3f); cdecl;
+  sfListener_getUpVector: function(): sfVector3f; cdecl;
+  sfTime_asSeconds: function(time: sfTime): Single; cdecl;
+  sfTime_asMilliseconds: function(time: sfTime): Int32; cdecl;
+  sfTime_asMicroseconds: function(time: sfTime): Int64; cdecl;
+  sfSeconds: function(amount: Single): sfTime; cdecl;
+  sfMilliseconds: function(amount: Int32): sfTime; cdecl;
+  sfMicroseconds: function(amount: Int64): sfTime; cdecl;
+  sfMusic_createFromFile: function(const filename: PUTF8Char): PsfMusic; cdecl;
+  sfMusic_createFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt): PsfMusic; cdecl;
+  sfMusic_createFromStream: function(stream: PsfInputStream): PsfMusic; cdecl;
+  sfMusic_destroy: procedure(const music: PsfMusic); cdecl;
+  sfMusic_setLooping: procedure(music: PsfMusic; loop: Boolean); cdecl;
+  sfMusic_isLooping: function(const music: PsfMusic): Boolean; cdecl;
+  sfMusic_setEffectProcessor: procedure(music: PsfMusic; effectProcessor: sfEffectProcessor); cdecl;
+  sfMusic_getDuration: function(const music: PsfMusic): sfTime; cdecl;
+  sfMusic_getLoopPoints: function(const music: PsfMusic): sfTimeSpan; cdecl;
+  sfMusic_setLoopPoints: procedure(music: PsfMusic; timePoints: sfTimeSpan); cdecl;
+  sfMusic_play: procedure(music: PsfMusic); cdecl;
+  sfMusic_pause: procedure(music: PsfMusic); cdecl;
+  sfMusic_stop: procedure(music: PsfMusic); cdecl;
+  sfMusic_getChannelCount: function(const music: PsfMusic): Cardinal; cdecl;
+  sfMusic_getSampleRate: function(const music: PsfMusic): Cardinal; cdecl;
+  sfMusic_getChannelMap: function(const music: PsfMusic; count: PNativeUInt): PsfSoundChannel; cdecl;
+  sfMusic_getStatus: function(const music: PsfMusic): sfSoundStatus; cdecl;
+  sfMusic_getPlayingOffset: function(const music: PsfMusic): sfTime; cdecl;
+  sfMusic_setPitch: procedure(music: PsfMusic; pitch: Single); cdecl;
+  sfMusic_setPan: procedure(music: PsfMusic; pan: Single); cdecl;
+  sfMusic_setVolume: procedure(music: PsfMusic; volume: Single); cdecl;
+  sfMusic_setSpatializationEnabled: procedure(music: PsfMusic; enabled: Boolean); cdecl;
+  sfMusic_setPosition: procedure(music: PsfMusic; position: sfVector3f); cdecl;
+  sfMusic_setDirection: procedure(music: PsfMusic; direction: sfVector3f); cdecl;
+  sfMusic_setCone: procedure(music: PsfMusic; cone: sfSoundSourceCone); cdecl;
+  sfMusic_setVelocity: procedure(music: PsfMusic; velocity: sfVector3f); cdecl;
+  sfMusic_setDopplerFactor: procedure(music: PsfMusic; factor: Single); cdecl;
+  sfMusic_setDirectionalAttenuationFactor: procedure(music: PsfMusic; factor: Single); cdecl;
+  sfMusic_setRelativeToListener: procedure(music: PsfMusic; relative: Boolean); cdecl;
+  sfMusic_setMinDistance: procedure(music: PsfMusic; distance: Single); cdecl;
+  sfMusic_setMaxDistance: procedure(music: PsfMusic; distance: Single); cdecl;
+  sfMusic_setMinGain: procedure(music: PsfMusic; gain: Single); cdecl;
+  sfMusic_setMaxGain: procedure(music: PsfMusic; gain: Single); cdecl;
+  sfMusic_setAttenuation: procedure(music: PsfMusic; attenuation: Single); cdecl;
+  sfMusic_setPlayingOffset: procedure(music: PsfMusic; timeOffset: sfTime); cdecl;
+  sfMusic_getPitch: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getPan: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_isSpatializationEnabled: function(const music: PsfMusic): Boolean; cdecl;
+  sfMusic_getVolume: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getPosition: function(const music: PsfMusic): sfVector3f; cdecl;
+  sfMusic_getDirection: function(const music: PsfMusic): sfVector3f; cdecl;
+  sfMusic_getCone: function(const music: PsfMusic): sfSoundSourceCone; cdecl;
+  sfMusic_getVelocity: function(const music: PsfMusic): sfVector3f; cdecl;
+  sfMusic_getDopplerFactor: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getDirectionalAttenuationFactor: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_isRelativeToListener: function(const music: PsfMusic): Boolean; cdecl;
+  sfMusic_getMinDistance: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getMaxDistance: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getMinGain: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getMaxGain: function(const music: PsfMusic): Single; cdecl;
+  sfMusic_getAttenuation: function(const music: PsfMusic): Single; cdecl;
+  sfSound_create: function(const buffer: PsfSoundBuffer): PsfSound; cdecl;
+  sfSound_copy: function(const sound: PsfSound): PsfSound; cdecl;
+  sfSound_destroy: procedure(const sound: PsfSound); cdecl;
+  sfSound_play: procedure(sound: PsfSound); cdecl;
+  sfSound_pause: procedure(sound: PsfSound); cdecl;
+  sfSound_stop: procedure(sound: PsfSound); cdecl;
+  sfSound_setBuffer: procedure(sound: PsfSound; const buffer: PsfSoundBuffer); cdecl;
+  sfSound_getBuffer: function(const sound: PsfSound): PsfSoundBuffer; cdecl;
+  sfSound_setLooping: procedure(sound: PsfSound; loop: Boolean); cdecl;
+  sfSound_isLooping: function(const sound: PsfSound): Boolean; cdecl;
+  sfSound_getStatus: function(const sound: PsfSound): sfSoundStatus; cdecl;
+  sfSound_setPitch: procedure(sound: PsfSound; pitch: Single); cdecl;
+  sfSound_setPan: procedure(sound: PsfSound; pan: Single); cdecl;
+  sfSound_setVolume: procedure(sound: PsfSound; volume: Single); cdecl;
+  sfSound_setSpatializationEnabled: procedure(sound: PsfSound; enabled: Boolean); cdecl;
+  sfSound_setPosition: procedure(sound: PsfSound; position: sfVector3f); cdecl;
+  sfSound_setDirection: procedure(sound: PsfSound; direction: sfVector3f); cdecl;
+  sfSound_setCone: procedure(sound: PsfSound; cone: sfSoundSourceCone); cdecl;
+  sfSound_setVelocity: procedure(sound: PsfSound; velocity: sfVector3f); cdecl;
+  sfSound_setDopplerFactor: procedure(sound: PsfSound; factor: Single); cdecl;
+  sfSound_setDirectionalAttenuationFactor: procedure(sound: PsfSound; factor: Single); cdecl;
+  sfSound_setRelativeToListener: procedure(sound: PsfSound; relative: Boolean); cdecl;
+  sfSound_setMinDistance: procedure(sound: PsfSound; distance: Single); cdecl;
+  sfSound_setMaxDistance: procedure(sound: PsfSound; distance: Single); cdecl;
+  sfSound_setMinGain: procedure(sound: PsfSound; gain: Single); cdecl;
+  sfSound_setMaxGain: procedure(sound: PsfSound; gain: Single); cdecl;
+  sfSound_setAttenuation: procedure(sound: PsfSound; attenuation: Single); cdecl;
+  sfSound_setPlayingOffset: procedure(sound: PsfSound; timeOffset: sfTime); cdecl;
+  sfSound_setEffectProcessor: procedure(sound: PsfSound; effectProcessor: sfEffectProcessor); cdecl;
+  sfSound_getPitch: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getPan: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getVolume: function(const sound: PsfSound): Single; cdecl;
+  sfSound_isSpatializationEnabled: function(const sound: PsfSound): Boolean; cdecl;
+  sfSound_getPosition: function(const sound: PsfSound): sfVector3f; cdecl;
+  sfSound_getDirection: function(const sound: PsfSound): sfVector3f; cdecl;
+  sfSound_getCone: function(const sound: PsfSound): sfSoundSourceCone; cdecl;
+  sfSound_getVelocity: function(const sound: PsfSound): sfVector3f; cdecl;
+  sfSound_getDopplerFactor: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getDirectionalAttenuationFactor: function(const sound: PsfSound): Single; cdecl;
+  sfSound_isRelativeToListener: function(const sound: PsfSound): Boolean; cdecl;
+  sfSound_getMinDistance: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getMaxDistance: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getMinGain: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getMaxGain: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getAttenuation: function(const sound: PsfSound): Single; cdecl;
+  sfSound_getPlayingOffset: function(const sound: PsfSound): sfTime; cdecl;
+  sfSoundBuffer_createFromFile: function(const filename: PUTF8Char): PsfSoundBuffer; cdecl;
+  sfSoundBuffer_createFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt): PsfSoundBuffer; cdecl;
+  sfSoundBuffer_createFromStream: function(stream: PsfInputStream): PsfSoundBuffer; cdecl;
+  sfSoundBuffer_createFromSamples: function(const samples: PInt16; sampleCount: UInt64; channelCount: Cardinal; sampleRate: Cardinal; channelMapData: PsfSoundChannel; channelMapSize: NativeUInt): PsfSoundBuffer; cdecl;
+  sfSoundBuffer_copy: function(const soundBuffer: PsfSoundBuffer): PsfSoundBuffer; cdecl;
+  sfSoundBuffer_destroy: procedure(const soundBuffer: PsfSoundBuffer); cdecl;
+  sfSoundBuffer_saveToFile: function(const soundBuffer: PsfSoundBuffer; const filename: PUTF8Char): Boolean; cdecl;
+  sfSoundBuffer_getSamples: function(const soundBuffer: PsfSoundBuffer): PInt16; cdecl;
+  sfSoundBuffer_getSampleCount: function(const soundBuffer: PsfSoundBuffer): UInt64; cdecl;
+  sfSoundBuffer_getSampleRate: function(const soundBuffer: PsfSoundBuffer): Cardinal; cdecl;
+  sfSoundBuffer_getChannelCount: function(const soundBuffer: PsfSoundBuffer): Cardinal; cdecl;
+  sfSoundBuffer_getChannelMap: function(const soundBuffer: PsfSoundBuffer; count: PNativeUInt): PsfSoundChannel; cdecl;
+  sfSoundBuffer_getDuration: function(const soundBuffer: PsfSoundBuffer): sfTime; cdecl;
+  sfSoundBufferRecorder_create: function(): PsfSoundBufferRecorder; cdecl;
+  sfSoundBufferRecorder_destroy: procedure(const soundBufferRecorder: PsfSoundBufferRecorder); cdecl;
+  sfSoundBufferRecorder_start: function(soundBufferRecorder: PsfSoundBufferRecorder; sampleRate: Cardinal): Boolean; cdecl;
+  sfSoundBufferRecorder_stop: procedure(soundBufferRecorder: PsfSoundBufferRecorder); cdecl;
+  sfSoundBufferRecorder_getSampleRate: function(const soundBufferRecorder: PsfSoundBufferRecorder): Cardinal; cdecl;
+  sfSoundBufferRecorder_getBuffer: function(const soundBufferRecorder: PsfSoundBufferRecorder): PsfSoundBuffer; cdecl;
+  sfSoundBufferRecorder_setDevice: function(soundBufferRecorder: PsfSoundBufferRecorder; const name: PUTF8Char): Boolean; cdecl;
+  sfSoundBufferRecorder_getDevice: function(soundBufferRecorder: PsfSoundBufferRecorder): PUTF8Char; cdecl;
+  sfSoundBufferRecorder_setChannelCount: procedure(soundBufferRecorder: PsfSoundBufferRecorder; channelCount: Cardinal); cdecl;
+  sfSoundBufferRecorder_getChannelCount: function(const soundBufferRecorder: PsfSoundBufferRecorder): Cardinal; cdecl;
+  sfSoundRecorder_create: function(onStart: sfSoundRecorderStartCallback; onProcess: sfSoundRecorderProcessCallback; onStop: sfSoundRecorderStopCallback; userData: Pointer): PsfSoundRecorder; cdecl;
+  sfSoundRecorder_destroy: procedure(const soundRecorder: PsfSoundRecorder); cdecl;
+  sfSoundRecorder_start: function(soundRecorder: PsfSoundRecorder; sampleRate: Cardinal): Boolean; cdecl;
+  sfSoundRecorder_stop: procedure(soundRecorder: PsfSoundRecorder); cdecl;
+  sfSoundRecorder_getSampleRate: function(const soundRecorder: PsfSoundRecorder): Cardinal; cdecl;
+  sfSoundRecorder_isAvailable: function(): Boolean; cdecl;
+  sfSoundRecorder_getAvailableDevices: function(count: PNativeUInt): PPUTF8Char; cdecl;
+  sfSoundRecorder_getDefaultDevice: function(): PUTF8Char; cdecl;
+  sfSoundRecorder_setDevice: function(soundRecorder: PsfSoundRecorder; const name: PUTF8Char): Boolean; cdecl;
+  sfSoundRecorder_getDevice: function(soundRecorder: PsfSoundRecorder): PUTF8Char; cdecl;
+  sfSoundRecorder_setChannelCount: procedure(soundRecorder: PsfSoundRecorder; channelCount: Cardinal); cdecl;
+  sfSoundRecorder_getChannelCount: function(const soundRecorder: PsfSoundRecorder): Cardinal; cdecl;
+  sfSoundRecorder_getChannelMap: function(const soundRecorder: PsfSoundRecorder; count: PNativeUInt): PsfSoundChannel; cdecl;
+  sfSoundStream_create: function(onGetData: sfSoundStreamGetDataCallback; onSeek: sfSoundStreamSeekCallback; channelCount: Cardinal; sampleRate: Cardinal; channelMapData: PsfSoundChannel; channelMapSize: NativeUInt; userData: Pointer): PsfSoundStream; cdecl;
+  sfSoundStream_destroy: procedure(const soundStream: PsfSoundStream); cdecl;
+  sfSoundStream_play: procedure(soundStream: PsfSoundStream); cdecl;
+  sfSoundStream_pause: procedure(soundStream: PsfSoundStream); cdecl;
+  sfSoundStream_stop: procedure(soundStream: PsfSoundStream); cdecl;
+  sfSoundStream_getStatus: function(const soundStream: PsfSoundStream): sfSoundStatus; cdecl;
+  sfSoundStream_getChannelCount: function(const soundStream: PsfSoundStream): Cardinal; cdecl;
+  sfSoundStream_getSampleRate: function(const soundStream: PsfSoundStream): Cardinal; cdecl;
+  sfSoundStream_getChannelMap: function(const soundStream: PsfSoundStream; count: PNativeUInt): PsfSoundChannel; cdecl;
+  sfSoundStream_setPitch: procedure(soundStream: PsfSoundStream; pitch: Single); cdecl;
+  sfSoundStream_setPan: procedure(soundStream: PsfSoundStream; pan: Single); cdecl;
+  sfSoundStream_setVolume: procedure(soundStream: PsfSoundStream; volume: Single); cdecl;
+  sfSoundStream_setSpatializationEnabled: procedure(soundStream: PsfSoundStream; enabled: Boolean); cdecl;
+  sfSoundStream_setPosition: procedure(soundStream: PsfSoundStream; position: sfVector3f); cdecl;
+  sfSoundStream_setDirection: procedure(soundStream: PsfSoundStream; direction: sfVector3f); cdecl;
+  sfSoundStream_setCone: procedure(soundStream: PsfSoundStream; cone: sfSoundSourceCone); cdecl;
+  sfSoundStream_setVelocity: procedure(soundStream: PsfSoundStream; velocity: sfVector3f); cdecl;
+  sfSoundStream_setDopplerFactor: procedure(soundStream: PsfSoundStream; factor: Single); cdecl;
+  sfSoundStream_setDirectionalAttenuationFactor: procedure(soundStream: PsfSoundStream; factor: Single); cdecl;
+  sfSoundStream_setRelativeToListener: procedure(soundStream: PsfSoundStream; relative: Boolean); cdecl;
+  sfSoundStream_setMinDistance: procedure(soundStream: PsfSoundStream; distance: Single); cdecl;
+  sfSoundStream_setMaxDistance: procedure(soundStream: PsfSoundStream; distance: Single); cdecl;
+  sfSoundStream_setMinGain: procedure(soundStream: PsfSoundStream; gain: Single); cdecl;
+  sfSoundStream_setMaxGain: procedure(soundStream: PsfSoundStream; gain: Single); cdecl;
+  sfSoundStream_setAttenuation: procedure(soundStream: PsfSoundStream; attenuation: Single); cdecl;
+  sfSoundStream_setPlayingOffset: procedure(soundStream: PsfSoundStream; timeOffset: sfTime); cdecl;
+  sfSoundStream_setLooping: procedure(soundStream: PsfSoundStream; loop: Boolean); cdecl;
+  sfSoundStream_getPitch: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getPan: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getVolume: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_isSpatializationEnabled: function(const soundStream: PsfSoundStream): Boolean; cdecl;
+  sfSoundStream_getPosition: function(const soundStream: PsfSoundStream): sfVector3f; cdecl;
+  sfSoundStream_getDirection: function(const soundStream: PsfSoundStream): sfVector3f; cdecl;
+  sfSoundStream_getCone: function(const soundStream: PsfSoundStream): sfSoundSourceCone; cdecl;
+  sfSoundStream_getVelocity: function(const soundStream: PsfSoundStream): sfVector3f; cdecl;
+  sfSoundStream_getDopplerFactor: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getDirectionalAttenuationFactor: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_isRelativeToListener: function(const soundStream: PsfSoundStream): Boolean; cdecl;
+  sfSoundStream_getMinDistance: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getMaxDistance: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getMinGain: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getMaxGain: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_getAttenuation: function(const soundStream: PsfSoundStream): Single; cdecl;
+  sfSoundStream_isLooping: function(const soundStream: PsfSoundStream): Boolean; cdecl;
+  sfSoundStream_setEffectProcessor: procedure(soundStream: PsfSoundStream; effectProcessor: sfEffectProcessor); cdecl;
+  sfSoundStream_getPlayingOffset: function(const soundStream: PsfSoundStream): sfTime; cdecl;
+  sfBuffer_create: function(): PsfBuffer; cdecl;
+  sfBuffer_destroy: procedure(const buffer: PsfBuffer); cdecl;
+  sfBuffer_getSize: function(const buffer: PsfBuffer): NativeUInt; cdecl;
+  sfBuffer_getData: function(const buffer: PsfBuffer): PUInt8; cdecl;
+  sfClock_create: function(): PsfClock; cdecl;
+  sfClock_copy: function(const clock: PsfClock): PsfClock; cdecl;
+  sfClock_destroy: procedure(const clock: PsfClock); cdecl;
+  sfClock_getElapsedTime: function(const clock: PsfClock): sfTime; cdecl;
+  sfClock_isRunning: function(const clock: PsfClock): Boolean; cdecl;
+  sfClock_start: procedure(clock: PsfClock); cdecl;
+  sfClock_stop: procedure(clock: PsfClock); cdecl;
+  sfClock_restart: function(clock: PsfClock): sfTime; cdecl;
+  sfClock_reset: function(clock: PsfClock): sfTime; cdecl;
+  sfSleep: procedure(duration: sfTime); cdecl;
+  sfColor_fromRGB: function(red: UInt8; green: UInt8; blue: UInt8): sfColor; cdecl;
+  sfColor_fromRGBA: function(red: UInt8; green: UInt8; blue: UInt8; alpha: UInt8): sfColor; cdecl;
+  sfColor_fromInteger: function(color: UInt32): sfColor; cdecl;
+  sfColor_toInteger: function(color: sfColor): UInt32; cdecl;
+  sfColor_add: function(color1: sfColor; color2: sfColor): sfColor; cdecl;
+  sfColor_subtract: function(color1: sfColor; color2: sfColor): sfColor; cdecl;
+  sfColor_modulate: function(color1: sfColor; color2: sfColor): sfColor; cdecl;
+  sfFloatRect_contains: function(const rect: PsfFloatRect; point: sfVector2f): Boolean; cdecl;
+  sfIntRect_contains: function(const rect: PsfIntRect; point: sfVector2i): Boolean; cdecl;
+  sfFloatRect_intersects: function(const rect1: PsfFloatRect; const rect2: PsfFloatRect; intersection: PsfFloatRect): Boolean; cdecl;
+  sfIntRect_intersects: function(const rect1: PsfIntRect; const rect2: PsfIntRect; intersection: PsfIntRect): Boolean; cdecl;
+  sfTransform_fromMatrix: function(a00: Single; a01: Single; a02: Single; a10: Single; a11: Single; a12: Single; a20: Single; a21: Single; a22: Single): sfTransform; cdecl;
+  sfTransform_getMatrix: procedure(const transform: PsfTransform; matrix: PSingle); cdecl;
+  sfTransform_getInverse: function(const transform: PsfTransform): sfTransform; cdecl;
+  sfTransform_transformPoint: function(const transform: PsfTransform; point: sfVector2f): sfVector2f; cdecl;
+  sfTransform_transformRect: function(const transform: PsfTransform; rectangle: sfFloatRect): sfFloatRect; cdecl;
+  sfTransform_combine: procedure(transform: PsfTransform; const other: PsfTransform); cdecl;
+  sfTransform_translate: procedure(transform: PsfTransform; offset: sfVector2f); cdecl;
+  sfTransform_rotate: procedure(transform: PsfTransform; angle: Single); cdecl;
+  sfTransform_rotateWithCenter: procedure(transform: PsfTransform; angle: Single; center: sfVector2f); cdecl;
+  sfTransform_scale: procedure(transform: PsfTransform; scale: sfVector2f); cdecl;
+  sfTransform_scaleWithCenter: procedure(transform: PsfTransform; scale: sfVector2f; center: sfVector2f); cdecl;
+  sfTransform_equal: function(left: PsfTransform; right: PsfTransform): Boolean; cdecl;
+  sfCircleShape_create: function(): PsfCircleShape; cdecl;
+  sfCircleShape_copy: function(const shape: PsfCircleShape): PsfCircleShape; cdecl;
+  sfCircleShape_destroy: procedure(const shape: PsfCircleShape); cdecl;
+  sfCircleShape_setPosition: procedure(shape: PsfCircleShape; position: sfVector2f); cdecl;
+  sfCircleShape_setRotation: procedure(shape: PsfCircleShape; angle: Single); cdecl;
+  sfCircleShape_setScale: procedure(shape: PsfCircleShape; scale: sfVector2f); cdecl;
+  sfCircleShape_setOrigin: procedure(shape: PsfCircleShape; origin: sfVector2f); cdecl;
+  sfCircleShape_getPosition: function(const shape: PsfCircleShape): sfVector2f; cdecl;
+  sfCircleShape_getRotation: function(const shape: PsfCircleShape): Single; cdecl;
+  sfCircleShape_getScale: function(const shape: PsfCircleShape): sfVector2f; cdecl;
+  sfCircleShape_getOrigin: function(const shape: PsfCircleShape): sfVector2f; cdecl;
+  sfCircleShape_move: procedure(shape: PsfCircleShape; offset: sfVector2f); cdecl;
+  sfCircleShape_rotate: procedure(shape: PsfCircleShape; angle: Single); cdecl;
+  sfCircleShape_scale: procedure(shape: PsfCircleShape; factors: sfVector2f); cdecl;
+  sfCircleShape_getTransform: function(const shape: PsfCircleShape): sfTransform; cdecl;
+  sfCircleShape_getInverseTransform: function(const shape: PsfCircleShape): sfTransform; cdecl;
+  sfCircleShape_setTexture: procedure(shape: PsfCircleShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
+  sfCircleShape_setTextureRect: procedure(shape: PsfCircleShape; rect: sfIntRect); cdecl;
+  sfCircleShape_setFillColor: procedure(shape: PsfCircleShape; color: sfColor); cdecl;
+  sfCircleShape_setOutlineColor: procedure(shape: PsfCircleShape; color: sfColor); cdecl;
+  sfCircleShape_setOutlineThickness: procedure(shape: PsfCircleShape; thickness: Single); cdecl;
+  sfCircleShape_getTexture: function(const shape: PsfCircleShape): PsfTexture; cdecl;
+  sfCircleShape_getTextureRect: function(const shape: PsfCircleShape): sfIntRect; cdecl;
+  sfCircleShape_getFillColor: function(const shape: PsfCircleShape): sfColor; cdecl;
+  sfCircleShape_getOutlineColor: function(const shape: PsfCircleShape): sfColor; cdecl;
+  sfCircleShape_getOutlineThickness: function(const shape: PsfCircleShape): Single; cdecl;
+  sfCircleShape_getPointCount: function(const shape: PsfCircleShape): NativeUInt; cdecl;
+  sfCircleShape_getPoint: function(const shape: PsfCircleShape; index: NativeUInt): sfVector2f; cdecl;
+  sfCircleShape_getGeometricCenter: function(const shape: PsfCircleShape): sfVector2f; cdecl;
+  sfCircleShape_setRadius: procedure(shape: PsfCircleShape; radius: Single); cdecl;
+  sfCircleShape_getRadius: function(const shape: PsfCircleShape): Single; cdecl;
+  sfCircleShape_setPointCount: procedure(shape: PsfCircleShape; count: NativeUInt); cdecl;
+  sfCircleShape_getLocalBounds: function(const shape: PsfCircleShape): sfFloatRect; cdecl;
+  sfCircleShape_getGlobalBounds: function(const shape: PsfCircleShape): sfFloatRect; cdecl;
+  sfConvexShape_create: function(): PsfConvexShape; cdecl;
+  sfConvexShape_copy: function(const shape: PsfConvexShape): PsfConvexShape; cdecl;
+  sfConvexShape_destroy: procedure(const shape: PsfConvexShape); cdecl;
+  sfConvexShape_setPosition: procedure(shape: PsfConvexShape; position: sfVector2f); cdecl;
+  sfConvexShape_setRotation: procedure(shape: PsfConvexShape; angle: Single); cdecl;
+  sfConvexShape_setScale: procedure(shape: PsfConvexShape; scale: sfVector2f); cdecl;
+  sfConvexShape_setOrigin: procedure(shape: PsfConvexShape; origin: sfVector2f); cdecl;
+  sfConvexShape_getPosition: function(const shape: PsfConvexShape): sfVector2f; cdecl;
+  sfConvexShape_getRotation: function(const shape: PsfConvexShape): Single; cdecl;
+  sfConvexShape_getScale: function(const shape: PsfConvexShape): sfVector2f; cdecl;
+  sfConvexShape_getOrigin: function(const shape: PsfConvexShape): sfVector2f; cdecl;
+  sfConvexShape_move: procedure(shape: PsfConvexShape; offset: sfVector2f); cdecl;
+  sfConvexShape_rotate: procedure(shape: PsfConvexShape; angle: Single); cdecl;
+  sfConvexShape_scale: procedure(shape: PsfConvexShape; factors: sfVector2f); cdecl;
+  sfConvexShape_getTransform: function(const shape: PsfConvexShape): sfTransform; cdecl;
+  sfConvexShape_getInverseTransform: function(const shape: PsfConvexShape): sfTransform; cdecl;
+  sfConvexShape_setTexture: procedure(shape: PsfConvexShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
+  sfConvexShape_setTextureRect: procedure(shape: PsfConvexShape; rect: sfIntRect); cdecl;
+  sfConvexShape_setFillColor: procedure(shape: PsfConvexShape; color: sfColor); cdecl;
+  sfConvexShape_setOutlineColor: procedure(shape: PsfConvexShape; color: sfColor); cdecl;
+  sfConvexShape_setOutlineThickness: procedure(shape: PsfConvexShape; thickness: Single); cdecl;
+  sfConvexShape_getTexture: function(const shape: PsfConvexShape): PsfTexture; cdecl;
+  sfConvexShape_getTextureRect: function(const shape: PsfConvexShape): sfIntRect; cdecl;
+  sfConvexShape_getFillColor: function(const shape: PsfConvexShape): sfColor; cdecl;
+  sfConvexShape_getOutlineColor: function(const shape: PsfConvexShape): sfColor; cdecl;
+  sfConvexShape_getOutlineThickness: function(const shape: PsfConvexShape): Single; cdecl;
+  sfConvexShape_getPointCount: function(const shape: PsfConvexShape): NativeUInt; cdecl;
+  sfConvexShape_getPoint: function(const shape: PsfConvexShape; index: NativeUInt): sfVector2f; cdecl;
+  sfConvexShape_getGeometricCenter: function(const shape: PsfConvexShape): sfVector2f; cdecl;
+  sfConvexShape_setPointCount: procedure(shape: PsfConvexShape; count: NativeUInt); cdecl;
+  sfConvexShape_setPoint: procedure(shape: PsfConvexShape; index: NativeUInt; point: sfVector2f); cdecl;
+  sfConvexShape_getLocalBounds: function(const shape: PsfConvexShape): sfFloatRect; cdecl;
+  sfConvexShape_getGlobalBounds: function(const shape: PsfConvexShape): sfFloatRect; cdecl;
+  sfFont_createFromFile: function(const filename: PUTF8Char): PsfFont; cdecl;
+  sfFont_createFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt): PsfFont; cdecl;
+  sfFont_createFromStream: function(stream: PsfInputStream): PsfFont; cdecl;
+  sfFont_copy: function(const font: PsfFont): PsfFont; cdecl;
+  sfFont_destroy: procedure(const font: PsfFont); cdecl;
+  sfFont_getGlyph: function(const font: PsfFont; codePoint: UInt32; characterSize: Cardinal; bold: Boolean; outlineThickness: Single): sfGlyph; cdecl;
+  sfFont_hasGlyph: function(const font: PsfFont; codePoint: UInt32): Boolean; cdecl;
+  sfFont_getKerning: function(const font: PsfFont; first: UInt32; second: UInt32; characterSize: Cardinal): Single; cdecl;
+  sfFont_getBoldKerning: function(const font: PsfFont; first: UInt32; second: UInt32; characterSize: Cardinal): Single; cdecl;
+  sfFont_getLineSpacing: function(const font: PsfFont; characterSize: Cardinal): Single; cdecl;
+  sfFont_getUnderlinePosition: function(const font: PsfFont; characterSize: Cardinal): Single; cdecl;
+  sfFont_getUnderlineThickness: function(const font: PsfFont; characterSize: Cardinal): Single; cdecl;
+  sfFont_getTexture: function(font: PsfFont; characterSize: Cardinal): PsfTexture; cdecl;
+  sfFont_setSmooth: procedure(font: PsfFont; smooth: Boolean); cdecl;
+  sfFont_isSmooth: function(const font: PsfFont): Boolean; cdecl;
+  sfFont_getInfo: function(const font: PsfFont): sfFontInfo; cdecl;
+  sfImage_create: function(size: sfVector2u): PsfImage; cdecl;
+  sfImage_createFromColor: function(size: sfVector2u; color: sfColor): PsfImage; cdecl;
+  sfImage_createFromPixels: function(size: sfVector2u; const pixels: PUInt8): PsfImage; cdecl;
+  sfImage_createFromFile: function(const filename: PUTF8Char): PsfImage; cdecl;
+  sfImage_createFromMemory: function(const data: Pointer; size: NativeUInt): PsfImage; cdecl;
+  sfImage_createFromStream: function(stream: PsfInputStream): PsfImage; cdecl;
+  sfImage_copy: function(const image: PsfImage): PsfImage; cdecl;
+  sfImage_destroy: procedure(const image: PsfImage); cdecl;
+  sfImage_saveToFile: function(const image: PsfImage; const filename: PUTF8Char): Boolean; cdecl;
+  sfImage_saveToMemory: function(const image: PsfImage; output: PsfBuffer; const format: PUTF8Char): Boolean; cdecl;
+  sfImage_getSize: function(const image: PsfImage): sfVector2u; cdecl;
+  sfImage_createMaskFromColor: procedure(image: PsfImage; color: sfColor; alpha: UInt8); cdecl;
+  sfImage_copyImage: function(image: PsfImage; const source: PsfImage; dest: sfVector2u; sourceRect: sfIntRect; applyAlpha: Boolean): Boolean; cdecl;
+  sfImage_setPixel: procedure(image: PsfImage; coords: sfVector2u; color: sfColor); cdecl;
+  sfImage_getPixel: function(const image: PsfImage; coords: sfVector2u): sfColor; cdecl;
+  sfImage_getPixelsPtr: function(const image: PsfImage): PUInt8; cdecl;
+  sfImage_flipHorizontally: procedure(image: PsfImage); cdecl;
+  sfImage_flipVertically: procedure(image: PsfImage); cdecl;
+  sfRectangleShape_create: function(): PsfRectangleShape; cdecl;
+  sfRectangleShape_copy: function(const shape: PsfRectangleShape): PsfRectangleShape; cdecl;
+  sfRectangleShape_destroy: procedure(const shape: PsfRectangleShape); cdecl;
+  sfRectangleShape_setPosition: procedure(shape: PsfRectangleShape; position: sfVector2f); cdecl;
+  sfRectangleShape_setRotation: procedure(shape: PsfRectangleShape; angle: Single); cdecl;
+  sfRectangleShape_setScale: procedure(shape: PsfRectangleShape; scale: sfVector2f); cdecl;
+  sfRectangleShape_setOrigin: procedure(shape: PsfRectangleShape; origin: sfVector2f); cdecl;
+  sfRectangleShape_getPosition: function(const shape: PsfRectangleShape): sfVector2f; cdecl;
+  sfRectangleShape_getRotation: function(const shape: PsfRectangleShape): Single; cdecl;
+  sfRectangleShape_getScale: function(const shape: PsfRectangleShape): sfVector2f; cdecl;
+  sfRectangleShape_getOrigin: function(const shape: PsfRectangleShape): sfVector2f; cdecl;
+  sfRectangleShape_move: procedure(shape: PsfRectangleShape; offset: sfVector2f); cdecl;
+  sfRectangleShape_rotate: procedure(shape: PsfRectangleShape; angle: Single); cdecl;
+  sfRectangleShape_scale: procedure(shape: PsfRectangleShape; factors: sfVector2f); cdecl;
+  sfRectangleShape_getTransform: function(const shape: PsfRectangleShape): sfTransform; cdecl;
+  sfRectangleShape_getInverseTransform: function(const shape: PsfRectangleShape): sfTransform; cdecl;
+  sfRectangleShape_setTexture: procedure(shape: PsfRectangleShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
+  sfRectangleShape_setTextureRect: procedure(shape: PsfRectangleShape; rect: sfIntRect); cdecl;
+  sfRectangleShape_setFillColor: procedure(shape: PsfRectangleShape; color: sfColor); cdecl;
+  sfRectangleShape_setOutlineColor: procedure(shape: PsfRectangleShape; color: sfColor); cdecl;
+  sfRectangleShape_setOutlineThickness: procedure(shape: PsfRectangleShape; thickness: Single); cdecl;
+  sfRectangleShape_getTexture: function(const shape: PsfRectangleShape): PsfTexture; cdecl;
+  sfRectangleShape_getTextureRect: function(const shape: PsfRectangleShape): sfIntRect; cdecl;
+  sfRectangleShape_getFillColor: function(const shape: PsfRectangleShape): sfColor; cdecl;
+  sfRectangleShape_getOutlineColor: function(const shape: PsfRectangleShape): sfColor; cdecl;
+  sfRectangleShape_getOutlineThickness: function(const shape: PsfRectangleShape): Single; cdecl;
+  sfRectangleShape_getPointCount: function(const shape: PsfRectangleShape): NativeUInt; cdecl;
+  sfRectangleShape_getPoint: function(const shape: PsfRectangleShape; index: NativeUInt): sfVector2f; cdecl;
+  sfRectangleShape_getGeometricCenter: function(const shape: PsfRectangleShape): sfVector2f; cdecl;
+  sfRectangleShape_setSize: procedure(shape: PsfRectangleShape; size: sfVector2f); cdecl;
+  sfRectangleShape_getSize: function(const shape: PsfRectangleShape): sfVector2f; cdecl;
+  sfRectangleShape_getLocalBounds: function(const shape: PsfRectangleShape): sfFloatRect; cdecl;
+  sfRectangleShape_getGlobalBounds: function(const shape: PsfRectangleShape): sfFloatRect; cdecl;
+  sfJoystick_isConnected: function(joystick: Cardinal): Boolean; cdecl;
+  sfJoystick_getButtonCount: function(joystick: Cardinal): Cardinal; cdecl;
+  sfJoystick_hasAxis: function(joystick: Cardinal; axis: sfJoystickAxis): Boolean; cdecl;
+  sfJoystick_isButtonPressed: function(joystick: Cardinal; button: Cardinal): Boolean; cdecl;
+  sfJoystick_getAxisPosition: function(joystick: Cardinal; axis: sfJoystickAxis): Single; cdecl;
+  sfJoystick_getIdentification: function(joystick: Cardinal): sfJoystickIdentification; cdecl;
+  sfJoystick_update: procedure(); cdecl;
+  sfKeyboard_isKeyPressed: function(key: sfKeyCode): Boolean; cdecl;
+  sfKeyboard_isScancodePressed: function(code: sfScancode): Boolean; cdecl;
+  sfKeyboard_localize: function(code: sfScancode): sfKeyCode; cdecl;
+  sfKeyboard_delocalize: function(key: sfKeyCode): sfScancode; cdecl;
+  sfKeyboard_getDescription: function(code: sfScancode): PUTF8Char; cdecl;
+  sfKeyboard_setVirtualKeyboardVisible: procedure(visible: Boolean); cdecl;
+  sfMouse_isButtonPressed: function(button: sfMouseButton): Boolean; cdecl;
+  sfMouse_getPosition: function(const relativeTo: PsfWindow): sfVector2i; cdecl;
+  sfMouse_setPosition: procedure(position: sfVector2i; const relativeTo: PsfWindow); cdecl;
+  sfMouse_getPositionWindowBase: function(const relativeTo: PsfWindowBase): sfVector2i; cdecl;
+  sfMouse_setPositionWindowBase: procedure(position: sfVector2i; const relativeTo: PsfWindowBase); cdecl;
+  sfSensor_isAvailable: function(sensor: sfSensorType): Boolean; cdecl;
+  sfSensor_setEnabled: procedure(sensor: sfSensorType; enabled: Boolean); cdecl;
+  sfSensor_getValue: function(sensor: sfSensorType): sfVector3f; cdecl;
+  sfVideoMode_getDesktopMode: function(): sfVideoMode; cdecl;
+  sfVideoMode_getFullscreenModes: function(count: PNativeUInt): PsfVideoMode; cdecl;
+  sfVideoMode_isValid: function(mode: sfVideoMode): Boolean; cdecl;
+  sfVulkan_isAvailable: function(requireGraphics: Boolean): Boolean; cdecl;
+  sfVulkan_getFunction: function(const name: PUTF8Char): sfVulkanFunctionPointer; cdecl;
+  sfVulkan_getGraphicsRequiredInstanceExtensions: function(count: PNativeUInt): PPUTF8Char; cdecl;
+  sfWindowBase_create: function(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState): PsfWindowBase; cdecl;
+  sfWindowBase_createUnicode: function(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState): PsfWindowBase; cdecl;
+  sfWindowBase_createFromHandle: function(handle: sfWindowHandle): PsfWindowBase; cdecl;
+  sfWindowBase_destroy: procedure(const windowBase: PsfWindowBase); cdecl;
+  sfWindowBase_close: procedure(windowBase: PsfWindowBase); cdecl;
+  sfWindowBase_isOpen: function(const windowBase: PsfWindowBase): Boolean; cdecl;
+  sfWindowBase_pollEvent: function(windowBase: PsfWindowBase; event: PsfEvent): Boolean; cdecl;
+  sfWindowBase_waitEvent: function(windowBase: PsfWindowBase; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
+  sfWindowBase_getPosition: function(const windowBase: PsfWindowBase): sfVector2i; cdecl;
+  sfWindowBase_setPosition: procedure(windowBase: PsfWindowBase; position: sfVector2i); cdecl;
+  sfWindowBase_getSize: function(const windowBase: PsfWindowBase): sfVector2u; cdecl;
+  sfWindowBase_setSize: procedure(windowBase: PsfWindowBase; size: sfVector2u); cdecl;
+  sfWindowBase_setTitle: procedure(windowBase: PsfWindowBase; const title: PUTF8Char); cdecl;
+  sfWindowBase_setUnicodeTitle: procedure(windowBase: PsfWindowBase; const title: PsfChar32); cdecl;
+  sfWindowBase_setIcon: procedure(windowBase: PsfWindowBase; size: sfVector2u; const pixels: PUInt8); cdecl;
+  sfWindowBase_setVisible: procedure(windowBase: PsfWindowBase; visible: Boolean); cdecl;
+  sfWindowBase_setMouseCursorVisible: procedure(windowBase: PsfWindowBase; visible: Boolean); cdecl;
+  sfWindowBase_setMouseCursorGrabbed: procedure(windowBase: PsfWindowBase; grabbed: Boolean); cdecl;
+  sfWindowBase_setMouseCursor: procedure(windowBase: PsfWindowBase; const cursor: PsfCursor); cdecl;
+  sfWindowBase_setKeyRepeatEnabled: procedure(windowBase: PsfWindowBase; enabled: Boolean); cdecl;
+  sfWindowBase_setJoystickThreshold: procedure(windowBase: PsfWindowBase; threshold: Single); cdecl;
+  sfWindowBase_requestFocus: procedure(windowBase: PsfWindowBase); cdecl;
+  sfWindowBase_hasFocus: function(const windowBase: PsfWindowBase): Boolean; cdecl;
+  sfWindowBase_getNativeHandle: function(const windowBase: PsfWindowBase): sfWindowHandle; cdecl;
+  sfWindowBase_createVulkanSurface: function(windowBase: PsfWindowBase; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
+  sfWindow_create: function(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfWindow; cdecl;
+  sfWindow_createUnicode: function(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfWindow; cdecl;
+  sfWindow_createFromHandle: function(handle: sfWindowHandle; const settings: PsfContextSettings): PsfWindow; cdecl;
+  sfWindow_destroy: procedure(const window: PsfWindow); cdecl;
+  sfWindow_close: procedure(window: PsfWindow); cdecl;
+  sfWindow_isOpen: function(const window: PsfWindow): Boolean; cdecl;
+  sfWindow_getSettings: function(const window: PsfWindow): sfContextSettings; cdecl;
+  sfWindow_pollEvent: function(window: PsfWindow; event: PsfEvent): Boolean; cdecl;
+  sfWindow_waitEvent: function(window: PsfWindow; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
+  sfWindow_getPosition: function(const window: PsfWindow): sfVector2i; cdecl;
+  sfWindow_setPosition: procedure(window: PsfWindow; position: sfVector2i); cdecl;
+  sfWindow_getSize: function(const window: PsfWindow): sfVector2u; cdecl;
+  sfWindow_setSize: procedure(window: PsfWindow; size: sfVector2u); cdecl;
+  sfWindow_setTitle: procedure(window: PsfWindow; const title: PUTF8Char); cdecl;
+  sfWindow_setUnicodeTitle: procedure(window: PsfWindow; const title: PsfChar32); cdecl;
+  sfWindow_setIcon: procedure(window: PsfWindow; size: sfVector2u; const pixels: PUInt8); cdecl;
+  sfWindow_setVisible: procedure(window: PsfWindow; visible: Boolean); cdecl;
+  sfWindow_setVerticalSyncEnabled: procedure(window: PsfWindow; enabled: Boolean); cdecl;
+  sfWindow_setMouseCursorVisible: procedure(window: PsfWindow; visible: Boolean); cdecl;
+  sfWindow_setMouseCursorGrabbed: procedure(window: PsfWindow; grabbed: Boolean); cdecl;
+  sfWindow_setMouseCursor: procedure(window: PsfWindow; const cursor: PsfCursor); cdecl;
+  sfWindow_setKeyRepeatEnabled: procedure(window: PsfWindow; enabled: Boolean); cdecl;
+  sfWindow_setFramerateLimit: procedure(window: PsfWindow; limit: Cardinal); cdecl;
+  sfWindow_setJoystickThreshold: procedure(window: PsfWindow; threshold: Single); cdecl;
+  sfWindow_setActive: function(window: PsfWindow; active: Boolean): Boolean; cdecl;
+  sfWindow_requestFocus: procedure(window: PsfWindow); cdecl;
+  sfWindow_hasFocus: function(const window: PsfWindow): Boolean; cdecl;
+  sfWindow_display: procedure(window: PsfWindow); cdecl;
+  sfWindow_getNativeHandle: function(const window: PsfWindow): sfWindowHandle; cdecl;
+  sfWindow_createVulkanSurface: function(window: PsfWindow; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
+  sfRenderTexture_create: function(size: sfVector2u; const settings: PsfContextSettings): PsfRenderTexture; cdecl;
+  sfRenderTexture_destroy: procedure(const renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_getSize: function(const renderTexture: PsfRenderTexture): sfVector2u; cdecl;
+  sfRenderTexture_isSrgb: function(const renderTexture: PsfRenderTexture): Boolean; cdecl;
+  sfRenderTexture_setActive: function(renderTexture: PsfRenderTexture; active: Boolean): Boolean; cdecl;
+  sfRenderTexture_display: procedure(renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_clear: procedure(renderTexture: PsfRenderTexture; color: sfColor); cdecl;
+  sfRenderTexture_clearStencil: procedure(renderTexture: PsfRenderTexture; stencilValue: sfStencilValue); cdecl;
+  sfRenderTexture_clearColorAndStencil: procedure(renderTexture: PsfRenderTexture; color: sfColor; stencilValue: sfStencilValue); cdecl;
+  sfRenderTexture_setView: procedure(renderTexture: PsfRenderTexture; const view: PsfView); cdecl;
+  sfRenderTexture_getView: function(const renderTexture: PsfRenderTexture): PsfView; cdecl;
+  sfRenderTexture_getDefaultView: function(const renderTexture: PsfRenderTexture): PsfView; cdecl;
+  sfRenderTexture_getViewport: function(const renderTexture: PsfRenderTexture; const view: PsfView): sfIntRect; cdecl;
+  sfRenderTexture_getScissor: function(const renderTexture: PsfRenderTexture; const view: PsfView): sfIntRect; cdecl;
+  sfRenderTexture_mapPixelToCoords: function(const renderTexture: PsfRenderTexture; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
+  sfRenderTexture_mapCoordsToPixel: function(const renderTexture: PsfRenderTexture; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
+  sfRenderTexture_drawSprite: procedure(renderTexture: PsfRenderTexture; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_drawText: procedure(renderTexture: PsfRenderTexture; const &object: PsfText; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_drawShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfShape; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_drawCircleShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfCircleShape; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_drawConvexShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfConvexShape; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_drawRectangleShape: procedure(renderTexture: PsfRenderTexture; const &object: PsfRectangleShape; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_drawVertexArray: procedure(renderTexture: PsfRenderTexture; const &object: PsfVertexArray; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_drawVertexBuffer: procedure(renderTexture: PsfRenderTexture; const &object: PsfVertexBuffer; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_drawVertexBufferRange: procedure(renderTexture: PsfRenderTexture; const &object: PsfVertexBuffer; firstVertex: NativeUInt; vertexCount: NativeUInt; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_drawPrimitives: procedure(renderTexture: PsfRenderTexture; const vertices: PsfVertex; vertexCount: NativeUInt; &type: sfPrimitiveType; const states: PsfRenderStates); cdecl;
+  sfRenderTexture_pushGLStates: procedure(renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_popGLStates: procedure(renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_resetGLStates: procedure(renderTexture: PsfRenderTexture); cdecl;
+  sfRenderTexture_getTexture: function(const renderTexture: PsfRenderTexture): PsfTexture; cdecl;
+  sfRenderTexture_getMaximumAntiAliasingLevel: function(): Cardinal; cdecl;
+  sfRenderTexture_setSmooth: procedure(renderTexture: PsfRenderTexture; smooth: Boolean); cdecl;
+  sfRenderTexture_isSmooth: function(const renderTexture: PsfRenderTexture): Boolean; cdecl;
+  sfRenderTexture_setRepeated: procedure(renderTexture: PsfRenderTexture; repeated: Boolean); cdecl;
+  sfRenderTexture_isRepeated: function(const renderTexture: PsfRenderTexture): Boolean; cdecl;
+  sfRenderTexture_generateMipmap: function(renderTexture: PsfRenderTexture): Boolean; cdecl;
+  sfRenderWindow_create: function(mode: sfVideoMode; const title: PUTF8Char; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
+  sfRenderWindow_createUnicode: function(mode: sfVideoMode; const title: PsfChar32; style: UInt32; state: sfWindowState; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
+  sfRenderWindow_createFromHandle: function(handle: sfWindowHandle; const settings: PsfContextSettings): PsfRenderWindow; cdecl;
+  sfRenderWindow_destroy: procedure(const renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_close: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_isOpen: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
+  sfRenderWindow_getSettings: function(const renderWindow: PsfRenderWindow): sfContextSettings; cdecl;
+  sfRenderWindow_pollEvent: function(renderWindow: PsfRenderWindow; event: PsfEvent): Boolean; cdecl;
+  sfRenderWindow_waitEvent: function(renderWindow: PsfRenderWindow; timeout: sfTime; event: PsfEvent): Boolean; cdecl;
+  sfRenderWindow_getPosition: function(const renderWindow: PsfRenderWindow): sfVector2i; cdecl;
+  sfRenderWindow_setPosition: procedure(renderWindow: PsfRenderWindow; position: sfVector2i); cdecl;
+  sfRenderWindow_getSize: function(const renderWindow: PsfRenderWindow): sfVector2u; cdecl;
+  sfRenderWindow_isSrgb: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
+  sfRenderWindow_setSize: procedure(renderWindow: PsfRenderWindow; size: sfVector2u); cdecl;
+  sfRenderWindow_setTitle: procedure(renderWindow: PsfRenderWindow; const title: PUTF8Char); cdecl;
+  sfRenderWindow_setUnicodeTitle: procedure(renderWindow: PsfRenderWindow; const title: PsfChar32); cdecl;
+  sfRenderWindow_setIcon: procedure(renderWindow: PsfRenderWindow; size: sfVector2u; const pixels: PUInt8); cdecl;
+  sfRenderWindow_setVisible: procedure(renderWindow: PsfRenderWindow; visible: Boolean); cdecl;
+  sfRenderWindow_setVerticalSyncEnabled: procedure(renderWindow: PsfRenderWindow; enabled: Boolean); cdecl;
+  sfRenderWindow_setMouseCursorVisible: procedure(renderWindow: PsfRenderWindow; show: Boolean); cdecl;
+  sfRenderWindow_setMouseCursorGrabbed: procedure(renderWindow: PsfRenderWindow; grabbed: Boolean); cdecl;
+  sfRenderWindow_setMouseCursor: procedure(renderWindow: PsfRenderWindow; const cursor: PsfCursor); cdecl;
+  sfRenderWindow_setKeyRepeatEnabled: procedure(renderWindow: PsfRenderWindow; enabled: Boolean); cdecl;
+  sfRenderWindow_setFramerateLimit: procedure(renderWindow: PsfRenderWindow; limit: Cardinal); cdecl;
+  sfRenderWindow_setJoystickThreshold: procedure(renderWindow: PsfRenderWindow; threshold: Single); cdecl;
+  sfRenderWindow_setActive: function(renderWindow: PsfRenderWindow; active: Boolean): Boolean; cdecl;
+  sfRenderWindow_requestFocus: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_hasFocus: function(const renderWindow: PsfRenderWindow): Boolean; cdecl;
+  sfRenderWindow_display: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_getNativeHandle: function(const renderWindow: PsfRenderWindow): sfWindowHandle; cdecl;
+  sfRenderWindow_clear: procedure(renderWindow: PsfRenderWindow; color: sfColor); cdecl;
+  sfRenderWindow_clearStencil: procedure(renderWindow: PsfRenderWindow; stencilValue: sfStencilValue); cdecl;
+  sfRenderWindow_clearColorAndStencil: procedure(renderWindow: PsfRenderWindow; color: sfColor; stencilValue: sfStencilValue); cdecl;
+  sfRenderWindow_setView: procedure(renderWindow: PsfRenderWindow; const view: PsfView); cdecl;
+  sfRenderWindow_getView: function(const renderWindow: PsfRenderWindow): PsfView; cdecl;
+  sfRenderWindow_getDefaultView: function(const renderWindow: PsfRenderWindow): PsfView; cdecl;
+  sfRenderWindow_getViewport: function(const renderWindow: PsfRenderWindow; const view: PsfView): sfIntRect; cdecl;
+  sfRenderWindow_getScissor: function(const renderWindow: PsfRenderWindow; const view: PsfView): sfIntRect; cdecl;
+  sfRenderWindow_mapPixelToCoords: function(const renderWindow: PsfRenderWindow; point: sfVector2i; const view: PsfView): sfVector2f; cdecl;
+  sfRenderWindow_mapCoordsToPixel: function(const renderWindow: PsfRenderWindow; point: sfVector2f; const view: PsfView): sfVector2i; cdecl;
+  sfRenderWindow_drawSprite: procedure(renderWindow: PsfRenderWindow; const &object: PsfSprite; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_drawText: procedure(renderWindow: PsfRenderWindow; const &object: PsfText; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_drawShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfShape; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_drawCircleShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfCircleShape; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_drawConvexShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfConvexShape; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_drawRectangleShape: procedure(renderWindow: PsfRenderWindow; const &object: PsfRectangleShape; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_drawVertexArray: procedure(renderWindow: PsfRenderWindow; const &object: PsfVertexArray; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_drawVertexBuffer: procedure(renderWindow: PsfRenderWindow; const &object: PsfVertexBuffer; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_drawVertexBufferRange: procedure(renderWindow: PsfRenderWindow; const &object: PsfVertexBuffer; firstVertex: NativeUInt; vertexCount: NativeUInt; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_drawPrimitives: procedure(renderWindow: PsfRenderWindow; const vertices: PsfVertex; vertexCount: NativeUInt; &type: sfPrimitiveType; const states: PsfRenderStates); cdecl;
+  sfRenderWindow_pushGLStates: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_popGLStates: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfRenderWindow_resetGLStates: procedure(renderWindow: PsfRenderWindow); cdecl;
+  sfMouse_getPositionRenderWindow: function(const relativeTo: PsfRenderWindow): sfVector2i; cdecl;
+  sfMouse_setPositionRenderWindow: procedure(position: sfVector2i; const relativeTo: PsfRenderWindow); cdecl;
+  sfTouch_getPositionRenderWindow: function(finger: Cardinal; const relativeTo: PsfRenderWindow): sfVector2i; cdecl;
+  sfRenderWindow_createVulkanSurface: function(renderWindow: PsfRenderWindow; const instance: PVkInstance; surface: PVkSurfaceKHR; const allocator: PVkAllocationCallbacks): Boolean; cdecl;
+  sfShader_createFromFile: function(const vertexShaderFilename: PUTF8Char; const geometryShaderFilename: PUTF8Char; const fragmentShaderFilename: PUTF8Char): PsfShader; cdecl;
+  sfShader_createFromMemory: function(const vertexShader: PUTF8Char; const geometryShader: PUTF8Char; const fragmentShader: PUTF8Char): PsfShader; cdecl;
+  sfShader_createFromStream: function(vertexShaderStream: PsfInputStream; geometryShaderStream: PsfInputStream; fragmentShaderStream: PsfInputStream): PsfShader; cdecl;
+  sfShader_destroy: procedure(const shader: PsfShader); cdecl;
+  sfShader_setFloatUniform: procedure(shader: PsfShader; const name: PUTF8Char; x: Single); cdecl;
+  sfShader_setVec2Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec2); cdecl;
+  sfShader_setVec3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec3); cdecl;
+  sfShader_setVec4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslVec4); cdecl;
+  sfShader_setColorUniform: procedure(shader: PsfShader; const name: PUTF8Char; color: sfColor); cdecl;
+  sfShader_setIntUniform: procedure(shader: PsfShader; const name: PUTF8Char; x: Integer); cdecl;
+  sfShader_setIvec2Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec2); cdecl;
+  sfShader_setIvec3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec3); cdecl;
+  sfShader_setIvec4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslIvec4); cdecl;
+  sfShader_setIntColorUniform: procedure(shader: PsfShader; const name: PUTF8Char; color: sfColor); cdecl;
+  sfShader_setBoolUniform: procedure(shader: PsfShader; const name: PUTF8Char; x: Boolean); cdecl;
+  sfShader_setBvec2Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec2); cdecl;
+  sfShader_setBvec3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec3); cdecl;
+  sfShader_setBvec4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; vector: sfGlslBvec4); cdecl;
+  sfShader_setMat3Uniform: procedure(shader: PsfShader; const name: PUTF8Char; const matrix: PsfGlslMat3); cdecl;
+  sfShader_setMat4Uniform: procedure(shader: PsfShader; const name: PUTF8Char; const matrix: PsfGlslMat4); cdecl;
+  sfShader_setTextureUniform: procedure(shader: PsfShader; const name: PUTF8Char; const texture: PsfTexture); cdecl;
+  sfShader_setCurrentTextureUniform: procedure(shader: PsfShader; const name: PUTF8Char); cdecl;
+  sfShader_setFloatUniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const scalarArray: PSingle; length: NativeUInt); cdecl;
+  sfShader_setVec2UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec2; length: NativeUInt); cdecl;
+  sfShader_setVec3UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec3; length: NativeUInt); cdecl;
+  sfShader_setVec4UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const vectorArray: PsfGlslVec4; length: NativeUInt); cdecl;
+  sfShader_setMat3UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const matrixArray: PsfGlslMat3; length: NativeUInt); cdecl;
+  sfShader_setMat4UniformArray: procedure(shader: PsfShader; const name: PUTF8Char; const matrixArray: PsfGlslMat4; length: NativeUInt); cdecl;
+  sfShader_getNativeHandle: function(const shader: PsfShader): Cardinal; cdecl;
+  sfShader_bind: procedure(const shader: PsfShader); cdecl;
+  sfShader_isAvailable: function(): Boolean; cdecl;
+  sfShader_isGeometryAvailable: function(): Boolean; cdecl;
+  sfShape_create: function(getPointCount: sfShapeGetPointCountCallback; getPoint: sfShapeGetPointCallback; userData: Pointer): PsfShape; cdecl;
+  sfShape_destroy: procedure(const shape: PsfShape); cdecl;
+  sfShape_setPosition: procedure(shape: PsfShape; position: sfVector2f); cdecl;
+  sfShape_setRotation: procedure(shape: PsfShape; angle: Single); cdecl;
+  sfShape_setScale: procedure(shape: PsfShape; scale: sfVector2f); cdecl;
+  sfShape_setOrigin: procedure(shape: PsfShape; origin: sfVector2f); cdecl;
+  sfShape_getPosition: function(const shape: PsfShape): sfVector2f; cdecl;
+  sfShape_getRotation: function(const shape: PsfShape): Single; cdecl;
+  sfShape_getScale: function(const shape: PsfShape): sfVector2f; cdecl;
+  sfShape_getOrigin: function(const shape: PsfShape): sfVector2f; cdecl;
+  sfShape_move: procedure(shape: PsfShape; offset: sfVector2f); cdecl;
+  sfShape_rotate: procedure(shape: PsfShape; angle: Single); cdecl;
+  sfShape_scale: procedure(shape: PsfShape; factors: sfVector2f); cdecl;
+  sfShape_getTransform: function(const shape: PsfShape): sfTransform; cdecl;
+  sfShape_getInverseTransform: function(const shape: PsfShape): sfTransform; cdecl;
+  sfShape_setTexture: procedure(shape: PsfShape; const texture: PsfTexture; resetRect: Boolean); cdecl;
+  sfShape_setTextureRect: procedure(shape: PsfShape; rect: sfIntRect); cdecl;
+  sfShape_setFillColor: procedure(shape: PsfShape; color: sfColor); cdecl;
+  sfShape_setOutlineColor: procedure(shape: PsfShape; color: sfColor); cdecl;
+  sfShape_setOutlineThickness: procedure(shape: PsfShape; thickness: Single); cdecl;
+  sfShape_getTexture: function(const shape: PsfShape): PsfTexture; cdecl;
+  sfShape_getTextureRect: function(const shape: PsfShape): sfIntRect; cdecl;
+  sfShape_getFillColor: function(const shape: PsfShape): sfColor; cdecl;
+  sfShape_getOutlineColor: function(const shape: PsfShape): sfColor; cdecl;
+  sfShape_getOutlineThickness: function(const shape: PsfShape): Single; cdecl;
+  sfShape_getPointCount: function(const shape: PsfShape): NativeUInt; cdecl;
+  sfShape_getPoint: function(const shape: PsfShape; index: NativeUInt): sfVector2f; cdecl;
+  sfShape_getGeometricCenter: function(const shape: PsfShape): sfVector2f; cdecl;
+  sfShape_getLocalBounds: function(const shape: PsfShape): sfFloatRect; cdecl;
+  sfShape_getGlobalBounds: function(const shape: PsfShape): sfFloatRect; cdecl;
+  sfShape_update: procedure(shape: PsfShape); cdecl;
+  sfSprite_create: function(const texture: PsfTexture): PsfSprite; cdecl;
+  sfSprite_copy: function(const sprite: PsfSprite): PsfSprite; cdecl;
+  sfSprite_destroy: procedure(const sprite: PsfSprite); cdecl;
+  sfSprite_setPosition: procedure(sprite: PsfSprite; position: sfVector2f); cdecl;
+  sfSprite_setRotation: procedure(sprite: PsfSprite; angle: Single); cdecl;
+  sfSprite_setScale: procedure(sprite: PsfSprite; scale: sfVector2f); cdecl;
+  sfSprite_setOrigin: procedure(sprite: PsfSprite; origin: sfVector2f); cdecl;
+  sfSprite_getPosition: function(const sprite: PsfSprite): sfVector2f; cdecl;
+  sfSprite_getRotation: function(const sprite: PsfSprite): Single; cdecl;
+  sfSprite_getScale: function(const sprite: PsfSprite): sfVector2f; cdecl;
+  sfSprite_getOrigin: function(const sprite: PsfSprite): sfVector2f; cdecl;
+  sfSprite_move: procedure(sprite: PsfSprite; offset: sfVector2f); cdecl;
+  sfSprite_rotate: procedure(sprite: PsfSprite; angle: Single); cdecl;
+  sfSprite_scale: procedure(sprite: PsfSprite; factors: sfVector2f); cdecl;
+  sfSprite_getTransform: function(const sprite: PsfSprite): sfTransform; cdecl;
+  sfSprite_getInverseTransform: function(const sprite: PsfSprite): sfTransform; cdecl;
+  sfSprite_setTexture: procedure(sprite: PsfSprite; const texture: PsfTexture; resetRect: Boolean); cdecl;
+  sfSprite_setTextureRect: procedure(sprite: PsfSprite; rectangle: sfIntRect); cdecl;
+  sfSprite_setColor: procedure(sprite: PsfSprite; color: sfColor); cdecl;
+  sfSprite_getTexture: function(const sprite: PsfSprite): PsfTexture; cdecl;
+  sfSprite_getTextureRect: function(const sprite: PsfSprite): sfIntRect; cdecl;
+  sfSprite_getColor: function(const sprite: PsfSprite): sfColor; cdecl;
+  sfSprite_getLocalBounds: function(const sprite: PsfSprite): sfFloatRect; cdecl;
+  sfSprite_getGlobalBounds: function(const sprite: PsfSprite): sfFloatRect; cdecl;
+  sfText_create: function(const font: PsfFont): PsfText; cdecl;
+  sfText_copy: function(const text: PsfText): PsfText; cdecl;
+  sfText_destroy: procedure(const text: PsfText); cdecl;
+  sfText_setPosition: procedure(text: PsfText; position: sfVector2f); cdecl;
+  sfText_setRotation: procedure(text: PsfText; angle: Single); cdecl;
+  sfText_setScale: procedure(text: PsfText; scale: sfVector2f); cdecl;
+  sfText_setOrigin: procedure(text: PsfText; origin: sfVector2f); cdecl;
+  sfText_getPosition: function(const text: PsfText): sfVector2f; cdecl;
+  sfText_getRotation: function(const text: PsfText): Single; cdecl;
+  sfText_getScale: function(const text: PsfText): sfVector2f; cdecl;
+  sfText_getOrigin: function(const text: PsfText): sfVector2f; cdecl;
+  sfText_move: procedure(text: PsfText; offset: sfVector2f); cdecl;
+  sfText_rotate: procedure(text: PsfText; angle: Single); cdecl;
+  sfText_scale: procedure(text: PsfText; factors: sfVector2f); cdecl;
+  sfText_getTransform: function(const text: PsfText): sfTransform; cdecl;
+  sfText_getInverseTransform: function(const text: PsfText): sfTransform; cdecl;
+  sfText_setString: procedure(text: PsfText; const &string: PUTF8Char); cdecl;
+  sfText_setUnicodeString: procedure(text: PsfText; const &string: PsfChar32); cdecl;
+  sfText_setFont: procedure(text: PsfText; const font: PsfFont); cdecl;
+  sfText_setCharacterSize: procedure(text: PsfText; size: Cardinal); cdecl;
+  sfText_setLineSpacing: procedure(text: PsfText; spacingFactor: Single); cdecl;
+  sfText_setLetterSpacing: procedure(text: PsfText; spacingFactor: Single); cdecl;
+  sfText_setStyle: procedure(text: PsfText; style: UInt32); cdecl;
+  sfText_setFillColor: procedure(text: PsfText; color: sfColor); cdecl;
+  sfText_setOutlineColor: procedure(text: PsfText; color: sfColor); cdecl;
+  sfText_setOutlineThickness: procedure(text: PsfText; thickness: Single); cdecl;
+  sfText_getString: function(const text: PsfText): PUTF8Char; cdecl;
+  sfText_getUnicodeString: function(const text: PsfText): PsfChar32; cdecl;
+  sfText_getFont: function(const text: PsfText): PsfFont; cdecl;
+  sfText_getCharacterSize: function(const text: PsfText): Cardinal; cdecl;
+  sfText_getLetterSpacing: function(const text: PsfText): Single; cdecl;
+  sfText_getLineSpacing: function(const text: PsfText): Single; cdecl;
+  sfText_getStyle: function(const text: PsfText): UInt32; cdecl;
+  sfText_getFillColor: function(const text: PsfText): sfColor; cdecl;
+  sfText_getOutlineColor: function(const text: PsfText): sfColor; cdecl;
+  sfText_getOutlineThickness: function(const text: PsfText): Single; cdecl;
+  sfText_findCharacterPos: function(const text: PsfText; index: NativeUInt): sfVector2f; cdecl;
+  sfText_getLocalBounds: function(const text: PsfText): sfFloatRect; cdecl;
+  sfText_getGlobalBounds: function(const text: PsfText): sfFloatRect; cdecl;
+  sfTexture_create: function(size: sfVector2u): PsfTexture; cdecl;
+  sfTexture_createSrgb: function(size: sfVector2u): PsfTexture; cdecl;
+  sfTexture_createFromFile: function(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_createSrgbFromFile: function(const filename: PUTF8Char; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_createFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_createSrgbFromMemory: function(const data: Pointer; sizeInBytes: NativeUInt; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_createFromStream: function(stream: PsfInputStream; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_createSrgbFromStream: function(stream: PsfInputStream; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_createFromImage: function(const image: PsfImage; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_createSrgbFromImage: function(const image: PsfImage; const area: PsfIntRect): PsfTexture; cdecl;
+  sfTexture_copy: function(const texture: PsfTexture): PsfTexture; cdecl;
+  sfTexture_destroy: procedure(const texture: PsfTexture); cdecl;
+  sfTexture_getSize: function(const texture: PsfTexture): sfVector2u; cdecl;
+  sfTexture_copyToImage: function(const texture: PsfTexture): PsfImage; cdecl;
+  sfTexture_updateFromPixels: procedure(texture: PsfTexture; const pixels: PUInt8; size: sfVector2u; offset: sfVector2u); cdecl;
+  sfTexture_updateFromTexture: procedure(destination: PsfTexture; const source: PsfTexture; offset: sfVector2u); cdecl;
+  sfTexture_updateFromImage: procedure(texture: PsfTexture; const image: PsfImage; offset: sfVector2u); cdecl;
+  sfTexture_updateFromWindow: procedure(texture: PsfTexture; const window: PsfWindow; offset: sfVector2u); cdecl;
+  sfTexture_updateFromRenderWindow: procedure(texture: PsfTexture; const renderWindow: PsfRenderWindow; offset: sfVector2u); cdecl;
+  sfTexture_setSmooth: procedure(texture: PsfTexture; smooth: Boolean); cdecl;
+  sfTexture_isSmooth: function(const texture: PsfTexture): Boolean; cdecl;
+  sfTexture_isSrgb: function(const texture: PsfTexture): Boolean; cdecl;
+  sfTexture_setRepeated: procedure(texture: PsfTexture; repeated: Boolean); cdecl;
+  sfTexture_isRepeated: function(const texture: PsfTexture): Boolean; cdecl;
+  sfTexture_generateMipmap: function(texture: PsfTexture): Boolean; cdecl;
+  sfTexture_swap: procedure(left: PsfTexture; right: PsfTexture); cdecl;
+  sfTexture_getNativeHandle: function(const texture: PsfTexture): Cardinal; cdecl;
+  sfTexture_bind: procedure(const texture: PsfTexture; &type: sfCoordinateType); cdecl;
+  sfTexture_getMaximumSize: function(): Cardinal; cdecl;
+  sfTransformable_create: function(): PsfTransformable; cdecl;
+  sfTransformable_copy: function(const transformable: PsfTransformable): PsfTransformable; cdecl;
+  sfTransformable_destroy: procedure(const transformable: PsfTransformable); cdecl;
+  sfTransformable_setPosition: procedure(transformable: PsfTransformable; position: sfVector2f); cdecl;
+  sfTransformable_setRotation: procedure(transformable: PsfTransformable; angle: Single); cdecl;
+  sfTransformable_setScale: procedure(transformable: PsfTransformable; scale: sfVector2f); cdecl;
+  sfTransformable_setOrigin: procedure(transformable: PsfTransformable; origin: sfVector2f); cdecl;
+  sfTransformable_getPosition: function(const transformable: PsfTransformable): sfVector2f; cdecl;
+  sfTransformable_getRotation: function(const transformable: PsfTransformable): Single; cdecl;
+  sfTransformable_getScale: function(const transformable: PsfTransformable): sfVector2f; cdecl;
+  sfTransformable_getOrigin: function(const transformable: PsfTransformable): sfVector2f; cdecl;
+  sfTransformable_move: procedure(transformable: PsfTransformable; offset: sfVector2f); cdecl;
+  sfTransformable_rotate: procedure(transformable: PsfTransformable; angle: Single); cdecl;
+  sfTransformable_scale: procedure(transformable: PsfTransformable; factors: sfVector2f); cdecl;
+  sfTransformable_getTransform: function(const transformable: PsfTransformable): sfTransform; cdecl;
+  sfTransformable_getInverseTransform: function(const transformable: PsfTransformable): sfTransform; cdecl;
+  sfVertexArray_create: function(): PsfVertexArray; cdecl;
+  sfVertexArray_copy: function(const vertexArray: PsfVertexArray): PsfVertexArray; cdecl;
+  sfVertexArray_destroy: procedure(const vertexArray: PsfVertexArray); cdecl;
+  sfVertexArray_getVertexCount: function(const vertexArray: PsfVertexArray): NativeUInt; cdecl;
+  sfVertexArray_getVertex: function(vertexArray: PsfVertexArray; index: NativeUInt): PsfVertex; cdecl;
+  sfVertexArray_clear: procedure(vertexArray: PsfVertexArray); cdecl;
+  sfVertexArray_resize: procedure(vertexArray: PsfVertexArray; vertexCount: NativeUInt); cdecl;
+  sfVertexArray_append: procedure(vertexArray: PsfVertexArray; vertex: sfVertex); cdecl;
+  sfVertexArray_setPrimitiveType: procedure(vertexArray: PsfVertexArray; &type: sfPrimitiveType); cdecl;
+  sfVertexArray_getPrimitiveType: function(vertexArray: PsfVertexArray): sfPrimitiveType; cdecl;
+  sfVertexArray_getBounds: function(vertexArray: PsfVertexArray): sfFloatRect; cdecl;
+  sfVertexBuffer_create: function(vertexCount: NativeUInt; &type: sfPrimitiveType; usage: sfVertexBufferUsage): PsfVertexBuffer; cdecl;
+  sfVertexBuffer_copy: function(const vertexBuffer: PsfVertexBuffer): PsfVertexBuffer; cdecl;
+  sfVertexBuffer_destroy: procedure(const vertexBuffer: PsfVertexBuffer); cdecl;
+  sfVertexBuffer_getVertexCount: function(const vertexBuffer: PsfVertexBuffer): NativeUInt; cdecl;
+  sfVertexBuffer_update: function(vertexBuffer: PsfVertexBuffer; const vertices: PsfVertex; vertexCount: Cardinal; offset: Cardinal): Boolean; cdecl;
+  sfVertexBuffer_updateFromVertexBuffer: function(vertexBuffer: PsfVertexBuffer; const other: PsfVertexBuffer): Boolean; cdecl;
+  sfVertexBuffer_swap: procedure(left: PsfVertexBuffer; right: PsfVertexBuffer); cdecl;
+  sfVertexBuffer_getNativeHandle: function(vertexBuffer: PsfVertexBuffer): Cardinal; cdecl;
+  sfVertexBuffer_setPrimitiveType: procedure(vertexBuffer: PsfVertexBuffer; &type: sfPrimitiveType); cdecl;
+  sfVertexBuffer_getPrimitiveType: function(const vertexBuffer: PsfVertexBuffer): sfPrimitiveType; cdecl;
+  sfVertexBuffer_setUsage: procedure(vertexBuffer: PsfVertexBuffer; usage: sfVertexBufferUsage); cdecl;
+  sfVertexBuffer_getUsage: function(const vertexBuffer: PsfVertexBuffer): sfVertexBufferUsage; cdecl;
+  sfVertexBuffer_bind: procedure(const vertexBuffer: PsfVertexBuffer); cdecl;
+  sfVertexBuffer_isAvailable: function(): Boolean; cdecl;
+  sfView_create: function(): PsfView; cdecl;
+  sfView_createFromRect: function(rectangle: sfFloatRect): PsfView; cdecl;
+  sfView_copy: function(const view: PsfView): PsfView; cdecl;
+  sfView_destroy: procedure(const view: PsfView); cdecl;
+  sfView_setCenter: procedure(view: PsfView; center: sfVector2f); cdecl;
+  sfView_setSize: procedure(view: PsfView; size: sfVector2f); cdecl;
+  sfView_setRotation: procedure(view: PsfView; angle: Single); cdecl;
+  sfView_setViewport: procedure(view: PsfView; viewport: sfFloatRect); cdecl;
+  sfView_setScissor: procedure(view: PsfView; scissor: sfFloatRect); cdecl;
+  sfView_getCenter: function(const view: PsfView): sfVector2f; cdecl;
+  sfView_getSize: function(const view: PsfView): sfVector2f; cdecl;
+  sfView_getRotation: function(const view: PsfView): Single; cdecl;
+  sfView_getViewport: function(const view: PsfView): sfFloatRect; cdecl;
+  sfView_getScissor: function(const view: PsfView): sfFloatRect; cdecl;
+  sfView_move: procedure(view: PsfView; offset: sfVector2f); cdecl;
+  sfView_rotate: procedure(view: PsfView; angle: Single); cdecl;
+  sfView_zoom: procedure(view: PsfView; factor: Single); cdecl;
+  sfClipboard_getString: function(): PUTF8Char; cdecl;
+  sfClipboard_getUnicodeString: function(): PsfChar32; cdecl;
+  sfClipboard_setString: procedure(const text: PUTF8Char); cdecl;
+  sfClipboard_setUnicodeString: procedure(const text: PsfChar32); cdecl;
+  sfContext_create: function(): PsfContext; cdecl;
+  sfContext_destroy: procedure(const context: PsfContext); cdecl;
+  sfContext_isExtensionAvailable: function(const name: PUTF8Char): Boolean; cdecl;
+  sfContext_setActive: function(context: PsfContext; active: Boolean): Boolean; cdecl;
+  sfContext_getFunction: function(const name: PUTF8Char): sfGlFunctionPointer; cdecl;
+  sfContext_getSettings: function(const context: PsfContext): sfContextSettings; cdecl;
+  sfContext_getActiveContextId: function(): UInt64; cdecl;
+  sfCursor_createFromPixels: function(const pixels: PUInt8; size: sfVector2u; hotspot: sfVector2u): PsfCursor; cdecl;
+  sfCursor_createFromSystem: function(&type: sfCursorType): PsfCursor; cdecl;
+  sfCursor_destroy: procedure(const cursor: PsfCursor); cdecl;
+  sfTouch_isDown: function(finger: Cardinal): Boolean; cdecl;
+  sfTouch_getPosition: function(finger: Cardinal; const relativeTo: PsfWindow): sfVector2i; cdecl;
+  sfTouch_getPositionWindowBase: function(finger: Cardinal; const relativeTo: PsfWindowBase): sfVector2i; cdecl;
+  sfIpAddress_fromString: function(const address: PUTF8Char): sfIpAddress; cdecl;
+  sfIpAddress_fromBytes: function(byte0: UInt8; byte1: UInt8; byte2: UInt8; byte3: UInt8): sfIpAddress; cdecl;
+  sfIpAddress_fromInteger: function(address: UInt32): sfIpAddress; cdecl;
+  sfIpAddress_toString: procedure(address: sfIpAddress; &string: PUTF8Char); cdecl;
+  sfIpAddress_toInteger: function(address: sfIpAddress): UInt32; cdecl;
+  sfIpAddress_getLocalAddress: function(): sfIpAddress; cdecl;
+  sfIpAddress_getPublicAddress: function(timeout: sfTime): sfIpAddress; cdecl;
+  sfFtpListingResponse_destroy: procedure(const ftpListingResponse: PsfFtpListingResponse); cdecl;
+  sfFtpListingResponse_isOk: function(const ftpListingResponse: PsfFtpListingResponse): Boolean; cdecl;
+  sfFtpListingResponse_getStatus: function(const ftpListingResponse: PsfFtpListingResponse): sfFtpStatus; cdecl;
+  sfFtpListingResponse_getMessage: function(const ftpListingResponse: PsfFtpListingResponse): PUTF8Char; cdecl;
+  sfFtpListingResponse_getCount: function(const ftpListingResponse: PsfFtpListingResponse): NativeUInt; cdecl;
+  sfFtpListingResponse_getName: function(const ftpListingResponse: PsfFtpListingResponse; index: NativeUInt): PUTF8Char; cdecl;
+  sfFtpDirectoryResponse_destroy: procedure(const ftpDirectoryResponse: PsfFtpDirectoryResponse); cdecl;
+  sfFtpDirectoryResponse_isOk: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): Boolean; cdecl;
+  sfFtpDirectoryResponse_getStatus: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): sfFtpStatus; cdecl;
+  sfFtpDirectoryResponse_getMessage: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PUTF8Char; cdecl;
+  sfFtpDirectoryResponse_getDirectory: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PUTF8Char; cdecl;
+  sfFtpDirectoryResponse_getDirectoryUnicode: function(const ftpDirectoryResponse: PsfFtpDirectoryResponse): PsfChar32; cdecl;
+  sfFtpResponse_destroy: procedure(const ftpResponse: PsfFtpResponse); cdecl;
+  sfFtpResponse_isOk: function(const ftpResponse: PsfFtpResponse): Boolean; cdecl;
+  sfFtpResponse_getStatus: function(const ftpResponse: PsfFtpResponse): sfFtpStatus; cdecl;
+  sfFtpResponse_getMessage: function(const ftpResponse: PsfFtpResponse): PUTF8Char; cdecl;
+  sfFtp_create: function(): PsfFtp; cdecl;
+  sfFtp_destroy: procedure(const ftp: PsfFtp); cdecl;
+  sfFtp_connect: function(ftp: PsfFtp; server: sfIpAddress; port: Word; timeout: sfTime): PsfFtpResponse; cdecl;
+  sfFtp_loginAnonymous: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
+  sfFtp_login: function(ftp: PsfFtp; const name: PUTF8Char; const password: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_disconnect: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
+  sfFtp_keepAlive: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
+  sfFtp_getWorkingDirectory: function(ftp: PsfFtp): PsfFtpDirectoryResponse; cdecl;
+  sfFtp_getDirectoryListing: function(ftp: PsfFtp; const directory: PUTF8Char): PsfFtpListingResponse; cdecl;
+  sfFtp_changeDirectory: function(ftp: PsfFtp; const directory: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_parentDirectory: function(ftp: PsfFtp): PsfFtpResponse; cdecl;
+  sfFtp_createDirectory: function(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_deleteDirectory: function(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_renameFile: function(ftp: PsfFtp; const &file: PUTF8Char; const newName: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_deleteFile: function(ftp: PsfFtp; const name: PUTF8Char): PsfFtpResponse; cdecl;
+  sfFtp_download: function(ftp: PsfFtp; const remoteFile: PUTF8Char; const localPath: PUTF8Char; mode: sfFtpTransferMode): PsfFtpResponse; cdecl;
+  sfFtp_upload: function(ftp: PsfFtp; const localFile: PUTF8Char; const remotePath: PUTF8Char; mode: sfFtpTransferMode; append: Boolean): PsfFtpResponse; cdecl;
+  sfFtp_sendCommand: function(ftp: PsfFtp; const command: PUTF8Char; const parameter: PUTF8Char): PsfFtpResponse; cdecl;
+  sfHttpRequest_create: function(): PsfHttpRequest; cdecl;
+  sfHttpRequest_destroy: procedure(const httpRequest: PsfHttpRequest); cdecl;
+  sfHttpRequest_setField: procedure(httpRequest: PsfHttpRequest; const field: PUTF8Char; const value: PUTF8Char); cdecl;
+  sfHttpRequest_setMethod: procedure(httpRequest: PsfHttpRequest; method: sfHttpMethod); cdecl;
+  sfHttpRequest_setUri: procedure(httpRequest: PsfHttpRequest; const uri: PUTF8Char); cdecl;
+  sfHttpRequest_setHttpVersion: procedure(httpRequest: PsfHttpRequest; major: Cardinal; minor: Cardinal); cdecl;
+  sfHttpRequest_setBody: procedure(httpRequest: PsfHttpRequest; const body: PUTF8Char); cdecl;
+  sfHttpResponse_destroy: procedure(const httpResponse: PsfHttpResponse); cdecl;
+  sfHttpResponse_getField: function(const httpResponse: PsfHttpResponse; const field: PUTF8Char): PUTF8Char; cdecl;
+  sfHttpResponse_getStatus: function(const httpResponse: PsfHttpResponse): sfHttpStatus; cdecl;
+  sfHttpResponse_getMajorVersion: function(const httpResponse: PsfHttpResponse): Cardinal; cdecl;
+  sfHttpResponse_getMinorVersion: function(const httpResponse: PsfHttpResponse): Cardinal; cdecl;
+  sfHttpResponse_getBody: function(const httpResponse: PsfHttpResponse): PUTF8Char; cdecl;
+  sfHttp_create: function(): PsfHttp; cdecl;
+  sfHttp_destroy: procedure(const http: PsfHttp); cdecl;
+  sfHttp_setHost: procedure(http: PsfHttp; const host: PUTF8Char; port: Word); cdecl;
+  sfHttp_sendRequest: function(http: PsfHttp; const request: PsfHttpRequest; timeout: sfTime): PsfHttpResponse; cdecl;
+  sfPacket_create: function(): PsfPacket; cdecl;
+  sfPacket_copy: function(const packet: PsfPacket): PsfPacket; cdecl;
+  sfPacket_destroy: procedure(const packet: PsfPacket); cdecl;
+  sfPacket_append: procedure(packet: PsfPacket; const data: Pointer; sizeInBytes: NativeUInt); cdecl;
+  sfPacket_getReadPosition: function(const packet: PsfPacket): NativeUInt; cdecl;
+  sfPacket_clear: procedure(packet: PsfPacket); cdecl;
+  sfPacket_getData: function(const packet: PsfPacket): Pointer; cdecl;
+  sfPacket_getDataSize: function(const packet: PsfPacket): NativeUInt; cdecl;
+  sfPacket_endOfPacket: function(const packet: PsfPacket): Boolean; cdecl;
+  sfPacket_canRead: function(const packet: PsfPacket): Boolean; cdecl;
+  sfPacket_readBool: function(packet: PsfPacket): Boolean; cdecl;
+  sfPacket_readInt8: function(packet: PsfPacket): Int8; cdecl;
+  sfPacket_readUint8: function(packet: PsfPacket): UInt8; cdecl;
+  sfPacket_readInt16: function(packet: PsfPacket): Int16; cdecl;
+  sfPacket_readUint16: function(packet: PsfPacket): UInt16; cdecl;
+  sfPacket_readInt32: function(packet: PsfPacket): Int32; cdecl;
+  sfPacket_readUint32: function(packet: PsfPacket): UInt32; cdecl;
+  sfPacket_readFloat: function(packet: PsfPacket): Single; cdecl;
+  sfPacket_readDouble: function(packet: PsfPacket): Double; cdecl;
+  sfPacket_readString: procedure(packet: PsfPacket; &string: PUTF8Char); cdecl;
+  sfPacket_readWideString: procedure(packet: PsfPacket; &string: PWideChar); cdecl;
+  sfPacket_writeBool: procedure(packet: PsfPacket; p2: Boolean); cdecl;
+  sfPacket_writeInt8: procedure(packet: PsfPacket; p2: Int8); cdecl;
+  sfPacket_writeUint8: procedure(packet: PsfPacket; p2: UInt8); cdecl;
+  sfPacket_writeInt16: procedure(packet: PsfPacket; p2: Int16); cdecl;
+  sfPacket_writeUint16: procedure(packet: PsfPacket; p2: UInt16); cdecl;
+  sfPacket_writeInt32: procedure(packet: PsfPacket; p2: Int32); cdecl;
+  sfPacket_writeUint32: procedure(packet: PsfPacket; p2: UInt32); cdecl;
+  sfPacket_writeFloat: procedure(packet: PsfPacket; p2: Single); cdecl;
+  sfPacket_writeDouble: procedure(packet: PsfPacket; p2: Double); cdecl;
+  sfPacket_writeString: procedure(packet: PsfPacket; const &string: PUTF8Char); cdecl;
+  sfPacket_writeWideString: procedure(packet: PsfPacket; const &string: PWideChar); cdecl;
+  sfSocketSelector_create: function(): PsfSocketSelector; cdecl;
+  sfSocketSelector_copy: function(const selector: PsfSocketSelector): PsfSocketSelector; cdecl;
+  sfSocketSelector_destroy: procedure(const selector: PsfSocketSelector); cdecl;
+  sfSocketSelector_addTcpListener: procedure(selector: PsfSocketSelector; socket: PsfTcpListener); cdecl;
+  sfSocketSelector_addTcpSocket: procedure(selector: PsfSocketSelector; socket: PsfTcpSocket); cdecl;
+  sfSocketSelector_addUdpSocket: procedure(selector: PsfSocketSelector; socket: PsfUdpSocket); cdecl;
+  sfSocketSelector_removeTcpListener: procedure(selector: PsfSocketSelector; socket: PsfTcpListener); cdecl;
+  sfSocketSelector_removeTcpSocket: procedure(selector: PsfSocketSelector; socket: PsfTcpSocket); cdecl;
+  sfSocketSelector_removeUdpSocket: procedure(selector: PsfSocketSelector; socket: PsfUdpSocket); cdecl;
+  sfSocketSelector_clear: procedure(selector: PsfSocketSelector); cdecl;
+  sfSocketSelector_wait: function(selector: PsfSocketSelector; timeout: sfTime): Boolean; cdecl;
+  sfSocketSelector_isTcpListenerReady: function(const selector: PsfSocketSelector; socket: PsfTcpListener): Boolean; cdecl;
+  sfSocketSelector_isTcpSocketReady: function(const selector: PsfSocketSelector; socket: PsfTcpSocket): Boolean; cdecl;
+  sfSocketSelector_isUdpSocketReady: function(const selector: PsfSocketSelector; socket: PsfUdpSocket): Boolean; cdecl;
+  sfTcpListener_create: function(): PsfTcpListener; cdecl;
+  sfTcpListener_destroy: procedure(const listener: PsfTcpListener); cdecl;
+  sfTcpListener_setBlocking: procedure(listener: PsfTcpListener; blocking: Boolean); cdecl;
+  sfTcpListener_isBlocking: function(const listener: PsfTcpListener): Boolean; cdecl;
+  sfTcpListener_getLocalPort: function(const listener: PsfTcpListener): Word; cdecl;
+  sfTcpListener_listen: function(listener: PsfTcpListener; port: Word; address: sfIpAddress): sfSocketStatus; cdecl;
+  sfTcpListener_accept: function(listener: PsfTcpListener; connected: PPsfTcpSocket): sfSocketStatus; cdecl;
+  sfTcpSocket_create: function(): PsfTcpSocket; cdecl;
+  sfTcpSocket_destroy: procedure(const socket: PsfTcpSocket); cdecl;
+  sfTcpSocket_setBlocking: procedure(socket: PsfTcpSocket; blocking: Boolean); cdecl;
+  sfTcpSocket_isBlocking: function(const socket: PsfTcpSocket): Boolean; cdecl;
+  sfTcpSocket_getLocalPort: function(const socket: PsfTcpSocket): Word; cdecl;
+  sfTcpSocket_getRemoteAddress: function(const socket: PsfTcpSocket): sfIpAddress; cdecl;
+  sfTcpSocket_getRemotePort: function(const socket: PsfTcpSocket): Word; cdecl;
+  sfTcpSocket_connect: function(socket: PsfTcpSocket; remoteAddress: sfIpAddress; remotePort: Word; timeout: sfTime): sfSocketStatus; cdecl;
+  sfTcpSocket_disconnect: procedure(socket: PsfTcpSocket); cdecl;
+  sfTcpSocket_send: function(socket: PsfTcpSocket; const data: Pointer; size: NativeUInt): sfSocketStatus; cdecl;
+  sfTcpSocket_sendPartial: function(socket: PsfTcpSocket; const data: Pointer; size: NativeUInt; sent: PNativeUInt): sfSocketStatus; cdecl;
+  sfTcpSocket_receive: function(socket: PsfTcpSocket; data: Pointer; size: NativeUInt; received: PNativeUInt): sfSocketStatus; cdecl;
+  sfTcpSocket_sendPacket: function(socket: PsfTcpSocket; packet: PsfPacket): sfSocketStatus; cdecl;
+  sfTcpSocket_receivePacket: function(socket: PsfTcpSocket; packet: PsfPacket): sfSocketStatus; cdecl;
+  sfUdpSocket_create: function(): PsfUdpSocket; cdecl;
+  sfUdpSocket_destroy: procedure(const socket: PsfUdpSocket); cdecl;
+  sfUdpSocket_setBlocking: procedure(socket: PsfUdpSocket; blocking: Boolean); cdecl;
+  sfUdpSocket_isBlocking: function(const socket: PsfUdpSocket): Boolean; cdecl;
+  sfUdpSocket_getLocalPort: function(const socket: PsfUdpSocket): Word; cdecl;
+  sfUdpSocket_bind: function(socket: PsfUdpSocket; port: Word; address: sfIpAddress): sfSocketStatus; cdecl;
+  sfUdpSocket_unbind: procedure(socket: PsfUdpSocket); cdecl;
+  sfUdpSocket_send: function(socket: PsfUdpSocket; const data: Pointer; size: NativeUInt; remoteAddress: sfIpAddress; remotePort: Word): sfSocketStatus; cdecl;
+  sfUdpSocket_receive: function(socket: PsfUdpSocket; data: Pointer; size: NativeUInt; received: PNativeUInt; remoteAddress: PsfIpAddress; remotePort: PWord): sfSocketStatus; cdecl;
+  sfUdpSocket_sendPacket: function(socket: PsfUdpSocket; packet: PsfPacket; remoteAddress: sfIpAddress; remotePort: Word): sfSocketStatus; cdecl;
+  sfUdpSocket_receivePacket: function(socket: PsfUdpSocket; packet: PsfPacket; remoteAddress: PsfIpAddress; remotePort: PWord): sfSocketStatus; cdecl;
+  sfUdpSocket_maxDatagramSize: function(): Cardinal; cdecl;
+  crc32: function(crc: uLong; const buf: PBytef; len: uInt): uLong; cdecl;
+  unzOpen64: function(const path: Pointer): unzFile; cdecl;
+  unzLocateFile: function(&file: unzFile; const szFileName: PUTF8Char; iCaseSensitivity: Integer): Integer; cdecl;
+  unzClose: function(&file: unzFile): Integer; cdecl;
+  unzOpenCurrentFilePassword: function(&file: unzFile; const password: PUTF8Char): Integer; cdecl;
+  unzGetCurrentFileInfo64: function(&file: unzFile; pfile_info: Punz_file_info64; szFileName: PUTF8Char; fileNameBufferSize: uLong; extraField: Pointer; extraFieldBufferSize: uLong; szComment: PUTF8Char; commentBufferSize: uLong): Integer; cdecl;
+  unzReadCurrentFile: function(&file: unzFile; buf: voidp; len: Cardinal): Integer; cdecl;
+  unzCloseCurrentFile: function(&file: unzFile): Integer; cdecl;
+  unztell64: function(&file: unzFile): UInt64; cdecl;
+  zipOpen64: function(const pathname: Pointer; append: Integer): zipFile; cdecl;
+  zipOpenNewFileInZip3_64: function(&file: zipFile; const filename: PUTF8Char; const zipfi: Pzip_fileinfo; const extrafield_local: Pointer; size_extrafield_local: uInt; const extrafield_global: Pointer; size_extrafield_global: uInt; const comment: PUTF8Char; method: Integer; level: Integer; raw: Integer; windowBits: Integer; memLevel: Integer; strategy: Integer; const password: PUTF8Char; crcForCrypting: uLong; zip64: Integer): Integer; cdecl;
+  zipWriteInFileInZip: function(&file: zipFile; const buf: Pointer; len: Cardinal): Integer; cdecl;
+  zipCloseFileInZip: function(&file: zipFile): Integer; cdecl;
+  zipClose: function(&file: zipFile; const global_comment: PUTF8Char): Integer; cdecl;
+  plm_create_with_filename: function(const filename: PUTF8Char): Pplm_t; cdecl;
+  plm_create_with_file: function(fh: PPointer; close_when_done: Integer): Pplm_t; cdecl;
+  plm_create_with_memory: function(bytes: PUInt8; length: NativeUInt; free_when_done: Integer): Pplm_t; cdecl;
+  plm_create_with_buffer: function(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_t; cdecl;
+  plm_destroy: procedure(self: Pplm_t); cdecl;
+  plm_has_headers: function(self: Pplm_t): Integer; cdecl;
+  plm_probe: function(self: Pplm_t; probesize: NativeUInt): Integer; cdecl;
+  plm_get_video_enabled: function(self: Pplm_t): Integer; cdecl;
+  plm_set_video_enabled: procedure(self: Pplm_t; enabled: Integer); cdecl;
+  plm_get_num_video_streams: function(self: Pplm_t): Integer; cdecl;
+  plm_get_width: function(self: Pplm_t): Integer; cdecl;
+  plm_get_height: function(self: Pplm_t): Integer; cdecl;
+  plm_get_pixel_aspect_ratio: function(self: Pplm_t): Double; cdecl;
+  plm_get_framerate: function(self: Pplm_t): Double; cdecl;
+  plm_get_audio_enabled: function(self: Pplm_t): Integer; cdecl;
+  plm_set_audio_enabled: procedure(self: Pplm_t; enabled: Integer); cdecl;
+  plm_get_num_audio_streams: function(self: Pplm_t): Integer; cdecl;
+  plm_set_audio_stream: procedure(self: Pplm_t; stream_index: Integer); cdecl;
+  plm_get_samplerate: function(self: Pplm_t): Integer; cdecl;
+  plm_get_audio_lead_time: function(self: Pplm_t): Double; cdecl;
+  plm_set_audio_lead_time: procedure(self: Pplm_t; lead_time: Double); cdecl;
+  plm_get_time: function(self: Pplm_t): Double; cdecl;
+  plm_get_duration: function(self: Pplm_t): Double; cdecl;
+  plm_rewind: procedure(self: Pplm_t); cdecl;
+  plm_get_loop: function(self: Pplm_t): Integer; cdecl;
+  plm_set_loop: procedure(self: Pplm_t; loop: Integer); cdecl;
+  plm_has_ended: function(self: Pplm_t): Integer; cdecl;
+  plm_set_video_decode_callback: procedure(self: Pplm_t; fp: plm_video_decode_callback; user: Pointer); cdecl;
+  plm_set_audio_decode_callback: procedure(self: Pplm_t; fp: plm_audio_decode_callback; user: Pointer); cdecl;
+  plm_decode: procedure(self: Pplm_t; seconds: Double); cdecl;
+  plm_decode_video: function(self: Pplm_t): Pplm_frame_t; cdecl;
+  plm_decode_audio: function(self: Pplm_t): Pplm_samples_t; cdecl;
+  plm_seek: function(self: Pplm_t; time: Double; seek_exact: Integer): Integer; cdecl;
+  plm_seek_frame: function(self: Pplm_t; time: Double; seek_exact: Integer): Pplm_frame_t; cdecl;
+  plm_buffer_create_with_filename: function(const filename: PUTF8Char): Pplm_buffer_t; cdecl;
+  plm_buffer_create_with_file: function(fh: PPointer; close_when_done: Integer): Pplm_buffer_t; cdecl;
+  plm_buffer_create_with_memory: function(bytes: PUInt8; length: NativeUInt; free_when_done: Integer): Pplm_buffer_t; cdecl;
+  plm_buffer_create_with_capacity: function(capacity: NativeUInt): Pplm_buffer_t; cdecl;
+  plm_buffer_create_for_appending: function(initial_capacity: NativeUInt): Pplm_buffer_t; cdecl;
+  plm_buffer_destroy: procedure(self: Pplm_buffer_t); cdecl;
+  plm_buffer_write: function(self: Pplm_buffer_t; bytes: PUInt8; length: NativeUInt): NativeUInt; cdecl;
+  plm_buffer_signal_end: procedure(self: Pplm_buffer_t); cdecl;
+  plm_buffer_set_load_callback: procedure(self: Pplm_buffer_t; fp: plm_buffer_load_callback; user: Pointer); cdecl;
+  plm_buffer_rewind: procedure(self: Pplm_buffer_t); cdecl;
+  plm_buffer_get_size: function(self: Pplm_buffer_t): NativeUInt; cdecl;
+  plm_buffer_get_remaining: function(self: Pplm_buffer_t): NativeUInt; cdecl;
+  plm_buffer_has_ended: function(self: Pplm_buffer_t): Integer; cdecl;
+  plm_demux_create: function(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_demux_t; cdecl;
+  plm_demux_destroy: procedure(self: Pplm_demux_t); cdecl;
+  plm_demux_has_headers: function(self: Pplm_demux_t): Integer; cdecl;
+  plm_demux_probe: function(self: Pplm_demux_t; probesize: NativeUInt): Integer; cdecl;
+  plm_demux_get_num_video_streams: function(self: Pplm_demux_t): Integer; cdecl;
+  plm_demux_get_num_audio_streams: function(self: Pplm_demux_t): Integer; cdecl;
+  plm_demux_rewind: procedure(self: Pplm_demux_t); cdecl;
+  plm_demux_has_ended: function(self: Pplm_demux_t): Integer; cdecl;
+  plm_demux_seek: function(self: Pplm_demux_t; time: Double; &type: Integer; force_intra: Integer): Pplm_packet_t; cdecl;
+  plm_demux_get_start_time: function(self: Pplm_demux_t; &type: Integer): Double; cdecl;
+  plm_demux_get_duration: function(self: Pplm_demux_t; &type: Integer): Double; cdecl;
+  plm_demux_decode: function(self: Pplm_demux_t): Pplm_packet_t; cdecl;
+  plm_video_create_with_buffer: function(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_video_t; cdecl;
+  plm_video_destroy: procedure(self: Pplm_video_t); cdecl;
+  plm_video_has_header: function(self: Pplm_video_t): Integer; cdecl;
+  plm_video_get_framerate: function(self: Pplm_video_t): Double; cdecl;
+  plm_video_get_pixel_aspect_ratio: function(self: Pplm_video_t): Double; cdecl;
+  plm_video_get_width: function(self: Pplm_video_t): Integer; cdecl;
+  plm_video_get_height: function(self: Pplm_video_t): Integer; cdecl;
+  plm_video_set_no_delay: procedure(self: Pplm_video_t; no_delay: Integer); cdecl;
+  plm_video_get_time: function(self: Pplm_video_t): Double; cdecl;
+  plm_video_set_time: procedure(self: Pplm_video_t; time: Double); cdecl;
+  plm_video_rewind: procedure(self: Pplm_video_t); cdecl;
+  plm_video_has_ended: function(self: Pplm_video_t): Integer; cdecl;
+  plm_video_decode: function(self: Pplm_video_t): Pplm_frame_t; cdecl;
+  plm_frame_to_rgb: procedure(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
+  plm_frame_to_bgr: procedure(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
+  plm_frame_to_rgba: procedure(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
+  plm_frame_to_bgra: procedure(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
+  plm_frame_to_argb: procedure(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
+  plm_frame_to_abgr: procedure(frame: Pplm_frame_t; dest: PUInt8; stride: Integer); cdecl;
+  plm_audio_create_with_buffer: function(buffer: Pplm_buffer_t; destroy_when_done: Integer): Pplm_audio_t; cdecl;
+  plm_audio_destroy: procedure(self: Pplm_audio_t); cdecl;
+  plm_audio_has_header: function(self: Pplm_audio_t): Integer; cdecl;
+  plm_audio_get_samplerate: function(self: Pplm_audio_t): Integer; cdecl;
+  plm_audio_get_time: function(self: Pplm_audio_t): Double; cdecl;
+  plm_audio_set_time: procedure(self: Pplm_audio_t; time: Double); cdecl;
+  plm_audio_rewind: procedure(self: Pplm_audio_t); cdecl;
+  plm_audio_has_ended: function(self: Pplm_audio_t): Integer; cdecl;
+  plm_audio_decode: function(self: Pplm_audio_t): Pplm_samples_t; cdecl;
+  redirect_cerr_to_callback: procedure(callback: cerr_callback; user_data: Pointer); cdecl;
+  restore_cerr: procedure(); cdecl;
+
+procedure GetExports(const aDLLHandle: THandle);
 
 implementation
+
+uses
+  PSFML.MemoryDLL;
+
+procedure GetExports(const aDLLHandle: THandle);
+begin
+  if aDllHandle = 0 then Exit;
+  crc32 := GetProcAddress(aDLLHandle, 'crc32');
+  plm_audio_create_with_buffer := GetProcAddress(aDLLHandle, 'plm_audio_create_with_buffer');
+  plm_audio_decode := GetProcAddress(aDLLHandle, 'plm_audio_decode');
+  plm_audio_destroy := GetProcAddress(aDLLHandle, 'plm_audio_destroy');
+  plm_audio_get_samplerate := GetProcAddress(aDLLHandle, 'plm_audio_get_samplerate');
+  plm_audio_get_time := GetProcAddress(aDLLHandle, 'plm_audio_get_time');
+  plm_audio_has_ended := GetProcAddress(aDLLHandle, 'plm_audio_has_ended');
+  plm_audio_has_header := GetProcAddress(aDLLHandle, 'plm_audio_has_header');
+  plm_audio_rewind := GetProcAddress(aDLLHandle, 'plm_audio_rewind');
+  plm_audio_set_time := GetProcAddress(aDLLHandle, 'plm_audio_set_time');
+  plm_buffer_create_for_appending := GetProcAddress(aDLLHandle, 'plm_buffer_create_for_appending');
+  plm_buffer_create_with_capacity := GetProcAddress(aDLLHandle, 'plm_buffer_create_with_capacity');
+  plm_buffer_create_with_file := GetProcAddress(aDLLHandle, 'plm_buffer_create_with_file');
+  plm_buffer_create_with_filename := GetProcAddress(aDLLHandle, 'plm_buffer_create_with_filename');
+  plm_buffer_create_with_memory := GetProcAddress(aDLLHandle, 'plm_buffer_create_with_memory');
+  plm_buffer_destroy := GetProcAddress(aDLLHandle, 'plm_buffer_destroy');
+  plm_buffer_get_remaining := GetProcAddress(aDLLHandle, 'plm_buffer_get_remaining');
+  plm_buffer_get_size := GetProcAddress(aDLLHandle, 'plm_buffer_get_size');
+  plm_buffer_has_ended := GetProcAddress(aDLLHandle, 'plm_buffer_has_ended');
+  plm_buffer_rewind := GetProcAddress(aDLLHandle, 'plm_buffer_rewind');
+  plm_buffer_set_load_callback := GetProcAddress(aDLLHandle, 'plm_buffer_set_load_callback');
+  plm_buffer_signal_end := GetProcAddress(aDLLHandle, 'plm_buffer_signal_end');
+  plm_buffer_write := GetProcAddress(aDLLHandle, 'plm_buffer_write');
+  plm_create_with_buffer := GetProcAddress(aDLLHandle, 'plm_create_with_buffer');
+  plm_create_with_file := GetProcAddress(aDLLHandle, 'plm_create_with_file');
+  plm_create_with_filename := GetProcAddress(aDLLHandle, 'plm_create_with_filename');
+  plm_create_with_memory := GetProcAddress(aDLLHandle, 'plm_create_with_memory');
+  plm_decode := GetProcAddress(aDLLHandle, 'plm_decode');
+  plm_decode_audio := GetProcAddress(aDLLHandle, 'plm_decode_audio');
+  plm_decode_video := GetProcAddress(aDLLHandle, 'plm_decode_video');
+  plm_demux_create := GetProcAddress(aDLLHandle, 'plm_demux_create');
+  plm_demux_decode := GetProcAddress(aDLLHandle, 'plm_demux_decode');
+  plm_demux_destroy := GetProcAddress(aDLLHandle, 'plm_demux_destroy');
+  plm_demux_get_duration := GetProcAddress(aDLLHandle, 'plm_demux_get_duration');
+  plm_demux_get_num_audio_streams := GetProcAddress(aDLLHandle, 'plm_demux_get_num_audio_streams');
+  plm_demux_get_num_video_streams := GetProcAddress(aDLLHandle, 'plm_demux_get_num_video_streams');
+  plm_demux_get_start_time := GetProcAddress(aDLLHandle, 'plm_demux_get_start_time');
+  plm_demux_has_ended := GetProcAddress(aDLLHandle, 'plm_demux_has_ended');
+  plm_demux_has_headers := GetProcAddress(aDLLHandle, 'plm_demux_has_headers');
+  plm_demux_probe := GetProcAddress(aDLLHandle, 'plm_demux_probe');
+  plm_demux_rewind := GetProcAddress(aDLLHandle, 'plm_demux_rewind');
+  plm_demux_seek := GetProcAddress(aDLLHandle, 'plm_demux_seek');
+  plm_destroy := GetProcAddress(aDLLHandle, 'plm_destroy');
+  plm_frame_to_abgr := GetProcAddress(aDLLHandle, 'plm_frame_to_abgr');
+  plm_frame_to_argb := GetProcAddress(aDLLHandle, 'plm_frame_to_argb');
+  plm_frame_to_bgr := GetProcAddress(aDLLHandle, 'plm_frame_to_bgr');
+  plm_frame_to_bgra := GetProcAddress(aDLLHandle, 'plm_frame_to_bgra');
+  plm_frame_to_rgb := GetProcAddress(aDLLHandle, 'plm_frame_to_rgb');
+  plm_frame_to_rgba := GetProcAddress(aDLLHandle, 'plm_frame_to_rgba');
+  plm_get_audio_enabled := GetProcAddress(aDLLHandle, 'plm_get_audio_enabled');
+  plm_get_audio_lead_time := GetProcAddress(aDLLHandle, 'plm_get_audio_lead_time');
+  plm_get_duration := GetProcAddress(aDLLHandle, 'plm_get_duration');
+  plm_get_framerate := GetProcAddress(aDLLHandle, 'plm_get_framerate');
+  plm_get_height := GetProcAddress(aDLLHandle, 'plm_get_height');
+  plm_get_loop := GetProcAddress(aDLLHandle, 'plm_get_loop');
+  plm_get_num_audio_streams := GetProcAddress(aDLLHandle, 'plm_get_num_audio_streams');
+  plm_get_num_video_streams := GetProcAddress(aDLLHandle, 'plm_get_num_video_streams');
+  plm_get_pixel_aspect_ratio := GetProcAddress(aDLLHandle, 'plm_get_pixel_aspect_ratio');
+  plm_get_samplerate := GetProcAddress(aDLLHandle, 'plm_get_samplerate');
+  plm_get_time := GetProcAddress(aDLLHandle, 'plm_get_time');
+  plm_get_video_enabled := GetProcAddress(aDLLHandle, 'plm_get_video_enabled');
+  plm_get_width := GetProcAddress(aDLLHandle, 'plm_get_width');
+  plm_has_ended := GetProcAddress(aDLLHandle, 'plm_has_ended');
+  plm_has_headers := GetProcAddress(aDLLHandle, 'plm_has_headers');
+  plm_probe := GetProcAddress(aDLLHandle, 'plm_probe');
+  plm_rewind := GetProcAddress(aDLLHandle, 'plm_rewind');
+  plm_seek := GetProcAddress(aDLLHandle, 'plm_seek');
+  plm_seek_frame := GetProcAddress(aDLLHandle, 'plm_seek_frame');
+  plm_set_audio_decode_callback := GetProcAddress(aDLLHandle, 'plm_set_audio_decode_callback');
+  plm_set_audio_enabled := GetProcAddress(aDLLHandle, 'plm_set_audio_enabled');
+  plm_set_audio_lead_time := GetProcAddress(aDLLHandle, 'plm_set_audio_lead_time');
+  plm_set_audio_stream := GetProcAddress(aDLLHandle, 'plm_set_audio_stream');
+  plm_set_loop := GetProcAddress(aDLLHandle, 'plm_set_loop');
+  plm_set_video_decode_callback := GetProcAddress(aDLLHandle, 'plm_set_video_decode_callback');
+  plm_set_video_enabled := GetProcAddress(aDLLHandle, 'plm_set_video_enabled');
+  plm_video_create_with_buffer := GetProcAddress(aDLLHandle, 'plm_video_create_with_buffer');
+  plm_video_decode := GetProcAddress(aDLLHandle, 'plm_video_decode');
+  plm_video_destroy := GetProcAddress(aDLLHandle, 'plm_video_destroy');
+  plm_video_get_framerate := GetProcAddress(aDLLHandle, 'plm_video_get_framerate');
+  plm_video_get_height := GetProcAddress(aDLLHandle, 'plm_video_get_height');
+  plm_video_get_pixel_aspect_ratio := GetProcAddress(aDLLHandle, 'plm_video_get_pixel_aspect_ratio');
+  plm_video_get_time := GetProcAddress(aDLLHandle, 'plm_video_get_time');
+  plm_video_get_width := GetProcAddress(aDLLHandle, 'plm_video_get_width');
+  plm_video_has_ended := GetProcAddress(aDLLHandle, 'plm_video_has_ended');
+  plm_video_has_header := GetProcAddress(aDLLHandle, 'plm_video_has_header');
+  plm_video_rewind := GetProcAddress(aDLLHandle, 'plm_video_rewind');
+  plm_video_set_no_delay := GetProcAddress(aDLLHandle, 'plm_video_set_no_delay');
+  plm_video_set_time := GetProcAddress(aDLLHandle, 'plm_video_set_time');
+  redirect_cerr_to_callback := GetProcAddress(aDLLHandle, 'redirect_cerr_to_callback');
+  restore_cerr := GetProcAddress(aDLLHandle, 'restore_cerr');
+  sfBuffer_create := GetProcAddress(aDLLHandle, 'sfBuffer_create');
+  sfBuffer_destroy := GetProcAddress(aDLLHandle, 'sfBuffer_destroy');
+  sfBuffer_getData := GetProcAddress(aDLLHandle, 'sfBuffer_getData');
+  sfBuffer_getSize := GetProcAddress(aDLLHandle, 'sfBuffer_getSize');
+  sfCircleShape_copy := GetProcAddress(aDLLHandle, 'sfCircleShape_copy');
+  sfCircleShape_create := GetProcAddress(aDLLHandle, 'sfCircleShape_create');
+  sfCircleShape_destroy := GetProcAddress(aDLLHandle, 'sfCircleShape_destroy');
+  sfCircleShape_getFillColor := GetProcAddress(aDLLHandle, 'sfCircleShape_getFillColor');
+  sfCircleShape_getGeometricCenter := GetProcAddress(aDLLHandle, 'sfCircleShape_getGeometricCenter');
+  sfCircleShape_getGlobalBounds := GetProcAddress(aDLLHandle, 'sfCircleShape_getGlobalBounds');
+  sfCircleShape_getInverseTransform := GetProcAddress(aDLLHandle, 'sfCircleShape_getInverseTransform');
+  sfCircleShape_getLocalBounds := GetProcAddress(aDLLHandle, 'sfCircleShape_getLocalBounds');
+  sfCircleShape_getOrigin := GetProcAddress(aDLLHandle, 'sfCircleShape_getOrigin');
+  sfCircleShape_getOutlineColor := GetProcAddress(aDLLHandle, 'sfCircleShape_getOutlineColor');
+  sfCircleShape_getOutlineThickness := GetProcAddress(aDLLHandle, 'sfCircleShape_getOutlineThickness');
+  sfCircleShape_getPoint := GetProcAddress(aDLLHandle, 'sfCircleShape_getPoint');
+  sfCircleShape_getPointCount := GetProcAddress(aDLLHandle, 'sfCircleShape_getPointCount');
+  sfCircleShape_getPosition := GetProcAddress(aDLLHandle, 'sfCircleShape_getPosition');
+  sfCircleShape_getRadius := GetProcAddress(aDLLHandle, 'sfCircleShape_getRadius');
+  sfCircleShape_getRotation := GetProcAddress(aDLLHandle, 'sfCircleShape_getRotation');
+  sfCircleShape_getScale := GetProcAddress(aDLLHandle, 'sfCircleShape_getScale');
+  sfCircleShape_getTexture := GetProcAddress(aDLLHandle, 'sfCircleShape_getTexture');
+  sfCircleShape_getTextureRect := GetProcAddress(aDLLHandle, 'sfCircleShape_getTextureRect');
+  sfCircleShape_getTransform := GetProcAddress(aDLLHandle, 'sfCircleShape_getTransform');
+  sfCircleShape_move := GetProcAddress(aDLLHandle, 'sfCircleShape_move');
+  sfCircleShape_rotate := GetProcAddress(aDLLHandle, 'sfCircleShape_rotate');
+  sfCircleShape_scale := GetProcAddress(aDLLHandle, 'sfCircleShape_scale');
+  sfCircleShape_setFillColor := GetProcAddress(aDLLHandle, 'sfCircleShape_setFillColor');
+  sfCircleShape_setOrigin := GetProcAddress(aDLLHandle, 'sfCircleShape_setOrigin');
+  sfCircleShape_setOutlineColor := GetProcAddress(aDLLHandle, 'sfCircleShape_setOutlineColor');
+  sfCircleShape_setOutlineThickness := GetProcAddress(aDLLHandle, 'sfCircleShape_setOutlineThickness');
+  sfCircleShape_setPointCount := GetProcAddress(aDLLHandle, 'sfCircleShape_setPointCount');
+  sfCircleShape_setPosition := GetProcAddress(aDLLHandle, 'sfCircleShape_setPosition');
+  sfCircleShape_setRadius := GetProcAddress(aDLLHandle, 'sfCircleShape_setRadius');
+  sfCircleShape_setRotation := GetProcAddress(aDLLHandle, 'sfCircleShape_setRotation');
+  sfCircleShape_setScale := GetProcAddress(aDLLHandle, 'sfCircleShape_setScale');
+  sfCircleShape_setTexture := GetProcAddress(aDLLHandle, 'sfCircleShape_setTexture');
+  sfCircleShape_setTextureRect := GetProcAddress(aDLLHandle, 'sfCircleShape_setTextureRect');
+  sfClipboard_getString := GetProcAddress(aDLLHandle, 'sfClipboard_getString');
+  sfClipboard_getUnicodeString := GetProcAddress(aDLLHandle, 'sfClipboard_getUnicodeString');
+  sfClipboard_setString := GetProcAddress(aDLLHandle, 'sfClipboard_setString');
+  sfClipboard_setUnicodeString := GetProcAddress(aDLLHandle, 'sfClipboard_setUnicodeString');
+  sfClock_copy := GetProcAddress(aDLLHandle, 'sfClock_copy');
+  sfClock_create := GetProcAddress(aDLLHandle, 'sfClock_create');
+  sfClock_destroy := GetProcAddress(aDLLHandle, 'sfClock_destroy');
+  sfClock_getElapsedTime := GetProcAddress(aDLLHandle, 'sfClock_getElapsedTime');
+  sfClock_isRunning := GetProcAddress(aDLLHandle, 'sfClock_isRunning');
+  sfClock_reset := GetProcAddress(aDLLHandle, 'sfClock_reset');
+  sfClock_restart := GetProcAddress(aDLLHandle, 'sfClock_restart');
+  sfClock_start := GetProcAddress(aDLLHandle, 'sfClock_start');
+  sfClock_stop := GetProcAddress(aDLLHandle, 'sfClock_stop');
+  sfColor_add := GetProcAddress(aDLLHandle, 'sfColor_add');
+  sfColor_fromInteger := GetProcAddress(aDLLHandle, 'sfColor_fromInteger');
+  sfColor_fromRGB := GetProcAddress(aDLLHandle, 'sfColor_fromRGB');
+  sfColor_fromRGBA := GetProcAddress(aDLLHandle, 'sfColor_fromRGBA');
+  sfColor_modulate := GetProcAddress(aDLLHandle, 'sfColor_modulate');
+  sfColor_subtract := GetProcAddress(aDLLHandle, 'sfColor_subtract');
+  sfColor_toInteger := GetProcAddress(aDLLHandle, 'sfColor_toInteger');
+  sfContext_create := GetProcAddress(aDLLHandle, 'sfContext_create');
+  sfContext_destroy := GetProcAddress(aDLLHandle, 'sfContext_destroy');
+  sfContext_getActiveContextId := GetProcAddress(aDLLHandle, 'sfContext_getActiveContextId');
+  sfContext_getFunction := GetProcAddress(aDLLHandle, 'sfContext_getFunction');
+  sfContext_getSettings := GetProcAddress(aDLLHandle, 'sfContext_getSettings');
+  sfContext_isExtensionAvailable := GetProcAddress(aDLLHandle, 'sfContext_isExtensionAvailable');
+  sfContext_setActive := GetProcAddress(aDLLHandle, 'sfContext_setActive');
+  sfConvexShape_copy := GetProcAddress(aDLLHandle, 'sfConvexShape_copy');
+  sfConvexShape_create := GetProcAddress(aDLLHandle, 'sfConvexShape_create');
+  sfConvexShape_destroy := GetProcAddress(aDLLHandle, 'sfConvexShape_destroy');
+  sfConvexShape_getFillColor := GetProcAddress(aDLLHandle, 'sfConvexShape_getFillColor');
+  sfConvexShape_getGeometricCenter := GetProcAddress(aDLLHandle, 'sfConvexShape_getGeometricCenter');
+  sfConvexShape_getGlobalBounds := GetProcAddress(aDLLHandle, 'sfConvexShape_getGlobalBounds');
+  sfConvexShape_getInverseTransform := GetProcAddress(aDLLHandle, 'sfConvexShape_getInverseTransform');
+  sfConvexShape_getLocalBounds := GetProcAddress(aDLLHandle, 'sfConvexShape_getLocalBounds');
+  sfConvexShape_getOrigin := GetProcAddress(aDLLHandle, 'sfConvexShape_getOrigin');
+  sfConvexShape_getOutlineColor := GetProcAddress(aDLLHandle, 'sfConvexShape_getOutlineColor');
+  sfConvexShape_getOutlineThickness := GetProcAddress(aDLLHandle, 'sfConvexShape_getOutlineThickness');
+  sfConvexShape_getPoint := GetProcAddress(aDLLHandle, 'sfConvexShape_getPoint');
+  sfConvexShape_getPointCount := GetProcAddress(aDLLHandle, 'sfConvexShape_getPointCount');
+  sfConvexShape_getPosition := GetProcAddress(aDLLHandle, 'sfConvexShape_getPosition');
+  sfConvexShape_getRotation := GetProcAddress(aDLLHandle, 'sfConvexShape_getRotation');
+  sfConvexShape_getScale := GetProcAddress(aDLLHandle, 'sfConvexShape_getScale');
+  sfConvexShape_getTexture := GetProcAddress(aDLLHandle, 'sfConvexShape_getTexture');
+  sfConvexShape_getTextureRect := GetProcAddress(aDLLHandle, 'sfConvexShape_getTextureRect');
+  sfConvexShape_getTransform := GetProcAddress(aDLLHandle, 'sfConvexShape_getTransform');
+  sfConvexShape_move := GetProcAddress(aDLLHandle, 'sfConvexShape_move');
+  sfConvexShape_rotate := GetProcAddress(aDLLHandle, 'sfConvexShape_rotate');
+  sfConvexShape_scale := GetProcAddress(aDLLHandle, 'sfConvexShape_scale');
+  sfConvexShape_setFillColor := GetProcAddress(aDLLHandle, 'sfConvexShape_setFillColor');
+  sfConvexShape_setOrigin := GetProcAddress(aDLLHandle, 'sfConvexShape_setOrigin');
+  sfConvexShape_setOutlineColor := GetProcAddress(aDLLHandle, 'sfConvexShape_setOutlineColor');
+  sfConvexShape_setOutlineThickness := GetProcAddress(aDLLHandle, 'sfConvexShape_setOutlineThickness');
+  sfConvexShape_setPoint := GetProcAddress(aDLLHandle, 'sfConvexShape_setPoint');
+  sfConvexShape_setPointCount := GetProcAddress(aDLLHandle, 'sfConvexShape_setPointCount');
+  sfConvexShape_setPosition := GetProcAddress(aDLLHandle, 'sfConvexShape_setPosition');
+  sfConvexShape_setRotation := GetProcAddress(aDLLHandle, 'sfConvexShape_setRotation');
+  sfConvexShape_setScale := GetProcAddress(aDLLHandle, 'sfConvexShape_setScale');
+  sfConvexShape_setTexture := GetProcAddress(aDLLHandle, 'sfConvexShape_setTexture');
+  sfConvexShape_setTextureRect := GetProcAddress(aDLLHandle, 'sfConvexShape_setTextureRect');
+  sfCursor_createFromPixels := GetProcAddress(aDLLHandle, 'sfCursor_createFromPixels');
+  sfCursor_createFromSystem := GetProcAddress(aDLLHandle, 'sfCursor_createFromSystem');
+  sfCursor_destroy := GetProcAddress(aDLLHandle, 'sfCursor_destroy');
+  sfFloatRect_contains := GetProcAddress(aDLLHandle, 'sfFloatRect_contains');
+  sfFloatRect_intersects := GetProcAddress(aDLLHandle, 'sfFloatRect_intersects');
+  sfFont_copy := GetProcAddress(aDLLHandle, 'sfFont_copy');
+  sfFont_createFromFile := GetProcAddress(aDLLHandle, 'sfFont_createFromFile');
+  sfFont_createFromMemory := GetProcAddress(aDLLHandle, 'sfFont_createFromMemory');
+  sfFont_createFromStream := GetProcAddress(aDLLHandle, 'sfFont_createFromStream');
+  sfFont_destroy := GetProcAddress(aDLLHandle, 'sfFont_destroy');
+  sfFont_getBoldKerning := GetProcAddress(aDLLHandle, 'sfFont_getBoldKerning');
+  sfFont_getGlyph := GetProcAddress(aDLLHandle, 'sfFont_getGlyph');
+  sfFont_getInfo := GetProcAddress(aDLLHandle, 'sfFont_getInfo');
+  sfFont_getKerning := GetProcAddress(aDLLHandle, 'sfFont_getKerning');
+  sfFont_getLineSpacing := GetProcAddress(aDLLHandle, 'sfFont_getLineSpacing');
+  sfFont_getTexture := GetProcAddress(aDLLHandle, 'sfFont_getTexture');
+  sfFont_getUnderlinePosition := GetProcAddress(aDLLHandle, 'sfFont_getUnderlinePosition');
+  sfFont_getUnderlineThickness := GetProcAddress(aDLLHandle, 'sfFont_getUnderlineThickness');
+  sfFont_hasGlyph := GetProcAddress(aDLLHandle, 'sfFont_hasGlyph');
+  sfFont_isSmooth := GetProcAddress(aDLLHandle, 'sfFont_isSmooth');
+  sfFont_setSmooth := GetProcAddress(aDLLHandle, 'sfFont_setSmooth');
+  sfFtp_changeDirectory := GetProcAddress(aDLLHandle, 'sfFtp_changeDirectory');
+  sfFtp_connect := GetProcAddress(aDLLHandle, 'sfFtp_connect');
+  sfFtp_create := GetProcAddress(aDLLHandle, 'sfFtp_create');
+  sfFtp_createDirectory := GetProcAddress(aDLLHandle, 'sfFtp_createDirectory');
+  sfFtp_deleteDirectory := GetProcAddress(aDLLHandle, 'sfFtp_deleteDirectory');
+  sfFtp_deleteFile := GetProcAddress(aDLLHandle, 'sfFtp_deleteFile');
+  sfFtp_destroy := GetProcAddress(aDLLHandle, 'sfFtp_destroy');
+  sfFtp_disconnect := GetProcAddress(aDLLHandle, 'sfFtp_disconnect');
+  sfFtp_download := GetProcAddress(aDLLHandle, 'sfFtp_download');
+  sfFtp_getDirectoryListing := GetProcAddress(aDLLHandle, 'sfFtp_getDirectoryListing');
+  sfFtp_getWorkingDirectory := GetProcAddress(aDLLHandle, 'sfFtp_getWorkingDirectory');
+  sfFtp_keepAlive := GetProcAddress(aDLLHandle, 'sfFtp_keepAlive');
+  sfFtp_login := GetProcAddress(aDLLHandle, 'sfFtp_login');
+  sfFtp_loginAnonymous := GetProcAddress(aDLLHandle, 'sfFtp_loginAnonymous');
+  sfFtp_parentDirectory := GetProcAddress(aDLLHandle, 'sfFtp_parentDirectory');
+  sfFtp_renameFile := GetProcAddress(aDLLHandle, 'sfFtp_renameFile');
+  sfFtp_sendCommand := GetProcAddress(aDLLHandle, 'sfFtp_sendCommand');
+  sfFtp_upload := GetProcAddress(aDLLHandle, 'sfFtp_upload');
+  sfFtpDirectoryResponse_destroy := GetProcAddress(aDLLHandle, 'sfFtpDirectoryResponse_destroy');
+  sfFtpDirectoryResponse_getDirectory := GetProcAddress(aDLLHandle, 'sfFtpDirectoryResponse_getDirectory');
+  sfFtpDirectoryResponse_getDirectoryUnicode := GetProcAddress(aDLLHandle, 'sfFtpDirectoryResponse_getDirectoryUnicode');
+  sfFtpDirectoryResponse_getMessage := GetProcAddress(aDLLHandle, 'sfFtpDirectoryResponse_getMessage');
+  sfFtpDirectoryResponse_getStatus := GetProcAddress(aDLLHandle, 'sfFtpDirectoryResponse_getStatus');
+  sfFtpDirectoryResponse_isOk := GetProcAddress(aDLLHandle, 'sfFtpDirectoryResponse_isOk');
+  sfFtpListingResponse_destroy := GetProcAddress(aDLLHandle, 'sfFtpListingResponse_destroy');
+  sfFtpListingResponse_getCount := GetProcAddress(aDLLHandle, 'sfFtpListingResponse_getCount');
+  sfFtpListingResponse_getMessage := GetProcAddress(aDLLHandle, 'sfFtpListingResponse_getMessage');
+  sfFtpListingResponse_getName := GetProcAddress(aDLLHandle, 'sfFtpListingResponse_getName');
+  sfFtpListingResponse_getStatus := GetProcAddress(aDLLHandle, 'sfFtpListingResponse_getStatus');
+  sfFtpListingResponse_isOk := GetProcAddress(aDLLHandle, 'sfFtpListingResponse_isOk');
+  sfFtpResponse_destroy := GetProcAddress(aDLLHandle, 'sfFtpResponse_destroy');
+  sfFtpResponse_getMessage := GetProcAddress(aDLLHandle, 'sfFtpResponse_getMessage');
+  sfFtpResponse_getStatus := GetProcAddress(aDLLHandle, 'sfFtpResponse_getStatus');
+  sfFtpResponse_isOk := GetProcAddress(aDLLHandle, 'sfFtpResponse_isOk');
+  sfHttp_create := GetProcAddress(aDLLHandle, 'sfHttp_create');
+  sfHttp_destroy := GetProcAddress(aDLLHandle, 'sfHttp_destroy');
+  sfHttp_sendRequest := GetProcAddress(aDLLHandle, 'sfHttp_sendRequest');
+  sfHttp_setHost := GetProcAddress(aDLLHandle, 'sfHttp_setHost');
+  sfHttpRequest_create := GetProcAddress(aDLLHandle, 'sfHttpRequest_create');
+  sfHttpRequest_destroy := GetProcAddress(aDLLHandle, 'sfHttpRequest_destroy');
+  sfHttpRequest_setBody := GetProcAddress(aDLLHandle, 'sfHttpRequest_setBody');
+  sfHttpRequest_setField := GetProcAddress(aDLLHandle, 'sfHttpRequest_setField');
+  sfHttpRequest_setHttpVersion := GetProcAddress(aDLLHandle, 'sfHttpRequest_setHttpVersion');
+  sfHttpRequest_setMethod := GetProcAddress(aDLLHandle, 'sfHttpRequest_setMethod');
+  sfHttpRequest_setUri := GetProcAddress(aDLLHandle, 'sfHttpRequest_setUri');
+  sfHttpResponse_destroy := GetProcAddress(aDLLHandle, 'sfHttpResponse_destroy');
+  sfHttpResponse_getBody := GetProcAddress(aDLLHandle, 'sfHttpResponse_getBody');
+  sfHttpResponse_getField := GetProcAddress(aDLLHandle, 'sfHttpResponse_getField');
+  sfHttpResponse_getMajorVersion := GetProcAddress(aDLLHandle, 'sfHttpResponse_getMajorVersion');
+  sfHttpResponse_getMinorVersion := GetProcAddress(aDLLHandle, 'sfHttpResponse_getMinorVersion');
+  sfHttpResponse_getStatus := GetProcAddress(aDLLHandle, 'sfHttpResponse_getStatus');
+  sfImage_copy := GetProcAddress(aDLLHandle, 'sfImage_copy');
+  sfImage_copyImage := GetProcAddress(aDLLHandle, 'sfImage_copyImage');
+  sfImage_create := GetProcAddress(aDLLHandle, 'sfImage_create');
+  sfImage_createFromColor := GetProcAddress(aDLLHandle, 'sfImage_createFromColor');
+  sfImage_createFromFile := GetProcAddress(aDLLHandle, 'sfImage_createFromFile');
+  sfImage_createFromMemory := GetProcAddress(aDLLHandle, 'sfImage_createFromMemory');
+  sfImage_createFromPixels := GetProcAddress(aDLLHandle, 'sfImage_createFromPixels');
+  sfImage_createFromStream := GetProcAddress(aDLLHandle, 'sfImage_createFromStream');
+  sfImage_createMaskFromColor := GetProcAddress(aDLLHandle, 'sfImage_createMaskFromColor');
+  sfImage_destroy := GetProcAddress(aDLLHandle, 'sfImage_destroy');
+  sfImage_flipHorizontally := GetProcAddress(aDLLHandle, 'sfImage_flipHorizontally');
+  sfImage_flipVertically := GetProcAddress(aDLLHandle, 'sfImage_flipVertically');
+  sfImage_getPixel := GetProcAddress(aDLLHandle, 'sfImage_getPixel');
+  sfImage_getPixelsPtr := GetProcAddress(aDLLHandle, 'sfImage_getPixelsPtr');
+  sfImage_getSize := GetProcAddress(aDLLHandle, 'sfImage_getSize');
+  sfImage_saveToFile := GetProcAddress(aDLLHandle, 'sfImage_saveToFile');
+  sfImage_saveToMemory := GetProcAddress(aDLLHandle, 'sfImage_saveToMemory');
+  sfImage_setPixel := GetProcAddress(aDLLHandle, 'sfImage_setPixel');
+  sfIntRect_contains := GetProcAddress(aDLLHandle, 'sfIntRect_contains');
+  sfIntRect_intersects := GetProcAddress(aDLLHandle, 'sfIntRect_intersects');
+  sfIpAddress_fromBytes := GetProcAddress(aDLLHandle, 'sfIpAddress_fromBytes');
+  sfIpAddress_fromInteger := GetProcAddress(aDLLHandle, 'sfIpAddress_fromInteger');
+  sfIpAddress_fromString := GetProcAddress(aDLLHandle, 'sfIpAddress_fromString');
+  sfIpAddress_getLocalAddress := GetProcAddress(aDLLHandle, 'sfIpAddress_getLocalAddress');
+  sfIpAddress_getPublicAddress := GetProcAddress(aDLLHandle, 'sfIpAddress_getPublicAddress');
+  sfIpAddress_toInteger := GetProcAddress(aDLLHandle, 'sfIpAddress_toInteger');
+  sfIpAddress_toString := GetProcAddress(aDLLHandle, 'sfIpAddress_toString');
+  sfJoystick_getAxisPosition := GetProcAddress(aDLLHandle, 'sfJoystick_getAxisPosition');
+  sfJoystick_getButtonCount := GetProcAddress(aDLLHandle, 'sfJoystick_getButtonCount');
+  sfJoystick_getIdentification := GetProcAddress(aDLLHandle, 'sfJoystick_getIdentification');
+  sfJoystick_hasAxis := GetProcAddress(aDLLHandle, 'sfJoystick_hasAxis');
+  sfJoystick_isButtonPressed := GetProcAddress(aDLLHandle, 'sfJoystick_isButtonPressed');
+  sfJoystick_isConnected := GetProcAddress(aDLLHandle, 'sfJoystick_isConnected');
+  sfJoystick_update := GetProcAddress(aDLLHandle, 'sfJoystick_update');
+  sfKeyboard_delocalize := GetProcAddress(aDLLHandle, 'sfKeyboard_delocalize');
+  sfKeyboard_getDescription := GetProcAddress(aDLLHandle, 'sfKeyboard_getDescription');
+  sfKeyboard_isKeyPressed := GetProcAddress(aDLLHandle, 'sfKeyboard_isKeyPressed');
+  sfKeyboard_isScancodePressed := GetProcAddress(aDLLHandle, 'sfKeyboard_isScancodePressed');
+  sfKeyboard_localize := GetProcAddress(aDLLHandle, 'sfKeyboard_localize');
+  sfKeyboard_setVirtualKeyboardVisible := GetProcAddress(aDLLHandle, 'sfKeyboard_setVirtualKeyboardVisible');
+  sfListener_getCone := GetProcAddress(aDLLHandle, 'sfListener_getCone');
+  sfListener_getDirection := GetProcAddress(aDLLHandle, 'sfListener_getDirection');
+  sfListener_getGlobalVolume := GetProcAddress(aDLLHandle, 'sfListener_getGlobalVolume');
+  sfListener_getPosition := GetProcAddress(aDLLHandle, 'sfListener_getPosition');
+  sfListener_getUpVector := GetProcAddress(aDLLHandle, 'sfListener_getUpVector');
+  sfListener_getVelocity := GetProcAddress(aDLLHandle, 'sfListener_getVelocity');
+  sfListener_setCone := GetProcAddress(aDLLHandle, 'sfListener_setCone');
+  sfListener_setDirection := GetProcAddress(aDLLHandle, 'sfListener_setDirection');
+  sfListener_setGlobalVolume := GetProcAddress(aDLLHandle, 'sfListener_setGlobalVolume');
+  sfListener_setPosition := GetProcAddress(aDLLHandle, 'sfListener_setPosition');
+  sfListener_setUpVector := GetProcAddress(aDLLHandle, 'sfListener_setUpVector');
+  sfListener_setVelocity := GetProcAddress(aDLLHandle, 'sfListener_setVelocity');
+  sfMicroseconds := GetProcAddress(aDLLHandle, 'sfMicroseconds');
+  sfMilliseconds := GetProcAddress(aDLLHandle, 'sfMilliseconds');
+  sfMouse_getPosition := GetProcAddress(aDLLHandle, 'sfMouse_getPosition');
+  sfMouse_getPositionRenderWindow := GetProcAddress(aDLLHandle, 'sfMouse_getPositionRenderWindow');
+  sfMouse_getPositionWindowBase := GetProcAddress(aDLLHandle, 'sfMouse_getPositionWindowBase');
+  sfMouse_isButtonPressed := GetProcAddress(aDLLHandle, 'sfMouse_isButtonPressed');
+  sfMouse_setPosition := GetProcAddress(aDLLHandle, 'sfMouse_setPosition');
+  sfMouse_setPositionRenderWindow := GetProcAddress(aDLLHandle, 'sfMouse_setPositionRenderWindow');
+  sfMouse_setPositionWindowBase := GetProcAddress(aDLLHandle, 'sfMouse_setPositionWindowBase');
+  sfMusic_createFromFile := GetProcAddress(aDLLHandle, 'sfMusic_createFromFile');
+  sfMusic_createFromMemory := GetProcAddress(aDLLHandle, 'sfMusic_createFromMemory');
+  sfMusic_createFromStream := GetProcAddress(aDLLHandle, 'sfMusic_createFromStream');
+  sfMusic_destroy := GetProcAddress(aDLLHandle, 'sfMusic_destroy');
+  sfMusic_getAttenuation := GetProcAddress(aDLLHandle, 'sfMusic_getAttenuation');
+  sfMusic_getChannelCount := GetProcAddress(aDLLHandle, 'sfMusic_getChannelCount');
+  sfMusic_getChannelMap := GetProcAddress(aDLLHandle, 'sfMusic_getChannelMap');
+  sfMusic_getCone := GetProcAddress(aDLLHandle, 'sfMusic_getCone');
+  sfMusic_getDirection := GetProcAddress(aDLLHandle, 'sfMusic_getDirection');
+  sfMusic_getDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfMusic_getDirectionalAttenuationFactor');
+  sfMusic_getDopplerFactor := GetProcAddress(aDLLHandle, 'sfMusic_getDopplerFactor');
+  sfMusic_getDuration := GetProcAddress(aDLLHandle, 'sfMusic_getDuration');
+  sfMusic_getLoopPoints := GetProcAddress(aDLLHandle, 'sfMusic_getLoopPoints');
+  sfMusic_getMaxDistance := GetProcAddress(aDLLHandle, 'sfMusic_getMaxDistance');
+  sfMusic_getMaxGain := GetProcAddress(aDLLHandle, 'sfMusic_getMaxGain');
+  sfMusic_getMinDistance := GetProcAddress(aDLLHandle, 'sfMusic_getMinDistance');
+  sfMusic_getMinGain := GetProcAddress(aDLLHandle, 'sfMusic_getMinGain');
+  sfMusic_getPan := GetProcAddress(aDLLHandle, 'sfMusic_getPan');
+  sfMusic_getPitch := GetProcAddress(aDLLHandle, 'sfMusic_getPitch');
+  sfMusic_getPlayingOffset := GetProcAddress(aDLLHandle, 'sfMusic_getPlayingOffset');
+  sfMusic_getPosition := GetProcAddress(aDLLHandle, 'sfMusic_getPosition');
+  sfMusic_getSampleRate := GetProcAddress(aDLLHandle, 'sfMusic_getSampleRate');
+  sfMusic_getStatus := GetProcAddress(aDLLHandle, 'sfMusic_getStatus');
+  sfMusic_getVelocity := GetProcAddress(aDLLHandle, 'sfMusic_getVelocity');
+  sfMusic_getVolume := GetProcAddress(aDLLHandle, 'sfMusic_getVolume');
+  sfMusic_isLooping := GetProcAddress(aDLLHandle, 'sfMusic_isLooping');
+  sfMusic_isRelativeToListener := GetProcAddress(aDLLHandle, 'sfMusic_isRelativeToListener');
+  sfMusic_isSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfMusic_isSpatializationEnabled');
+  sfMusic_pause := GetProcAddress(aDLLHandle, 'sfMusic_pause');
+  sfMusic_play := GetProcAddress(aDLLHandle, 'sfMusic_play');
+  sfMusic_setAttenuation := GetProcAddress(aDLLHandle, 'sfMusic_setAttenuation');
+  sfMusic_setCone := GetProcAddress(aDLLHandle, 'sfMusic_setCone');
+  sfMusic_setDirection := GetProcAddress(aDLLHandle, 'sfMusic_setDirection');
+  sfMusic_setDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfMusic_setDirectionalAttenuationFactor');
+  sfMusic_setDopplerFactor := GetProcAddress(aDLLHandle, 'sfMusic_setDopplerFactor');
+  sfMusic_setEffectProcessor := GetProcAddress(aDLLHandle, 'sfMusic_setEffectProcessor');
+  sfMusic_setLooping := GetProcAddress(aDLLHandle, 'sfMusic_setLooping');
+  sfMusic_setLoopPoints := GetProcAddress(aDLLHandle, 'sfMusic_setLoopPoints');
+  sfMusic_setMaxDistance := GetProcAddress(aDLLHandle, 'sfMusic_setMaxDistance');
+  sfMusic_setMaxGain := GetProcAddress(aDLLHandle, 'sfMusic_setMaxGain');
+  sfMusic_setMinDistance := GetProcAddress(aDLLHandle, 'sfMusic_setMinDistance');
+  sfMusic_setMinGain := GetProcAddress(aDLLHandle, 'sfMusic_setMinGain');
+  sfMusic_setPan := GetProcAddress(aDLLHandle, 'sfMusic_setPan');
+  sfMusic_setPitch := GetProcAddress(aDLLHandle, 'sfMusic_setPitch');
+  sfMusic_setPlayingOffset := GetProcAddress(aDLLHandle, 'sfMusic_setPlayingOffset');
+  sfMusic_setPosition := GetProcAddress(aDLLHandle, 'sfMusic_setPosition');
+  sfMusic_setRelativeToListener := GetProcAddress(aDLLHandle, 'sfMusic_setRelativeToListener');
+  sfMusic_setSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfMusic_setSpatializationEnabled');
+  sfMusic_setVelocity := GetProcAddress(aDLLHandle, 'sfMusic_setVelocity');
+  sfMusic_setVolume := GetProcAddress(aDLLHandle, 'sfMusic_setVolume');
+  sfMusic_stop := GetProcAddress(aDLLHandle, 'sfMusic_stop');
+  sfPacket_append := GetProcAddress(aDLLHandle, 'sfPacket_append');
+  sfPacket_canRead := GetProcAddress(aDLLHandle, 'sfPacket_canRead');
+  sfPacket_clear := GetProcAddress(aDLLHandle, 'sfPacket_clear');
+  sfPacket_copy := GetProcAddress(aDLLHandle, 'sfPacket_copy');
+  sfPacket_create := GetProcAddress(aDLLHandle, 'sfPacket_create');
+  sfPacket_destroy := GetProcAddress(aDLLHandle, 'sfPacket_destroy');
+  sfPacket_endOfPacket := GetProcAddress(aDLLHandle, 'sfPacket_endOfPacket');
+  sfPacket_getData := GetProcAddress(aDLLHandle, 'sfPacket_getData');
+  sfPacket_getDataSize := GetProcAddress(aDLLHandle, 'sfPacket_getDataSize');
+  sfPacket_getReadPosition := GetProcAddress(aDLLHandle, 'sfPacket_getReadPosition');
+  sfPacket_readBool := GetProcAddress(aDLLHandle, 'sfPacket_readBool');
+  sfPacket_readDouble := GetProcAddress(aDLLHandle, 'sfPacket_readDouble');
+  sfPacket_readFloat := GetProcAddress(aDLLHandle, 'sfPacket_readFloat');
+  sfPacket_readInt16 := GetProcAddress(aDLLHandle, 'sfPacket_readInt16');
+  sfPacket_readInt32 := GetProcAddress(aDLLHandle, 'sfPacket_readInt32');
+  sfPacket_readInt8 := GetProcAddress(aDLLHandle, 'sfPacket_readInt8');
+  sfPacket_readString := GetProcAddress(aDLLHandle, 'sfPacket_readString');
+  sfPacket_readUint16 := GetProcAddress(aDLLHandle, 'sfPacket_readUint16');
+  sfPacket_readUint32 := GetProcAddress(aDLLHandle, 'sfPacket_readUint32');
+  sfPacket_readUint8 := GetProcAddress(aDLLHandle, 'sfPacket_readUint8');
+  sfPacket_readWideString := GetProcAddress(aDLLHandle, 'sfPacket_readWideString');
+  sfPacket_writeBool := GetProcAddress(aDLLHandle, 'sfPacket_writeBool');
+  sfPacket_writeDouble := GetProcAddress(aDLLHandle, 'sfPacket_writeDouble');
+  sfPacket_writeFloat := GetProcAddress(aDLLHandle, 'sfPacket_writeFloat');
+  sfPacket_writeInt16 := GetProcAddress(aDLLHandle, 'sfPacket_writeInt16');
+  sfPacket_writeInt32 := GetProcAddress(aDLLHandle, 'sfPacket_writeInt32');
+  sfPacket_writeInt8 := GetProcAddress(aDLLHandle, 'sfPacket_writeInt8');
+  sfPacket_writeString := GetProcAddress(aDLLHandle, 'sfPacket_writeString');
+  sfPacket_writeUint16 := GetProcAddress(aDLLHandle, 'sfPacket_writeUint16');
+  sfPacket_writeUint32 := GetProcAddress(aDLLHandle, 'sfPacket_writeUint32');
+  sfPacket_writeUint8 := GetProcAddress(aDLLHandle, 'sfPacket_writeUint8');
+  sfPacket_writeWideString := GetProcAddress(aDLLHandle, 'sfPacket_writeWideString');
+  sfRectangleShape_copy := GetProcAddress(aDLLHandle, 'sfRectangleShape_copy');
+  sfRectangleShape_create := GetProcAddress(aDLLHandle, 'sfRectangleShape_create');
+  sfRectangleShape_destroy := GetProcAddress(aDLLHandle, 'sfRectangleShape_destroy');
+  sfRectangleShape_getFillColor := GetProcAddress(aDLLHandle, 'sfRectangleShape_getFillColor');
+  sfRectangleShape_getGeometricCenter := GetProcAddress(aDLLHandle, 'sfRectangleShape_getGeometricCenter');
+  sfRectangleShape_getGlobalBounds := GetProcAddress(aDLLHandle, 'sfRectangleShape_getGlobalBounds');
+  sfRectangleShape_getInverseTransform := GetProcAddress(aDLLHandle, 'sfRectangleShape_getInverseTransform');
+  sfRectangleShape_getLocalBounds := GetProcAddress(aDLLHandle, 'sfRectangleShape_getLocalBounds');
+  sfRectangleShape_getOrigin := GetProcAddress(aDLLHandle, 'sfRectangleShape_getOrigin');
+  sfRectangleShape_getOutlineColor := GetProcAddress(aDLLHandle, 'sfRectangleShape_getOutlineColor');
+  sfRectangleShape_getOutlineThickness := GetProcAddress(aDLLHandle, 'sfRectangleShape_getOutlineThickness');
+  sfRectangleShape_getPoint := GetProcAddress(aDLLHandle, 'sfRectangleShape_getPoint');
+  sfRectangleShape_getPointCount := GetProcAddress(aDLLHandle, 'sfRectangleShape_getPointCount');
+  sfRectangleShape_getPosition := GetProcAddress(aDLLHandle, 'sfRectangleShape_getPosition');
+  sfRectangleShape_getRotation := GetProcAddress(aDLLHandle, 'sfRectangleShape_getRotation');
+  sfRectangleShape_getScale := GetProcAddress(aDLLHandle, 'sfRectangleShape_getScale');
+  sfRectangleShape_getSize := GetProcAddress(aDLLHandle, 'sfRectangleShape_getSize');
+  sfRectangleShape_getTexture := GetProcAddress(aDLLHandle, 'sfRectangleShape_getTexture');
+  sfRectangleShape_getTextureRect := GetProcAddress(aDLLHandle, 'sfRectangleShape_getTextureRect');
+  sfRectangleShape_getTransform := GetProcAddress(aDLLHandle, 'sfRectangleShape_getTransform');
+  sfRectangleShape_move := GetProcAddress(aDLLHandle, 'sfRectangleShape_move');
+  sfRectangleShape_rotate := GetProcAddress(aDLLHandle, 'sfRectangleShape_rotate');
+  sfRectangleShape_scale := GetProcAddress(aDLLHandle, 'sfRectangleShape_scale');
+  sfRectangleShape_setFillColor := GetProcAddress(aDLLHandle, 'sfRectangleShape_setFillColor');
+  sfRectangleShape_setOrigin := GetProcAddress(aDLLHandle, 'sfRectangleShape_setOrigin');
+  sfRectangleShape_setOutlineColor := GetProcAddress(aDLLHandle, 'sfRectangleShape_setOutlineColor');
+  sfRectangleShape_setOutlineThickness := GetProcAddress(aDLLHandle, 'sfRectangleShape_setOutlineThickness');
+  sfRectangleShape_setPosition := GetProcAddress(aDLLHandle, 'sfRectangleShape_setPosition');
+  sfRectangleShape_setRotation := GetProcAddress(aDLLHandle, 'sfRectangleShape_setRotation');
+  sfRectangleShape_setScale := GetProcAddress(aDLLHandle, 'sfRectangleShape_setScale');
+  sfRectangleShape_setSize := GetProcAddress(aDLLHandle, 'sfRectangleShape_setSize');
+  sfRectangleShape_setTexture := GetProcAddress(aDLLHandle, 'sfRectangleShape_setTexture');
+  sfRectangleShape_setTextureRect := GetProcAddress(aDLLHandle, 'sfRectangleShape_setTextureRect');
+  sfRenderTexture_clear := GetProcAddress(aDLLHandle, 'sfRenderTexture_clear');
+  sfRenderTexture_clearColorAndStencil := GetProcAddress(aDLLHandle, 'sfRenderTexture_clearColorAndStencil');
+  sfRenderTexture_clearStencil := GetProcAddress(aDLLHandle, 'sfRenderTexture_clearStencil');
+  sfRenderTexture_create := GetProcAddress(aDLLHandle, 'sfRenderTexture_create');
+  sfRenderTexture_destroy := GetProcAddress(aDLLHandle, 'sfRenderTexture_destroy');
+  sfRenderTexture_display := GetProcAddress(aDLLHandle, 'sfRenderTexture_display');
+  sfRenderTexture_drawCircleShape := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawCircleShape');
+  sfRenderTexture_drawConvexShape := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawConvexShape');
+  sfRenderTexture_drawPrimitives := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawPrimitives');
+  sfRenderTexture_drawRectangleShape := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawRectangleShape');
+  sfRenderTexture_drawShape := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawShape');
+  sfRenderTexture_drawSprite := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawSprite');
+  sfRenderTexture_drawText := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawText');
+  sfRenderTexture_drawVertexArray := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawVertexArray');
+  sfRenderTexture_drawVertexBuffer := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawVertexBuffer');
+  sfRenderTexture_drawVertexBufferRange := GetProcAddress(aDLLHandle, 'sfRenderTexture_drawVertexBufferRange');
+  sfRenderTexture_generateMipmap := GetProcAddress(aDLLHandle, 'sfRenderTexture_generateMipmap');
+  sfRenderTexture_getDefaultView := GetProcAddress(aDLLHandle, 'sfRenderTexture_getDefaultView');
+  sfRenderTexture_getMaximumAntiAliasingLevel := GetProcAddress(aDLLHandle, 'sfRenderTexture_getMaximumAntiAliasingLevel');
+  sfRenderTexture_getScissor := GetProcAddress(aDLLHandle, 'sfRenderTexture_getScissor');
+  sfRenderTexture_getSize := GetProcAddress(aDLLHandle, 'sfRenderTexture_getSize');
+  sfRenderTexture_getTexture := GetProcAddress(aDLLHandle, 'sfRenderTexture_getTexture');
+  sfRenderTexture_getView := GetProcAddress(aDLLHandle, 'sfRenderTexture_getView');
+  sfRenderTexture_getViewport := GetProcAddress(aDLLHandle, 'sfRenderTexture_getViewport');
+  sfRenderTexture_isRepeated := GetProcAddress(aDLLHandle, 'sfRenderTexture_isRepeated');
+  sfRenderTexture_isSmooth := GetProcAddress(aDLLHandle, 'sfRenderTexture_isSmooth');
+  sfRenderTexture_isSrgb := GetProcAddress(aDLLHandle, 'sfRenderTexture_isSrgb');
+  sfRenderTexture_mapCoordsToPixel := GetProcAddress(aDLLHandle, 'sfRenderTexture_mapCoordsToPixel');
+  sfRenderTexture_mapPixelToCoords := GetProcAddress(aDLLHandle, 'sfRenderTexture_mapPixelToCoords');
+  sfRenderTexture_popGLStates := GetProcAddress(aDLLHandle, 'sfRenderTexture_popGLStates');
+  sfRenderTexture_pushGLStates := GetProcAddress(aDLLHandle, 'sfRenderTexture_pushGLStates');
+  sfRenderTexture_resetGLStates := GetProcAddress(aDLLHandle, 'sfRenderTexture_resetGLStates');
+  sfRenderTexture_setActive := GetProcAddress(aDLLHandle, 'sfRenderTexture_setActive');
+  sfRenderTexture_setRepeated := GetProcAddress(aDLLHandle, 'sfRenderTexture_setRepeated');
+  sfRenderTexture_setSmooth := GetProcAddress(aDLLHandle, 'sfRenderTexture_setSmooth');
+  sfRenderTexture_setView := GetProcAddress(aDLLHandle, 'sfRenderTexture_setView');
+  sfRenderWindow_clear := GetProcAddress(aDLLHandle, 'sfRenderWindow_clear');
+  sfRenderWindow_clearColorAndStencil := GetProcAddress(aDLLHandle, 'sfRenderWindow_clearColorAndStencil');
+  sfRenderWindow_clearStencil := GetProcAddress(aDLLHandle, 'sfRenderWindow_clearStencil');
+  sfRenderWindow_close := GetProcAddress(aDLLHandle, 'sfRenderWindow_close');
+  sfRenderWindow_create := GetProcAddress(aDLLHandle, 'sfRenderWindow_create');
+  sfRenderWindow_createFromHandle := GetProcAddress(aDLLHandle, 'sfRenderWindow_createFromHandle');
+  sfRenderWindow_createUnicode := GetProcAddress(aDLLHandle, 'sfRenderWindow_createUnicode');
+  sfRenderWindow_createVulkanSurface := GetProcAddress(aDLLHandle, 'sfRenderWindow_createVulkanSurface');
+  sfRenderWindow_destroy := GetProcAddress(aDLLHandle, 'sfRenderWindow_destroy');
+  sfRenderWindow_display := GetProcAddress(aDLLHandle, 'sfRenderWindow_display');
+  sfRenderWindow_drawCircleShape := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawCircleShape');
+  sfRenderWindow_drawConvexShape := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawConvexShape');
+  sfRenderWindow_drawPrimitives := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawPrimitives');
+  sfRenderWindow_drawRectangleShape := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawRectangleShape');
+  sfRenderWindow_drawShape := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawShape');
+  sfRenderWindow_drawSprite := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawSprite');
+  sfRenderWindow_drawText := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawText');
+  sfRenderWindow_drawVertexArray := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawVertexArray');
+  sfRenderWindow_drawVertexBuffer := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawVertexBuffer');
+  sfRenderWindow_drawVertexBufferRange := GetProcAddress(aDLLHandle, 'sfRenderWindow_drawVertexBufferRange');
+  sfRenderWindow_getDefaultView := GetProcAddress(aDLLHandle, 'sfRenderWindow_getDefaultView');
+  sfRenderWindow_getNativeHandle := GetProcAddress(aDLLHandle, 'sfRenderWindow_getNativeHandle');
+  sfRenderWindow_getPosition := GetProcAddress(aDLLHandle, 'sfRenderWindow_getPosition');
+  sfRenderWindow_getScissor := GetProcAddress(aDLLHandle, 'sfRenderWindow_getScissor');
+  sfRenderWindow_getSettings := GetProcAddress(aDLLHandle, 'sfRenderWindow_getSettings');
+  sfRenderWindow_getSize := GetProcAddress(aDLLHandle, 'sfRenderWindow_getSize');
+  sfRenderWindow_getView := GetProcAddress(aDLLHandle, 'sfRenderWindow_getView');
+  sfRenderWindow_getViewport := GetProcAddress(aDLLHandle, 'sfRenderWindow_getViewport');
+  sfRenderWindow_hasFocus := GetProcAddress(aDLLHandle, 'sfRenderWindow_hasFocus');
+  sfRenderWindow_isOpen := GetProcAddress(aDLLHandle, 'sfRenderWindow_isOpen');
+  sfRenderWindow_isSrgb := GetProcAddress(aDLLHandle, 'sfRenderWindow_isSrgb');
+  sfRenderWindow_mapCoordsToPixel := GetProcAddress(aDLLHandle, 'sfRenderWindow_mapCoordsToPixel');
+  sfRenderWindow_mapPixelToCoords := GetProcAddress(aDLLHandle, 'sfRenderWindow_mapPixelToCoords');
+  sfRenderWindow_pollEvent := GetProcAddress(aDLLHandle, 'sfRenderWindow_pollEvent');
+  sfRenderWindow_popGLStates := GetProcAddress(aDLLHandle, 'sfRenderWindow_popGLStates');
+  sfRenderWindow_pushGLStates := GetProcAddress(aDLLHandle, 'sfRenderWindow_pushGLStates');
+  sfRenderWindow_requestFocus := GetProcAddress(aDLLHandle, 'sfRenderWindow_requestFocus');
+  sfRenderWindow_resetGLStates := GetProcAddress(aDLLHandle, 'sfRenderWindow_resetGLStates');
+  sfRenderWindow_setActive := GetProcAddress(aDLLHandle, 'sfRenderWindow_setActive');
+  sfRenderWindow_setFramerateLimit := GetProcAddress(aDLLHandle, 'sfRenderWindow_setFramerateLimit');
+  sfRenderWindow_setIcon := GetProcAddress(aDLLHandle, 'sfRenderWindow_setIcon');
+  sfRenderWindow_setJoystickThreshold := GetProcAddress(aDLLHandle, 'sfRenderWindow_setJoystickThreshold');
+  sfRenderWindow_setKeyRepeatEnabled := GetProcAddress(aDLLHandle, 'sfRenderWindow_setKeyRepeatEnabled');
+  sfRenderWindow_setMouseCursor := GetProcAddress(aDLLHandle, 'sfRenderWindow_setMouseCursor');
+  sfRenderWindow_setMouseCursorGrabbed := GetProcAddress(aDLLHandle, 'sfRenderWindow_setMouseCursorGrabbed');
+  sfRenderWindow_setMouseCursorVisible := GetProcAddress(aDLLHandle, 'sfRenderWindow_setMouseCursorVisible');
+  sfRenderWindow_setPosition := GetProcAddress(aDLLHandle, 'sfRenderWindow_setPosition');
+  sfRenderWindow_setSize := GetProcAddress(aDLLHandle, 'sfRenderWindow_setSize');
+  sfRenderWindow_setTitle := GetProcAddress(aDLLHandle, 'sfRenderWindow_setTitle');
+  sfRenderWindow_setUnicodeTitle := GetProcAddress(aDLLHandle, 'sfRenderWindow_setUnicodeTitle');
+  sfRenderWindow_setVerticalSyncEnabled := GetProcAddress(aDLLHandle, 'sfRenderWindow_setVerticalSyncEnabled');
+  sfRenderWindow_setView := GetProcAddress(aDLLHandle, 'sfRenderWindow_setView');
+  sfRenderWindow_setVisible := GetProcAddress(aDLLHandle, 'sfRenderWindow_setVisible');
+  sfRenderWindow_waitEvent := GetProcAddress(aDLLHandle, 'sfRenderWindow_waitEvent');
+  sfSeconds := GetProcAddress(aDLLHandle, 'sfSeconds');
+  sfSensor_getValue := GetProcAddress(aDLLHandle, 'sfSensor_getValue');
+  sfSensor_isAvailable := GetProcAddress(aDLLHandle, 'sfSensor_isAvailable');
+  sfSensor_setEnabled := GetProcAddress(aDLLHandle, 'sfSensor_setEnabled');
+  sfShader_bind := GetProcAddress(aDLLHandle, 'sfShader_bind');
+  sfShader_createFromFile := GetProcAddress(aDLLHandle, 'sfShader_createFromFile');
+  sfShader_createFromMemory := GetProcAddress(aDLLHandle, 'sfShader_createFromMemory');
+  sfShader_createFromStream := GetProcAddress(aDLLHandle, 'sfShader_createFromStream');
+  sfShader_destroy := GetProcAddress(aDLLHandle, 'sfShader_destroy');
+  sfShader_getNativeHandle := GetProcAddress(aDLLHandle, 'sfShader_getNativeHandle');
+  sfShader_isAvailable := GetProcAddress(aDLLHandle, 'sfShader_isAvailable');
+  sfShader_isGeometryAvailable := GetProcAddress(aDLLHandle, 'sfShader_isGeometryAvailable');
+  sfShader_setBoolUniform := GetProcAddress(aDLLHandle, 'sfShader_setBoolUniform');
+  sfShader_setBvec2Uniform := GetProcAddress(aDLLHandle, 'sfShader_setBvec2Uniform');
+  sfShader_setBvec3Uniform := GetProcAddress(aDLLHandle, 'sfShader_setBvec3Uniform');
+  sfShader_setBvec4Uniform := GetProcAddress(aDLLHandle, 'sfShader_setBvec4Uniform');
+  sfShader_setColorUniform := GetProcAddress(aDLLHandle, 'sfShader_setColorUniform');
+  sfShader_setCurrentTextureUniform := GetProcAddress(aDLLHandle, 'sfShader_setCurrentTextureUniform');
+  sfShader_setFloatUniform := GetProcAddress(aDLLHandle, 'sfShader_setFloatUniform');
+  sfShader_setFloatUniformArray := GetProcAddress(aDLLHandle, 'sfShader_setFloatUniformArray');
+  sfShader_setIntColorUniform := GetProcAddress(aDLLHandle, 'sfShader_setIntColorUniform');
+  sfShader_setIntUniform := GetProcAddress(aDLLHandle, 'sfShader_setIntUniform');
+  sfShader_setIvec2Uniform := GetProcAddress(aDLLHandle, 'sfShader_setIvec2Uniform');
+  sfShader_setIvec3Uniform := GetProcAddress(aDLLHandle, 'sfShader_setIvec3Uniform');
+  sfShader_setIvec4Uniform := GetProcAddress(aDLLHandle, 'sfShader_setIvec4Uniform');
+  sfShader_setMat3Uniform := GetProcAddress(aDLLHandle, 'sfShader_setMat3Uniform');
+  sfShader_setMat3UniformArray := GetProcAddress(aDLLHandle, 'sfShader_setMat3UniformArray');
+  sfShader_setMat4Uniform := GetProcAddress(aDLLHandle, 'sfShader_setMat4Uniform');
+  sfShader_setMat4UniformArray := GetProcAddress(aDLLHandle, 'sfShader_setMat4UniformArray');
+  sfShader_setTextureUniform := GetProcAddress(aDLLHandle, 'sfShader_setTextureUniform');
+  sfShader_setVec2Uniform := GetProcAddress(aDLLHandle, 'sfShader_setVec2Uniform');
+  sfShader_setVec2UniformArray := GetProcAddress(aDLLHandle, 'sfShader_setVec2UniformArray');
+  sfShader_setVec3Uniform := GetProcAddress(aDLLHandle, 'sfShader_setVec3Uniform');
+  sfShader_setVec3UniformArray := GetProcAddress(aDLLHandle, 'sfShader_setVec3UniformArray');
+  sfShader_setVec4Uniform := GetProcAddress(aDLLHandle, 'sfShader_setVec4Uniform');
+  sfShader_setVec4UniformArray := GetProcAddress(aDLLHandle, 'sfShader_setVec4UniformArray');
+  sfShape_create := GetProcAddress(aDLLHandle, 'sfShape_create');
+  sfShape_destroy := GetProcAddress(aDLLHandle, 'sfShape_destroy');
+  sfShape_getFillColor := GetProcAddress(aDLLHandle, 'sfShape_getFillColor');
+  sfShape_getGeometricCenter := GetProcAddress(aDLLHandle, 'sfShape_getGeometricCenter');
+  sfShape_getGlobalBounds := GetProcAddress(aDLLHandle, 'sfShape_getGlobalBounds');
+  sfShape_getInverseTransform := GetProcAddress(aDLLHandle, 'sfShape_getInverseTransform');
+  sfShape_getLocalBounds := GetProcAddress(aDLLHandle, 'sfShape_getLocalBounds');
+  sfShape_getOrigin := GetProcAddress(aDLLHandle, 'sfShape_getOrigin');
+  sfShape_getOutlineColor := GetProcAddress(aDLLHandle, 'sfShape_getOutlineColor');
+  sfShape_getOutlineThickness := GetProcAddress(aDLLHandle, 'sfShape_getOutlineThickness');
+  sfShape_getPoint := GetProcAddress(aDLLHandle, 'sfShape_getPoint');
+  sfShape_getPointCount := GetProcAddress(aDLLHandle, 'sfShape_getPointCount');
+  sfShape_getPosition := GetProcAddress(aDLLHandle, 'sfShape_getPosition');
+  sfShape_getRotation := GetProcAddress(aDLLHandle, 'sfShape_getRotation');
+  sfShape_getScale := GetProcAddress(aDLLHandle, 'sfShape_getScale');
+  sfShape_getTexture := GetProcAddress(aDLLHandle, 'sfShape_getTexture');
+  sfShape_getTextureRect := GetProcAddress(aDLLHandle, 'sfShape_getTextureRect');
+  sfShape_getTransform := GetProcAddress(aDLLHandle, 'sfShape_getTransform');
+  sfShape_move := GetProcAddress(aDLLHandle, 'sfShape_move');
+  sfShape_rotate := GetProcAddress(aDLLHandle, 'sfShape_rotate');
+  sfShape_scale := GetProcAddress(aDLLHandle, 'sfShape_scale');
+  sfShape_setFillColor := GetProcAddress(aDLLHandle, 'sfShape_setFillColor');
+  sfShape_setOrigin := GetProcAddress(aDLLHandle, 'sfShape_setOrigin');
+  sfShape_setOutlineColor := GetProcAddress(aDLLHandle, 'sfShape_setOutlineColor');
+  sfShape_setOutlineThickness := GetProcAddress(aDLLHandle, 'sfShape_setOutlineThickness');
+  sfShape_setPosition := GetProcAddress(aDLLHandle, 'sfShape_setPosition');
+  sfShape_setRotation := GetProcAddress(aDLLHandle, 'sfShape_setRotation');
+  sfShape_setScale := GetProcAddress(aDLLHandle, 'sfShape_setScale');
+  sfShape_setTexture := GetProcAddress(aDLLHandle, 'sfShape_setTexture');
+  sfShape_setTextureRect := GetProcAddress(aDLLHandle, 'sfShape_setTextureRect');
+  sfShape_update := GetProcAddress(aDLLHandle, 'sfShape_update');
+  sfSleep := GetProcAddress(aDLLHandle, 'sfSleep');
+  sfSocketSelector_addTcpListener := GetProcAddress(aDLLHandle, 'sfSocketSelector_addTcpListener');
+  sfSocketSelector_addTcpSocket := GetProcAddress(aDLLHandle, 'sfSocketSelector_addTcpSocket');
+  sfSocketSelector_addUdpSocket := GetProcAddress(aDLLHandle, 'sfSocketSelector_addUdpSocket');
+  sfSocketSelector_clear := GetProcAddress(aDLLHandle, 'sfSocketSelector_clear');
+  sfSocketSelector_copy := GetProcAddress(aDLLHandle, 'sfSocketSelector_copy');
+  sfSocketSelector_create := GetProcAddress(aDLLHandle, 'sfSocketSelector_create');
+  sfSocketSelector_destroy := GetProcAddress(aDLLHandle, 'sfSocketSelector_destroy');
+  sfSocketSelector_isTcpListenerReady := GetProcAddress(aDLLHandle, 'sfSocketSelector_isTcpListenerReady');
+  sfSocketSelector_isTcpSocketReady := GetProcAddress(aDLLHandle, 'sfSocketSelector_isTcpSocketReady');
+  sfSocketSelector_isUdpSocketReady := GetProcAddress(aDLLHandle, 'sfSocketSelector_isUdpSocketReady');
+  sfSocketSelector_removeTcpListener := GetProcAddress(aDLLHandle, 'sfSocketSelector_removeTcpListener');
+  sfSocketSelector_removeTcpSocket := GetProcAddress(aDLLHandle, 'sfSocketSelector_removeTcpSocket');
+  sfSocketSelector_removeUdpSocket := GetProcAddress(aDLLHandle, 'sfSocketSelector_removeUdpSocket');
+  sfSocketSelector_wait := GetProcAddress(aDLLHandle, 'sfSocketSelector_wait');
+  sfSound_copy := GetProcAddress(aDLLHandle, 'sfSound_copy');
+  sfSound_create := GetProcAddress(aDLLHandle, 'sfSound_create');
+  sfSound_destroy := GetProcAddress(aDLLHandle, 'sfSound_destroy');
+  sfSound_getAttenuation := GetProcAddress(aDLLHandle, 'sfSound_getAttenuation');
+  sfSound_getBuffer := GetProcAddress(aDLLHandle, 'sfSound_getBuffer');
+  sfSound_getCone := GetProcAddress(aDLLHandle, 'sfSound_getCone');
+  sfSound_getDirection := GetProcAddress(aDLLHandle, 'sfSound_getDirection');
+  sfSound_getDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfSound_getDirectionalAttenuationFactor');
+  sfSound_getDopplerFactor := GetProcAddress(aDLLHandle, 'sfSound_getDopplerFactor');
+  sfSound_getMaxDistance := GetProcAddress(aDLLHandle, 'sfSound_getMaxDistance');
+  sfSound_getMaxGain := GetProcAddress(aDLLHandle, 'sfSound_getMaxGain');
+  sfSound_getMinDistance := GetProcAddress(aDLLHandle, 'sfSound_getMinDistance');
+  sfSound_getMinGain := GetProcAddress(aDLLHandle, 'sfSound_getMinGain');
+  sfSound_getPan := GetProcAddress(aDLLHandle, 'sfSound_getPan');
+  sfSound_getPitch := GetProcAddress(aDLLHandle, 'sfSound_getPitch');
+  sfSound_getPlayingOffset := GetProcAddress(aDLLHandle, 'sfSound_getPlayingOffset');
+  sfSound_getPosition := GetProcAddress(aDLLHandle, 'sfSound_getPosition');
+  sfSound_getStatus := GetProcAddress(aDLLHandle, 'sfSound_getStatus');
+  sfSound_getVelocity := GetProcAddress(aDLLHandle, 'sfSound_getVelocity');
+  sfSound_getVolume := GetProcAddress(aDLLHandle, 'sfSound_getVolume');
+  sfSound_isLooping := GetProcAddress(aDLLHandle, 'sfSound_isLooping');
+  sfSound_isRelativeToListener := GetProcAddress(aDLLHandle, 'sfSound_isRelativeToListener');
+  sfSound_isSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfSound_isSpatializationEnabled');
+  sfSound_pause := GetProcAddress(aDLLHandle, 'sfSound_pause');
+  sfSound_play := GetProcAddress(aDLLHandle, 'sfSound_play');
+  sfSound_setAttenuation := GetProcAddress(aDLLHandle, 'sfSound_setAttenuation');
+  sfSound_setBuffer := GetProcAddress(aDLLHandle, 'sfSound_setBuffer');
+  sfSound_setCone := GetProcAddress(aDLLHandle, 'sfSound_setCone');
+  sfSound_setDirection := GetProcAddress(aDLLHandle, 'sfSound_setDirection');
+  sfSound_setDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfSound_setDirectionalAttenuationFactor');
+  sfSound_setDopplerFactor := GetProcAddress(aDLLHandle, 'sfSound_setDopplerFactor');
+  sfSound_setEffectProcessor := GetProcAddress(aDLLHandle, 'sfSound_setEffectProcessor');
+  sfSound_setLooping := GetProcAddress(aDLLHandle, 'sfSound_setLooping');
+  sfSound_setMaxDistance := GetProcAddress(aDLLHandle, 'sfSound_setMaxDistance');
+  sfSound_setMaxGain := GetProcAddress(aDLLHandle, 'sfSound_setMaxGain');
+  sfSound_setMinDistance := GetProcAddress(aDLLHandle, 'sfSound_setMinDistance');
+  sfSound_setMinGain := GetProcAddress(aDLLHandle, 'sfSound_setMinGain');
+  sfSound_setPan := GetProcAddress(aDLLHandle, 'sfSound_setPan');
+  sfSound_setPitch := GetProcAddress(aDLLHandle, 'sfSound_setPitch');
+  sfSound_setPlayingOffset := GetProcAddress(aDLLHandle, 'sfSound_setPlayingOffset');
+  sfSound_setPosition := GetProcAddress(aDLLHandle, 'sfSound_setPosition');
+  sfSound_setRelativeToListener := GetProcAddress(aDLLHandle, 'sfSound_setRelativeToListener');
+  sfSound_setSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfSound_setSpatializationEnabled');
+  sfSound_setVelocity := GetProcAddress(aDLLHandle, 'sfSound_setVelocity');
+  sfSound_setVolume := GetProcAddress(aDLLHandle, 'sfSound_setVolume');
+  sfSound_stop := GetProcAddress(aDLLHandle, 'sfSound_stop');
+  sfSoundBuffer_copy := GetProcAddress(aDLLHandle, 'sfSoundBuffer_copy');
+  sfSoundBuffer_createFromFile := GetProcAddress(aDLLHandle, 'sfSoundBuffer_createFromFile');
+  sfSoundBuffer_createFromMemory := GetProcAddress(aDLLHandle, 'sfSoundBuffer_createFromMemory');
+  sfSoundBuffer_createFromSamples := GetProcAddress(aDLLHandle, 'sfSoundBuffer_createFromSamples');
+  sfSoundBuffer_createFromStream := GetProcAddress(aDLLHandle, 'sfSoundBuffer_createFromStream');
+  sfSoundBuffer_destroy := GetProcAddress(aDLLHandle, 'sfSoundBuffer_destroy');
+  sfSoundBuffer_getChannelCount := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getChannelCount');
+  sfSoundBuffer_getChannelMap := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getChannelMap');
+  sfSoundBuffer_getDuration := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getDuration');
+  sfSoundBuffer_getSampleCount := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getSampleCount');
+  sfSoundBuffer_getSampleRate := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getSampleRate');
+  sfSoundBuffer_getSamples := GetProcAddress(aDLLHandle, 'sfSoundBuffer_getSamples');
+  sfSoundBuffer_saveToFile := GetProcAddress(aDLLHandle, 'sfSoundBuffer_saveToFile');
+  sfSoundBufferRecorder_create := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_create');
+  sfSoundBufferRecorder_destroy := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_destroy');
+  sfSoundBufferRecorder_getBuffer := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_getBuffer');
+  sfSoundBufferRecorder_getChannelCount := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_getChannelCount');
+  sfSoundBufferRecorder_getDevice := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_getDevice');
+  sfSoundBufferRecorder_getSampleRate := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_getSampleRate');
+  sfSoundBufferRecorder_setChannelCount := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_setChannelCount');
+  sfSoundBufferRecorder_setDevice := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_setDevice');
+  sfSoundBufferRecorder_start := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_start');
+  sfSoundBufferRecorder_stop := GetProcAddress(aDLLHandle, 'sfSoundBufferRecorder_stop');
+  sfSoundRecorder_create := GetProcAddress(aDLLHandle, 'sfSoundRecorder_create');
+  sfSoundRecorder_destroy := GetProcAddress(aDLLHandle, 'sfSoundRecorder_destroy');
+  sfSoundRecorder_getAvailableDevices := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getAvailableDevices');
+  sfSoundRecorder_getChannelCount := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getChannelCount');
+  sfSoundRecorder_getChannelMap := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getChannelMap');
+  sfSoundRecorder_getDefaultDevice := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getDefaultDevice');
+  sfSoundRecorder_getDevice := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getDevice');
+  sfSoundRecorder_getSampleRate := GetProcAddress(aDLLHandle, 'sfSoundRecorder_getSampleRate');
+  sfSoundRecorder_isAvailable := GetProcAddress(aDLLHandle, 'sfSoundRecorder_isAvailable');
+  sfSoundRecorder_setChannelCount := GetProcAddress(aDLLHandle, 'sfSoundRecorder_setChannelCount');
+  sfSoundRecorder_setDevice := GetProcAddress(aDLLHandle, 'sfSoundRecorder_setDevice');
+  sfSoundRecorder_start := GetProcAddress(aDLLHandle, 'sfSoundRecorder_start');
+  sfSoundRecorder_stop := GetProcAddress(aDLLHandle, 'sfSoundRecorder_stop');
+  sfSoundStream_create := GetProcAddress(aDLLHandle, 'sfSoundStream_create');
+  sfSoundStream_destroy := GetProcAddress(aDLLHandle, 'sfSoundStream_destroy');
+  sfSoundStream_getAttenuation := GetProcAddress(aDLLHandle, 'sfSoundStream_getAttenuation');
+  sfSoundStream_getChannelCount := GetProcAddress(aDLLHandle, 'sfSoundStream_getChannelCount');
+  sfSoundStream_getChannelMap := GetProcAddress(aDLLHandle, 'sfSoundStream_getChannelMap');
+  sfSoundStream_getCone := GetProcAddress(aDLLHandle, 'sfSoundStream_getCone');
+  sfSoundStream_getDirection := GetProcAddress(aDLLHandle, 'sfSoundStream_getDirection');
+  sfSoundStream_getDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfSoundStream_getDirectionalAttenuationFactor');
+  sfSoundStream_getDopplerFactor := GetProcAddress(aDLLHandle, 'sfSoundStream_getDopplerFactor');
+  sfSoundStream_getMaxDistance := GetProcAddress(aDLLHandle, 'sfSoundStream_getMaxDistance');
+  sfSoundStream_getMaxGain := GetProcAddress(aDLLHandle, 'sfSoundStream_getMaxGain');
+  sfSoundStream_getMinDistance := GetProcAddress(aDLLHandle, 'sfSoundStream_getMinDistance');
+  sfSoundStream_getMinGain := GetProcAddress(aDLLHandle, 'sfSoundStream_getMinGain');
+  sfSoundStream_getPan := GetProcAddress(aDLLHandle, 'sfSoundStream_getPan');
+  sfSoundStream_getPitch := GetProcAddress(aDLLHandle, 'sfSoundStream_getPitch');
+  sfSoundStream_getPlayingOffset := GetProcAddress(aDLLHandle, 'sfSoundStream_getPlayingOffset');
+  sfSoundStream_getPosition := GetProcAddress(aDLLHandle, 'sfSoundStream_getPosition');
+  sfSoundStream_getSampleRate := GetProcAddress(aDLLHandle, 'sfSoundStream_getSampleRate');
+  sfSoundStream_getStatus := GetProcAddress(aDLLHandle, 'sfSoundStream_getStatus');
+  sfSoundStream_getVelocity := GetProcAddress(aDLLHandle, 'sfSoundStream_getVelocity');
+  sfSoundStream_getVolume := GetProcAddress(aDLLHandle, 'sfSoundStream_getVolume');
+  sfSoundStream_isLooping := GetProcAddress(aDLLHandle, 'sfSoundStream_isLooping');
+  sfSoundStream_isRelativeToListener := GetProcAddress(aDLLHandle, 'sfSoundStream_isRelativeToListener');
+  sfSoundStream_isSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfSoundStream_isSpatializationEnabled');
+  sfSoundStream_pause := GetProcAddress(aDLLHandle, 'sfSoundStream_pause');
+  sfSoundStream_play := GetProcAddress(aDLLHandle, 'sfSoundStream_play');
+  sfSoundStream_setAttenuation := GetProcAddress(aDLLHandle, 'sfSoundStream_setAttenuation');
+  sfSoundStream_setCone := GetProcAddress(aDLLHandle, 'sfSoundStream_setCone');
+  sfSoundStream_setDirection := GetProcAddress(aDLLHandle, 'sfSoundStream_setDirection');
+  sfSoundStream_setDirectionalAttenuationFactor := GetProcAddress(aDLLHandle, 'sfSoundStream_setDirectionalAttenuationFactor');
+  sfSoundStream_setDopplerFactor := GetProcAddress(aDLLHandle, 'sfSoundStream_setDopplerFactor');
+  sfSoundStream_setEffectProcessor := GetProcAddress(aDLLHandle, 'sfSoundStream_setEffectProcessor');
+  sfSoundStream_setLooping := GetProcAddress(aDLLHandle, 'sfSoundStream_setLooping');
+  sfSoundStream_setMaxDistance := GetProcAddress(aDLLHandle, 'sfSoundStream_setMaxDistance');
+  sfSoundStream_setMaxGain := GetProcAddress(aDLLHandle, 'sfSoundStream_setMaxGain');
+  sfSoundStream_setMinDistance := GetProcAddress(aDLLHandle, 'sfSoundStream_setMinDistance');
+  sfSoundStream_setMinGain := GetProcAddress(aDLLHandle, 'sfSoundStream_setMinGain');
+  sfSoundStream_setPan := GetProcAddress(aDLLHandle, 'sfSoundStream_setPan');
+  sfSoundStream_setPitch := GetProcAddress(aDLLHandle, 'sfSoundStream_setPitch');
+  sfSoundStream_setPlayingOffset := GetProcAddress(aDLLHandle, 'sfSoundStream_setPlayingOffset');
+  sfSoundStream_setPosition := GetProcAddress(aDLLHandle, 'sfSoundStream_setPosition');
+  sfSoundStream_setRelativeToListener := GetProcAddress(aDLLHandle, 'sfSoundStream_setRelativeToListener');
+  sfSoundStream_setSpatializationEnabled := GetProcAddress(aDLLHandle, 'sfSoundStream_setSpatializationEnabled');
+  sfSoundStream_setVelocity := GetProcAddress(aDLLHandle, 'sfSoundStream_setVelocity');
+  sfSoundStream_setVolume := GetProcAddress(aDLLHandle, 'sfSoundStream_setVolume');
+  sfSoundStream_stop := GetProcAddress(aDLLHandle, 'sfSoundStream_stop');
+  sfSprite_copy := GetProcAddress(aDLLHandle, 'sfSprite_copy');
+  sfSprite_create := GetProcAddress(aDLLHandle, 'sfSprite_create');
+  sfSprite_destroy := GetProcAddress(aDLLHandle, 'sfSprite_destroy');
+  sfSprite_getColor := GetProcAddress(aDLLHandle, 'sfSprite_getColor');
+  sfSprite_getGlobalBounds := GetProcAddress(aDLLHandle, 'sfSprite_getGlobalBounds');
+  sfSprite_getInverseTransform := GetProcAddress(aDLLHandle, 'sfSprite_getInverseTransform');
+  sfSprite_getLocalBounds := GetProcAddress(aDLLHandle, 'sfSprite_getLocalBounds');
+  sfSprite_getOrigin := GetProcAddress(aDLLHandle, 'sfSprite_getOrigin');
+  sfSprite_getPosition := GetProcAddress(aDLLHandle, 'sfSprite_getPosition');
+  sfSprite_getRotation := GetProcAddress(aDLLHandle, 'sfSprite_getRotation');
+  sfSprite_getScale := GetProcAddress(aDLLHandle, 'sfSprite_getScale');
+  sfSprite_getTexture := GetProcAddress(aDLLHandle, 'sfSprite_getTexture');
+  sfSprite_getTextureRect := GetProcAddress(aDLLHandle, 'sfSprite_getTextureRect');
+  sfSprite_getTransform := GetProcAddress(aDLLHandle, 'sfSprite_getTransform');
+  sfSprite_move := GetProcAddress(aDLLHandle, 'sfSprite_move');
+  sfSprite_rotate := GetProcAddress(aDLLHandle, 'sfSprite_rotate');
+  sfSprite_scale := GetProcAddress(aDLLHandle, 'sfSprite_scale');
+  sfSprite_setColor := GetProcAddress(aDLLHandle, 'sfSprite_setColor');
+  sfSprite_setOrigin := GetProcAddress(aDLLHandle, 'sfSprite_setOrigin');
+  sfSprite_setPosition := GetProcAddress(aDLLHandle, 'sfSprite_setPosition');
+  sfSprite_setRotation := GetProcAddress(aDLLHandle, 'sfSprite_setRotation');
+  sfSprite_setScale := GetProcAddress(aDLLHandle, 'sfSprite_setScale');
+  sfSprite_setTexture := GetProcAddress(aDLLHandle, 'sfSprite_setTexture');
+  sfSprite_setTextureRect := GetProcAddress(aDLLHandle, 'sfSprite_setTextureRect');
+  sfTcpListener_accept := GetProcAddress(aDLLHandle, 'sfTcpListener_accept');
+  sfTcpListener_create := GetProcAddress(aDLLHandle, 'sfTcpListener_create');
+  sfTcpListener_destroy := GetProcAddress(aDLLHandle, 'sfTcpListener_destroy');
+  sfTcpListener_getLocalPort := GetProcAddress(aDLLHandle, 'sfTcpListener_getLocalPort');
+  sfTcpListener_isBlocking := GetProcAddress(aDLLHandle, 'sfTcpListener_isBlocking');
+  sfTcpListener_listen := GetProcAddress(aDLLHandle, 'sfTcpListener_listen');
+  sfTcpListener_setBlocking := GetProcAddress(aDLLHandle, 'sfTcpListener_setBlocking');
+  sfTcpSocket_connect := GetProcAddress(aDLLHandle, 'sfTcpSocket_connect');
+  sfTcpSocket_create := GetProcAddress(aDLLHandle, 'sfTcpSocket_create');
+  sfTcpSocket_destroy := GetProcAddress(aDLLHandle, 'sfTcpSocket_destroy');
+  sfTcpSocket_disconnect := GetProcAddress(aDLLHandle, 'sfTcpSocket_disconnect');
+  sfTcpSocket_getLocalPort := GetProcAddress(aDLLHandle, 'sfTcpSocket_getLocalPort');
+  sfTcpSocket_getRemoteAddress := GetProcAddress(aDLLHandle, 'sfTcpSocket_getRemoteAddress');
+  sfTcpSocket_getRemotePort := GetProcAddress(aDLLHandle, 'sfTcpSocket_getRemotePort');
+  sfTcpSocket_isBlocking := GetProcAddress(aDLLHandle, 'sfTcpSocket_isBlocking');
+  sfTcpSocket_receive := GetProcAddress(aDLLHandle, 'sfTcpSocket_receive');
+  sfTcpSocket_receivePacket := GetProcAddress(aDLLHandle, 'sfTcpSocket_receivePacket');
+  sfTcpSocket_send := GetProcAddress(aDLLHandle, 'sfTcpSocket_send');
+  sfTcpSocket_sendPacket := GetProcAddress(aDLLHandle, 'sfTcpSocket_sendPacket');
+  sfTcpSocket_sendPartial := GetProcAddress(aDLLHandle, 'sfTcpSocket_sendPartial');
+  sfTcpSocket_setBlocking := GetProcAddress(aDLLHandle, 'sfTcpSocket_setBlocking');
+  sfText_copy := GetProcAddress(aDLLHandle, 'sfText_copy');
+  sfText_create := GetProcAddress(aDLLHandle, 'sfText_create');
+  sfText_destroy := GetProcAddress(aDLLHandle, 'sfText_destroy');
+  sfText_findCharacterPos := GetProcAddress(aDLLHandle, 'sfText_findCharacterPos');
+  sfText_getCharacterSize := GetProcAddress(aDLLHandle, 'sfText_getCharacterSize');
+  sfText_getFillColor := GetProcAddress(aDLLHandle, 'sfText_getFillColor');
+  sfText_getFont := GetProcAddress(aDLLHandle, 'sfText_getFont');
+  sfText_getGlobalBounds := GetProcAddress(aDLLHandle, 'sfText_getGlobalBounds');
+  sfText_getInverseTransform := GetProcAddress(aDLLHandle, 'sfText_getInverseTransform');
+  sfText_getLetterSpacing := GetProcAddress(aDLLHandle, 'sfText_getLetterSpacing');
+  sfText_getLineSpacing := GetProcAddress(aDLLHandle, 'sfText_getLineSpacing');
+  sfText_getLocalBounds := GetProcAddress(aDLLHandle, 'sfText_getLocalBounds');
+  sfText_getOrigin := GetProcAddress(aDLLHandle, 'sfText_getOrigin');
+  sfText_getOutlineColor := GetProcAddress(aDLLHandle, 'sfText_getOutlineColor');
+  sfText_getOutlineThickness := GetProcAddress(aDLLHandle, 'sfText_getOutlineThickness');
+  sfText_getPosition := GetProcAddress(aDLLHandle, 'sfText_getPosition');
+  sfText_getRotation := GetProcAddress(aDLLHandle, 'sfText_getRotation');
+  sfText_getScale := GetProcAddress(aDLLHandle, 'sfText_getScale');
+  sfText_getString := GetProcAddress(aDLLHandle, 'sfText_getString');
+  sfText_getStyle := GetProcAddress(aDLLHandle, 'sfText_getStyle');
+  sfText_getTransform := GetProcAddress(aDLLHandle, 'sfText_getTransform');
+  sfText_getUnicodeString := GetProcAddress(aDLLHandle, 'sfText_getUnicodeString');
+  sfText_move := GetProcAddress(aDLLHandle, 'sfText_move');
+  sfText_rotate := GetProcAddress(aDLLHandle, 'sfText_rotate');
+  sfText_scale := GetProcAddress(aDLLHandle, 'sfText_scale');
+  sfText_setCharacterSize := GetProcAddress(aDLLHandle, 'sfText_setCharacterSize');
+  sfText_setFillColor := GetProcAddress(aDLLHandle, 'sfText_setFillColor');
+  sfText_setFont := GetProcAddress(aDLLHandle, 'sfText_setFont');
+  sfText_setLetterSpacing := GetProcAddress(aDLLHandle, 'sfText_setLetterSpacing');
+  sfText_setLineSpacing := GetProcAddress(aDLLHandle, 'sfText_setLineSpacing');
+  sfText_setOrigin := GetProcAddress(aDLLHandle, 'sfText_setOrigin');
+  sfText_setOutlineColor := GetProcAddress(aDLLHandle, 'sfText_setOutlineColor');
+  sfText_setOutlineThickness := GetProcAddress(aDLLHandle, 'sfText_setOutlineThickness');
+  sfText_setPosition := GetProcAddress(aDLLHandle, 'sfText_setPosition');
+  sfText_setRotation := GetProcAddress(aDLLHandle, 'sfText_setRotation');
+  sfText_setScale := GetProcAddress(aDLLHandle, 'sfText_setScale');
+  sfText_setString := GetProcAddress(aDLLHandle, 'sfText_setString');
+  sfText_setStyle := GetProcAddress(aDLLHandle, 'sfText_setStyle');
+  sfText_setUnicodeString := GetProcAddress(aDLLHandle, 'sfText_setUnicodeString');
+  sfTexture_bind := GetProcAddress(aDLLHandle, 'sfTexture_bind');
+  sfTexture_copy := GetProcAddress(aDLLHandle, 'sfTexture_copy');
+  sfTexture_copyToImage := GetProcAddress(aDLLHandle, 'sfTexture_copyToImage');
+  sfTexture_create := GetProcAddress(aDLLHandle, 'sfTexture_create');
+  sfTexture_createFromFile := GetProcAddress(aDLLHandle, 'sfTexture_createFromFile');
+  sfTexture_createFromImage := GetProcAddress(aDLLHandle, 'sfTexture_createFromImage');
+  sfTexture_createFromMemory := GetProcAddress(aDLLHandle, 'sfTexture_createFromMemory');
+  sfTexture_createFromStream := GetProcAddress(aDLLHandle, 'sfTexture_createFromStream');
+  sfTexture_createSrgb := GetProcAddress(aDLLHandle, 'sfTexture_createSrgb');
+  sfTexture_createSrgbFromFile := GetProcAddress(aDLLHandle, 'sfTexture_createSrgbFromFile');
+  sfTexture_createSrgbFromImage := GetProcAddress(aDLLHandle, 'sfTexture_createSrgbFromImage');
+  sfTexture_createSrgbFromMemory := GetProcAddress(aDLLHandle, 'sfTexture_createSrgbFromMemory');
+  sfTexture_createSrgbFromStream := GetProcAddress(aDLLHandle, 'sfTexture_createSrgbFromStream');
+  sfTexture_destroy := GetProcAddress(aDLLHandle, 'sfTexture_destroy');
+  sfTexture_generateMipmap := GetProcAddress(aDLLHandle, 'sfTexture_generateMipmap');
+  sfTexture_getMaximumSize := GetProcAddress(aDLLHandle, 'sfTexture_getMaximumSize');
+  sfTexture_getNativeHandle := GetProcAddress(aDLLHandle, 'sfTexture_getNativeHandle');
+  sfTexture_getSize := GetProcAddress(aDLLHandle, 'sfTexture_getSize');
+  sfTexture_isRepeated := GetProcAddress(aDLLHandle, 'sfTexture_isRepeated');
+  sfTexture_isSmooth := GetProcAddress(aDLLHandle, 'sfTexture_isSmooth');
+  sfTexture_isSrgb := GetProcAddress(aDLLHandle, 'sfTexture_isSrgb');
+  sfTexture_setRepeated := GetProcAddress(aDLLHandle, 'sfTexture_setRepeated');
+  sfTexture_setSmooth := GetProcAddress(aDLLHandle, 'sfTexture_setSmooth');
+  sfTexture_swap := GetProcAddress(aDLLHandle, 'sfTexture_swap');
+  sfTexture_updateFromImage := GetProcAddress(aDLLHandle, 'sfTexture_updateFromImage');
+  sfTexture_updateFromPixels := GetProcAddress(aDLLHandle, 'sfTexture_updateFromPixels');
+  sfTexture_updateFromRenderWindow := GetProcAddress(aDLLHandle, 'sfTexture_updateFromRenderWindow');
+  sfTexture_updateFromTexture := GetProcAddress(aDLLHandle, 'sfTexture_updateFromTexture');
+  sfTexture_updateFromWindow := GetProcAddress(aDLLHandle, 'sfTexture_updateFromWindow');
+  sfTime_asMicroseconds := GetProcAddress(aDLLHandle, 'sfTime_asMicroseconds');
+  sfTime_asMilliseconds := GetProcAddress(aDLLHandle, 'sfTime_asMilliseconds');
+  sfTime_asSeconds := GetProcAddress(aDLLHandle, 'sfTime_asSeconds');
+  sfTouch_getPosition := GetProcAddress(aDLLHandle, 'sfTouch_getPosition');
+  sfTouch_getPositionRenderWindow := GetProcAddress(aDLLHandle, 'sfTouch_getPositionRenderWindow');
+  sfTouch_getPositionWindowBase := GetProcAddress(aDLLHandle, 'sfTouch_getPositionWindowBase');
+  sfTouch_isDown := GetProcAddress(aDLLHandle, 'sfTouch_isDown');
+  sfTransform_combine := GetProcAddress(aDLLHandle, 'sfTransform_combine');
+  sfTransform_equal := GetProcAddress(aDLLHandle, 'sfTransform_equal');
+  sfTransform_fromMatrix := GetProcAddress(aDLLHandle, 'sfTransform_fromMatrix');
+  sfTransform_getInverse := GetProcAddress(aDLLHandle, 'sfTransform_getInverse');
+  sfTransform_getMatrix := GetProcAddress(aDLLHandle, 'sfTransform_getMatrix');
+  sfTransform_rotate := GetProcAddress(aDLLHandle, 'sfTransform_rotate');
+  sfTransform_rotateWithCenter := GetProcAddress(aDLLHandle, 'sfTransform_rotateWithCenter');
+  sfTransform_scale := GetProcAddress(aDLLHandle, 'sfTransform_scale');
+  sfTransform_scaleWithCenter := GetProcAddress(aDLLHandle, 'sfTransform_scaleWithCenter');
+  sfTransform_transformPoint := GetProcAddress(aDLLHandle, 'sfTransform_transformPoint');
+  sfTransform_transformRect := GetProcAddress(aDLLHandle, 'sfTransform_transformRect');
+  sfTransform_translate := GetProcAddress(aDLLHandle, 'sfTransform_translate');
+  sfTransformable_copy := GetProcAddress(aDLLHandle, 'sfTransformable_copy');
+  sfTransformable_create := GetProcAddress(aDLLHandle, 'sfTransformable_create');
+  sfTransformable_destroy := GetProcAddress(aDLLHandle, 'sfTransformable_destroy');
+  sfTransformable_getInverseTransform := GetProcAddress(aDLLHandle, 'sfTransformable_getInverseTransform');
+  sfTransformable_getOrigin := GetProcAddress(aDLLHandle, 'sfTransformable_getOrigin');
+  sfTransformable_getPosition := GetProcAddress(aDLLHandle, 'sfTransformable_getPosition');
+  sfTransformable_getRotation := GetProcAddress(aDLLHandle, 'sfTransformable_getRotation');
+  sfTransformable_getScale := GetProcAddress(aDLLHandle, 'sfTransformable_getScale');
+  sfTransformable_getTransform := GetProcAddress(aDLLHandle, 'sfTransformable_getTransform');
+  sfTransformable_move := GetProcAddress(aDLLHandle, 'sfTransformable_move');
+  sfTransformable_rotate := GetProcAddress(aDLLHandle, 'sfTransformable_rotate');
+  sfTransformable_scale := GetProcAddress(aDLLHandle, 'sfTransformable_scale');
+  sfTransformable_setOrigin := GetProcAddress(aDLLHandle, 'sfTransformable_setOrigin');
+  sfTransformable_setPosition := GetProcAddress(aDLLHandle, 'sfTransformable_setPosition');
+  sfTransformable_setRotation := GetProcAddress(aDLLHandle, 'sfTransformable_setRotation');
+  sfTransformable_setScale := GetProcAddress(aDLLHandle, 'sfTransformable_setScale');
+  sfUdpSocket_bind := GetProcAddress(aDLLHandle, 'sfUdpSocket_bind');
+  sfUdpSocket_create := GetProcAddress(aDLLHandle, 'sfUdpSocket_create');
+  sfUdpSocket_destroy := GetProcAddress(aDLLHandle, 'sfUdpSocket_destroy');
+  sfUdpSocket_getLocalPort := GetProcAddress(aDLLHandle, 'sfUdpSocket_getLocalPort');
+  sfUdpSocket_isBlocking := GetProcAddress(aDLLHandle, 'sfUdpSocket_isBlocking');
+  sfUdpSocket_maxDatagramSize := GetProcAddress(aDLLHandle, 'sfUdpSocket_maxDatagramSize');
+  sfUdpSocket_receive := GetProcAddress(aDLLHandle, 'sfUdpSocket_receive');
+  sfUdpSocket_receivePacket := GetProcAddress(aDLLHandle, 'sfUdpSocket_receivePacket');
+  sfUdpSocket_send := GetProcAddress(aDLLHandle, 'sfUdpSocket_send');
+  sfUdpSocket_sendPacket := GetProcAddress(aDLLHandle, 'sfUdpSocket_sendPacket');
+  sfUdpSocket_setBlocking := GetProcAddress(aDLLHandle, 'sfUdpSocket_setBlocking');
+  sfUdpSocket_unbind := GetProcAddress(aDLLHandle, 'sfUdpSocket_unbind');
+  sfVertexArray_append := GetProcAddress(aDLLHandle, 'sfVertexArray_append');
+  sfVertexArray_clear := GetProcAddress(aDLLHandle, 'sfVertexArray_clear');
+  sfVertexArray_copy := GetProcAddress(aDLLHandle, 'sfVertexArray_copy');
+  sfVertexArray_create := GetProcAddress(aDLLHandle, 'sfVertexArray_create');
+  sfVertexArray_destroy := GetProcAddress(aDLLHandle, 'sfVertexArray_destroy');
+  sfVertexArray_getBounds := GetProcAddress(aDLLHandle, 'sfVertexArray_getBounds');
+  sfVertexArray_getPrimitiveType := GetProcAddress(aDLLHandle, 'sfVertexArray_getPrimitiveType');
+  sfVertexArray_getVertex := GetProcAddress(aDLLHandle, 'sfVertexArray_getVertex');
+  sfVertexArray_getVertexCount := GetProcAddress(aDLLHandle, 'sfVertexArray_getVertexCount');
+  sfVertexArray_resize := GetProcAddress(aDLLHandle, 'sfVertexArray_resize');
+  sfVertexArray_setPrimitiveType := GetProcAddress(aDLLHandle, 'sfVertexArray_setPrimitiveType');
+  sfVertexBuffer_bind := GetProcAddress(aDLLHandle, 'sfVertexBuffer_bind');
+  sfVertexBuffer_copy := GetProcAddress(aDLLHandle, 'sfVertexBuffer_copy');
+  sfVertexBuffer_create := GetProcAddress(aDLLHandle, 'sfVertexBuffer_create');
+  sfVertexBuffer_destroy := GetProcAddress(aDLLHandle, 'sfVertexBuffer_destroy');
+  sfVertexBuffer_getNativeHandle := GetProcAddress(aDLLHandle, 'sfVertexBuffer_getNativeHandle');
+  sfVertexBuffer_getPrimitiveType := GetProcAddress(aDLLHandle, 'sfVertexBuffer_getPrimitiveType');
+  sfVertexBuffer_getUsage := GetProcAddress(aDLLHandle, 'sfVertexBuffer_getUsage');
+  sfVertexBuffer_getVertexCount := GetProcAddress(aDLLHandle, 'sfVertexBuffer_getVertexCount');
+  sfVertexBuffer_isAvailable := GetProcAddress(aDLLHandle, 'sfVertexBuffer_isAvailable');
+  sfVertexBuffer_setPrimitiveType := GetProcAddress(aDLLHandle, 'sfVertexBuffer_setPrimitiveType');
+  sfVertexBuffer_setUsage := GetProcAddress(aDLLHandle, 'sfVertexBuffer_setUsage');
+  sfVertexBuffer_swap := GetProcAddress(aDLLHandle, 'sfVertexBuffer_swap');
+  sfVertexBuffer_update := GetProcAddress(aDLLHandle, 'sfVertexBuffer_update');
+  sfVertexBuffer_updateFromVertexBuffer := GetProcAddress(aDLLHandle, 'sfVertexBuffer_updateFromVertexBuffer');
+  sfVideoMode_getDesktopMode := GetProcAddress(aDLLHandle, 'sfVideoMode_getDesktopMode');
+  sfVideoMode_getFullscreenModes := GetProcAddress(aDLLHandle, 'sfVideoMode_getFullscreenModes');
+  sfVideoMode_isValid := GetProcAddress(aDLLHandle, 'sfVideoMode_isValid');
+  sfView_copy := GetProcAddress(aDLLHandle, 'sfView_copy');
+  sfView_create := GetProcAddress(aDLLHandle, 'sfView_create');
+  sfView_createFromRect := GetProcAddress(aDLLHandle, 'sfView_createFromRect');
+  sfView_destroy := GetProcAddress(aDLLHandle, 'sfView_destroy');
+  sfView_getCenter := GetProcAddress(aDLLHandle, 'sfView_getCenter');
+  sfView_getRotation := GetProcAddress(aDLLHandle, 'sfView_getRotation');
+  sfView_getScissor := GetProcAddress(aDLLHandle, 'sfView_getScissor');
+  sfView_getSize := GetProcAddress(aDLLHandle, 'sfView_getSize');
+  sfView_getViewport := GetProcAddress(aDLLHandle, 'sfView_getViewport');
+  sfView_move := GetProcAddress(aDLLHandle, 'sfView_move');
+  sfView_rotate := GetProcAddress(aDLLHandle, 'sfView_rotate');
+  sfView_setCenter := GetProcAddress(aDLLHandle, 'sfView_setCenter');
+  sfView_setRotation := GetProcAddress(aDLLHandle, 'sfView_setRotation');
+  sfView_setScissor := GetProcAddress(aDLLHandle, 'sfView_setScissor');
+  sfView_setSize := GetProcAddress(aDLLHandle, 'sfView_setSize');
+  sfView_setViewport := GetProcAddress(aDLLHandle, 'sfView_setViewport');
+  sfView_zoom := GetProcAddress(aDLLHandle, 'sfView_zoom');
+  sfVulkan_getFunction := GetProcAddress(aDLLHandle, 'sfVulkan_getFunction');
+  sfVulkan_getGraphicsRequiredInstanceExtensions := GetProcAddress(aDLLHandle, 'sfVulkan_getGraphicsRequiredInstanceExtensions');
+  sfVulkan_isAvailable := GetProcAddress(aDLLHandle, 'sfVulkan_isAvailable');
+  sfWindow_close := GetProcAddress(aDLLHandle, 'sfWindow_close');
+  sfWindow_create := GetProcAddress(aDLLHandle, 'sfWindow_create');
+  sfWindow_createFromHandle := GetProcAddress(aDLLHandle, 'sfWindow_createFromHandle');
+  sfWindow_createUnicode := GetProcAddress(aDLLHandle, 'sfWindow_createUnicode');
+  sfWindow_createVulkanSurface := GetProcAddress(aDLLHandle, 'sfWindow_createVulkanSurface');
+  sfWindow_destroy := GetProcAddress(aDLLHandle, 'sfWindow_destroy');
+  sfWindow_display := GetProcAddress(aDLLHandle, 'sfWindow_display');
+  sfWindow_getNativeHandle := GetProcAddress(aDLLHandle, 'sfWindow_getNativeHandle');
+  sfWindow_getPosition := GetProcAddress(aDLLHandle, 'sfWindow_getPosition');
+  sfWindow_getSettings := GetProcAddress(aDLLHandle, 'sfWindow_getSettings');
+  sfWindow_getSize := GetProcAddress(aDLLHandle, 'sfWindow_getSize');
+  sfWindow_hasFocus := GetProcAddress(aDLLHandle, 'sfWindow_hasFocus');
+  sfWindow_isOpen := GetProcAddress(aDLLHandle, 'sfWindow_isOpen');
+  sfWindow_pollEvent := GetProcAddress(aDLLHandle, 'sfWindow_pollEvent');
+  sfWindow_requestFocus := GetProcAddress(aDLLHandle, 'sfWindow_requestFocus');
+  sfWindow_setActive := GetProcAddress(aDLLHandle, 'sfWindow_setActive');
+  sfWindow_setFramerateLimit := GetProcAddress(aDLLHandle, 'sfWindow_setFramerateLimit');
+  sfWindow_setIcon := GetProcAddress(aDLLHandle, 'sfWindow_setIcon');
+  sfWindow_setJoystickThreshold := GetProcAddress(aDLLHandle, 'sfWindow_setJoystickThreshold');
+  sfWindow_setKeyRepeatEnabled := GetProcAddress(aDLLHandle, 'sfWindow_setKeyRepeatEnabled');
+  sfWindow_setMouseCursor := GetProcAddress(aDLLHandle, 'sfWindow_setMouseCursor');
+  sfWindow_setMouseCursorGrabbed := GetProcAddress(aDLLHandle, 'sfWindow_setMouseCursorGrabbed');
+  sfWindow_setMouseCursorVisible := GetProcAddress(aDLLHandle, 'sfWindow_setMouseCursorVisible');
+  sfWindow_setPosition := GetProcAddress(aDLLHandle, 'sfWindow_setPosition');
+  sfWindow_setSize := GetProcAddress(aDLLHandle, 'sfWindow_setSize');
+  sfWindow_setTitle := GetProcAddress(aDLLHandle, 'sfWindow_setTitle');
+  sfWindow_setUnicodeTitle := GetProcAddress(aDLLHandle, 'sfWindow_setUnicodeTitle');
+  sfWindow_setVerticalSyncEnabled := GetProcAddress(aDLLHandle, 'sfWindow_setVerticalSyncEnabled');
+  sfWindow_setVisible := GetProcAddress(aDLLHandle, 'sfWindow_setVisible');
+  sfWindow_waitEvent := GetProcAddress(aDLLHandle, 'sfWindow_waitEvent');
+  sfWindowBase_close := GetProcAddress(aDLLHandle, 'sfWindowBase_close');
+  sfWindowBase_create := GetProcAddress(aDLLHandle, 'sfWindowBase_create');
+  sfWindowBase_createFromHandle := GetProcAddress(aDLLHandle, 'sfWindowBase_createFromHandle');
+  sfWindowBase_createUnicode := GetProcAddress(aDLLHandle, 'sfWindowBase_createUnicode');
+  sfWindowBase_createVulkanSurface := GetProcAddress(aDLLHandle, 'sfWindowBase_createVulkanSurface');
+  sfWindowBase_destroy := GetProcAddress(aDLLHandle, 'sfWindowBase_destroy');
+  sfWindowBase_getNativeHandle := GetProcAddress(aDLLHandle, 'sfWindowBase_getNativeHandle');
+  sfWindowBase_getPosition := GetProcAddress(aDLLHandle, 'sfWindowBase_getPosition');
+  sfWindowBase_getSize := GetProcAddress(aDLLHandle, 'sfWindowBase_getSize');
+  sfWindowBase_hasFocus := GetProcAddress(aDLLHandle, 'sfWindowBase_hasFocus');
+  sfWindowBase_isOpen := GetProcAddress(aDLLHandle, 'sfWindowBase_isOpen');
+  sfWindowBase_pollEvent := GetProcAddress(aDLLHandle, 'sfWindowBase_pollEvent');
+  sfWindowBase_requestFocus := GetProcAddress(aDLLHandle, 'sfWindowBase_requestFocus');
+  sfWindowBase_setIcon := GetProcAddress(aDLLHandle, 'sfWindowBase_setIcon');
+  sfWindowBase_setJoystickThreshold := GetProcAddress(aDLLHandle, 'sfWindowBase_setJoystickThreshold');
+  sfWindowBase_setKeyRepeatEnabled := GetProcAddress(aDLLHandle, 'sfWindowBase_setKeyRepeatEnabled');
+  sfWindowBase_setMouseCursor := GetProcAddress(aDLLHandle, 'sfWindowBase_setMouseCursor');
+  sfWindowBase_setMouseCursorGrabbed := GetProcAddress(aDLLHandle, 'sfWindowBase_setMouseCursorGrabbed');
+  sfWindowBase_setMouseCursorVisible := GetProcAddress(aDLLHandle, 'sfWindowBase_setMouseCursorVisible');
+  sfWindowBase_setPosition := GetProcAddress(aDLLHandle, 'sfWindowBase_setPosition');
+  sfWindowBase_setSize := GetProcAddress(aDLLHandle, 'sfWindowBase_setSize');
+  sfWindowBase_setTitle := GetProcAddress(aDLLHandle, 'sfWindowBase_setTitle');
+  sfWindowBase_setUnicodeTitle := GetProcAddress(aDLLHandle, 'sfWindowBase_setUnicodeTitle');
+  sfWindowBase_setVisible := GetProcAddress(aDLLHandle, 'sfWindowBase_setVisible');
+  sfWindowBase_waitEvent := GetProcAddress(aDLLHandle, 'sfWindowBase_waitEvent');
+  unzClose := GetProcAddress(aDLLHandle, 'unzClose');
+  unzCloseCurrentFile := GetProcAddress(aDLLHandle, 'unzCloseCurrentFile');
+  unzGetCurrentFileInfo64 := GetProcAddress(aDLLHandle, 'unzGetCurrentFileInfo64');
+  unzLocateFile := GetProcAddress(aDLLHandle, 'unzLocateFile');
+  unzOpen64 := GetProcAddress(aDLLHandle, 'unzOpen64');
+  unzOpenCurrentFilePassword := GetProcAddress(aDLLHandle, 'unzOpenCurrentFilePassword');
+  unzReadCurrentFile := GetProcAddress(aDLLHandle, 'unzReadCurrentFile');
+  unztell64 := GetProcAddress(aDLLHandle, 'unztell64');
+  zipClose := GetProcAddress(aDLLHandle, 'zipClose');
+  zipCloseFileInZip := GetProcAddress(aDLLHandle, 'zipCloseFileInZip');
+  zipOpen64 := GetProcAddress(aDLLHandle, 'zipOpen64');
+  zipOpenNewFileInZip3_64 := GetProcAddress(aDLLHandle, 'zipOpenNewFileInZip3_64');
+  zipWriteInFileInZip := GetProcAddress(aDLLHandle, 'zipWriteInFileInZip');
+end;
+
+{$REGION ' DLL LOADER '}
+{$R PSFML.res}
+
+var
+  DepsDLLHandle: THandle = 0;
+
+function LoadDLL(): Boolean;
+var
+  LResStream: TResourceStream;
+
+  function f1698f73a70b4b1da0d46bbd7e4944c7(): string;
+  const
+    CValue = 'b87deef5bbfd43c3a07379e26f4dec9b';
+  begin
+    Result := CValue;
+  end;
+
+begin
+  Result := False;
+  
+  // load deps DLL
+  if DepsDLLHandle <> 0 then Exit;
+  if not Boolean((FindResource(HInstance, PChar(f1698f73a70b4b1da0d46bbd7e4944c7()), RT_RCDATA) <> 0)) then Exit;
+  LResStream := TResourceStream.Create(HInstance, f1698f73a70b4b1da0d46bbd7e4944c7(), RT_RCDATA);
+  try
+    DepsDLLHandle := LoadLibrary(LResStream.Memory);
+    if DepsDLLHandle = 0 then Exit;
+    GetExports(DepsDLLHandle);    
+    Result := True;
+  finally
+    LResStream.Free();
+  end;
+end;
+
+procedure UnloadDLL();
+begin
+  // unload deps DLL
+  if DepsDLLHandle <> 0 then
+  begin
+    FreeLibrary(DepsDLLHandle);
+    DepsDLLHandle := 0;
+  end;
+end;
+
+initialization
+begin
+  // turn on memory leak detection
+  ReportMemoryLeaksOnShutdown := True;
+
+  // load deps DLL
+  if not LoadDLL() then
+    Halt(1);
+end;
+
+finalization
+begin
+  // shutdown deps DLL
+  UnloadDLL();
+end;
+{$ENDREGION}
 
 end.

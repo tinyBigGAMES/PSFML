@@ -946,6 +946,7 @@ begin
   Y := LVec.Z;
 end;
 
+{$REGION ' UNIT INIT '}
 initialization
 begin
   sfAudio := Default(TsfAudio);
@@ -955,5 +956,6 @@ finalization
 begin
   sfAudio_close();
 end;
+{$ENDREGION}
 
 end.

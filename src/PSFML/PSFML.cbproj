@@ -111,7 +111,7 @@
         <VerInfo_Locale>1033</VerInfo_Locale>
         <BCC_EnableBatchCompilation>true</BCC_EnableBatchCompilation>
         <BCC_PCHName_Clang>PSFMLPCH1.h</BCC_PCHName_Clang>
-        <FinalOutputDir>..\..\bin</FinalOutputDir>
+        <FinalOutputDir>.\resdata</FinalOutputDir>
         <Manifest_File>(None)</Manifest_File>
         <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
         <ILINK_AdditionalOptions>libmsvcrt-os.a</ILINK_AdditionalOptions>
@@ -171,6 +171,7 @@ $(PostBuildEvent)]]></PostBuildEvent>
         <VerInfo_MajorVer>0</VerInfo_MajorVer>
         <VerInfo_MinorVer>1</VerInfo_MinorVer>
         <VerInfo_DLL>true</VerInfo_DLL>
+        <ILINK_AdditionalOptions>libmsvcrt-os.a </ILINK_AdditionalOptions>
     </PropertyGroup>
     <ItemGroup>
         <LibFiles Include="..\extern\vendor\lib\csfml.lib" Condition="'$(Platform)'=='Win64x' Or '$(Platform)'=='Win32'">

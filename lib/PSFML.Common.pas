@@ -588,7 +588,7 @@ begin
   inherited;
 end;
 
-{ =========================================================================== }
+{$REGION ' UNIT INIT '}
 var
   InputCodePage: Cardinal;
   OutputCodePage: Cardinal;
@@ -606,8 +606,8 @@ begin
   // init critical section
   CriticalSection := TCriticalSection.Create;
 
+  // init virtual terminal processing
   EnableVirtualTerminalProcessing();
-
 end;
 
 finalization
@@ -619,5 +619,6 @@ begin
   SetConsoleCP(InputCodePage);
   SetConsoleOutputCP(OutputCodePage);
 end;
+{$ENDREGION}
 
 end.

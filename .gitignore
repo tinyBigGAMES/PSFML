@@ -90,3 +90,4 @@ src/PSFML/resdata/PSFML.dll.txt
 src/PSFML/Win64x/*
 bin/*.rsp
 
+src/PSFML/resdata/PSFML.rsp

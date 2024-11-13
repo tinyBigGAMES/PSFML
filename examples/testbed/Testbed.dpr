@@ -30,7 +30,8 @@ uses
   PSFML.Common in '..\..\lib\PSFML.Common.pas',
   PSFML.Audio in '..\..\lib\PSFML.Audio.pas',
   UAudio in 'UAudio.pas',
-  PSFML.Math in '..\..\lib\PSFML.Math.pas';
+  PSFML.Math in '..\..\lib\PSFML.Math.pas',
+  PSFML.MemoryDLL in '..\..\lib\PSFML.MemoryDLL.pas';
 
 begin
   try

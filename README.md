@@ -27,8 +27,8 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
 ### 🤔 Why PSFML?
 
 - **📝 Pascal-Focused**: PSFML is designed explicitly for Pascal developers, offering a familiar and intuitive API that fits naturally into existing Pascal workflows.
-- **📦 Minimal Distribution Overhead**: Only the `PSFML.dll` is needed to get started, keeping deployment simple and reducing potential dependency issues.
-- **🛠️ Modern Compiler Support**: Supports **Delphi** (Community Edition and higher), targeting **Windows 64-bit** environments. PSFML has been tested on **Windows 11** and developed using Delphi 12.2.
+- **📦 Minimal Distribution Overhead**: All library dependencies are embedded within the executable, ensuring a streamlined deployment process that eliminates external dependencies and minimizes potential compatibility issues.
+- **🛠️ Modern Compiler Support**: PSFML is compatible with **Delphi Community Edition** and higher, enabling seamless integration for Delphi developers targeting **Windows 64-bit**. While Delphi CE allows for immediate use of PSFML, **RAD Studio 12.2** is required to rebuild the library if customization or modification is needed. PSFML has been rigorously tested on **Windows 11**, ensuring stability and performance for professional-grade applications. 
 - **🆕 Up-to-Date with SFML**: Always kept in sync with the latest **SFML** version, ensuring access to all the latest features and fixes.
 
 ## ✨ Features
@@ -47,7 +47,7 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
 ### 📌 Requirements
 
 - **Delphi CE** or a higher edition for development (files in the `lib` folder).
-- **C++ Builder 12.2** is required to build the sources (files in the `src` folder).
+- **C++ Builder 12.2** or a higher edition is required to build the sources (files in the `src` folder).
 - **💻 Windows 10** or higher (64-bit).
 
 ### ⚙️ Installation
