@@ -1,4 +1,4 @@
-{==============================================================================
+﻿{==============================================================================
                          ___  ___  ___  __  __  _ ™
                         | _ \/ __|| __||  \/  || |
                         |  _/\__ \| _| | |\/| || |__
@@ -2311,7 +2311,7 @@ procedure GetExports(const aDLLHandle: THandle);
 implementation
 
 uses
-  PSFML.MemoryDLL;
+  MemoryDLL;
 
 procedure GetExports(const aDLLHandle: THandle);
 begin
@@ -3356,7 +3356,7 @@ begin
   if not Boolean((FindResource(HInstance, PChar(f1698f73a70b4b1da0d46bbd7e4944c7()), RT_RCDATA) <> 0)) then Exit;
   LResStream := TResourceStream.Create(HInstance, f1698f73a70b4b1da0d46bbd7e4944c7(), RT_RCDATA);
   try
-    DepsDLLHandle := LoadLibrary(LResStream.Memory);
+    DepsDLLHandle := MemoryDLL.MemoryLoadLibrary(LResStream.Memory);
     if DepsDLLHandle = 0 then Exit;
     GetExports(DepsDLLHandle);    
     Result := True;

@@ -1,6 +1,7 @@
 ![PSFML](media/psfml-logo.png)  
 
-[![Chat on Discord](https://img.shields.io/discord/754884471324672040.svg?logo=discord)](https://discord.gg/tPWjMwK) [![Twitter Follow](https://img.shields.io/twitter/follow/tinyBigGAMES?style=social)](https://twitter.com/tinyBigGAMES)
+[![Chat on Discord](https://img.shields.io/discord/754884471324672040?style=for-the-badge)](https://discord.gg/tPWjMwK)
+[![Follow on Bluesky](https://img.shields.io/badge/Bluesky-tinyBigGAMES-blue?style=for-the-badge&logo=bluesky)](https://bsky.app/profile/tinyBigGAMES.bsky.social)
 
 **PSFML** is a Pascal binding for the **⚡ Simple and Fast Multimedia Library (SFML)**, providing Pascal developers with a straightforward way to utilize SFML’s multimedia features directly in their projects. Whether building 🎮 games, 🤖 interactive applications, or 🎥 multimedia tools, PSFML integrates smoothly with SFML, bringing robust multimedia functionality to the Pascal ecosystem.
 

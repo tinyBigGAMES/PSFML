@@ -31,7 +31,7 @@ uses
   PSFML.Audio in '..\..\lib\PSFML.Audio.pas',
   UAudio in 'UAudio.pas',
   PSFML.Math in '..\..\lib\PSFML.Math.pas',
-  PSFML.MemoryDLL in '..\..\lib\PSFML.MemoryDLL.pas';
+  MemoryDLL in '..\..\lib\MemoryDLL.pas';
 
 begin
   try

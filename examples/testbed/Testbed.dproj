@@ -128,7 +128,7 @@
         <DCCReference Include="..\..\lib\PSFML.Audio.pas"/>
         <DCCReference Include="UAudio.pas"/>
         <DCCReference Include="..\..\lib\PSFML.Math.pas"/>
-        <DCCReference Include="..\..\lib\PSFML.MemoryDLL.pas"/>
+        <DCCReference Include="..\..\lib\MemoryDLL.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
