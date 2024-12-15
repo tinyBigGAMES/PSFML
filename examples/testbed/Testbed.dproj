@@ -120,15 +120,14 @@
         <DCCReference Include="UTestbed.pas"/>
         <DCCReference Include="URenderWindow.pas"/>
         <DCCReference Include="UCommon.pas"/>
-        <DCCReference Include="..\..\lib\PSFML.pas"/>
-        <DCCReference Include="..\..\lib\PSFML.Ext.pas"/>
         <DCCReference Include="UZipFile.pas"/>
         <DCCReference Include="UVideo.pas"/>
-        <DCCReference Include="..\..\lib\PSFML.Common.pas"/>
-        <DCCReference Include="..\..\lib\PSFML.Audio.pas"/>
         <DCCReference Include="UAudio.pas"/>
-        <DCCReference Include="..\..\lib\PSFML.Math.pas"/>
-        <DCCReference Include="..\..\lib\MemoryDLL.pas"/>
+        <DCCReference Include="..\..\src\PSFML.Audio.pas"/>
+        <DCCReference Include="..\..\src\PSFML.Common.pas"/>
+        <DCCReference Include="..\..\src\PSFML.Ext.pas"/>
+        <DCCReference Include="..\..\src\PSFML.Math.pas"/>
+        <DCCReference Include="..\..\src\PSFML.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -178,9 +177,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\bin\Testbed.rsm" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName="..\..\bin\Testbed.exe" Configuration="Release" Class="ProjectOutput">
                     <Platform Name="Win64">
-                        <RemoteName>Testbed.rsm</RemoteName>
+                        <RemoteName>Testbed.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

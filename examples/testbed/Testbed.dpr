@@ -23,15 +23,14 @@ uses
   UTestbed in 'UTestbed.pas',
   URenderWindow in 'URenderWindow.pas',
   UCommon in 'UCommon.pas',
-  PSFML in '..\..\lib\PSFML.pas',
-  PSFML.Ext in '..\..\lib\PSFML.Ext.pas',
   UZipFile in 'UZipFile.pas',
   UVideo in 'UVideo.pas',
-  PSFML.Common in '..\..\lib\PSFML.Common.pas',
-  PSFML.Audio in '..\..\lib\PSFML.Audio.pas',
   UAudio in 'UAudio.pas',
-  PSFML.Math in '..\..\lib\PSFML.Math.pas',
-  MemoryDLL in '..\..\lib\MemoryDLL.pas';
+  PSFML.Audio in '..\..\src\PSFML.Audio.pas',
+  PSFML.Common in '..\..\src\PSFML.Common.pas',
+  PSFML.Ext in '..\..\src\PSFML.Ext.pas',
+  PSFML.Math in '..\..\src\PSFML.Math.pas',
+  PSFML in '..\..\src\PSFML.pas';
 
 begin
   try

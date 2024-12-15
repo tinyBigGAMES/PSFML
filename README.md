@@ -29,7 +29,7 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
 
 - **📝 Pascal-Focused**: PSFML is designed explicitly for Pascal developers, offering a familiar and intuitive API that fits naturally into existing Pascal workflows.
 - **📦 Minimal Distribution Overhead**: All library dependencies are embedded within the executable, ensuring a streamlined deployment process that eliminates external dependencies and minimizes potential compatibility issues.
-- **🛠️ Modern Compiler Support**: PSFML is compatible with **Delphi Community Edition** and higher, enabling seamless integration for Delphi developers targeting **Windows 64-bit**. While Delphi CE allows for immediate use of PSFML, **RAD Studio 12.2** is required to rebuild the library if customization or modification is needed. PSFML has been rigorously tested on **Windows 11**, ensuring stability and performance for professional-grade applications. 
+- **🛠️ Modern Compiler Support**: PSFML is compatible with **Delphi Community Edition** and higher, enabling seamless integration for Delphi developers targeting **Windows 64-bit**. PSFML has been rigorously tested on **Windows 11 24H2**, ensuring stability and performance for professional-grade applications. 
 - **🆕 Up-to-Date with SFML**: Always kept in sync with the latest **SFML** version, ensuring access to all the latest features and fixes.
 
 ## Features
@@ -47,15 +47,14 @@ PSFML leverages the power of **SFML** and makes it accessible to Pascal programm
 
 ### Requirements
 
-- **Delphi CE** or a higher edition for development (files in the `lib` folder).
-- **C++ Builder 12.2** or a higher edition is required to build the sources (files in the `src` folder).
+- **Delphi CE** or a higher edition for development.
 - **💻 Windows 10** or higher (64-bit).
 
 ### Installation
 
 1. 📥 Download the latest version of [PSFML](https://github.com/tinyBigGAMES/PSFML/archive/refs/heads/main.zip).
 2. 📂 Extract the contents to your project directory.
-3. ➕ Add the **PSFML** `lib` folder to your **Library Path** in Delphi.
+3. ➕ Add the **PSFML** `src` folder to your **Library Path** in Delphi.
 4. 📝 In your project, include `PSFML` in the `uses` clause. To leverage the extensions, add `PSFML.Ext` after `PSFML` in the `uses` clause.
 5. 📁 Refer to the `examples` folder for detailed usage instructions and demonstrations of the PSFML library in action.
 6. ▶️ It is recommended to run the `ZipFile01` example initially to generate the `data.zip` file required by other examples.

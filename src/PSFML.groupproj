@@ -3,21 +3,6 @@
         <ProjectGuid>{4E68F99D-8EEC-40BC-A634-0F47F116B7BA}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="extern\sfml.cbproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="extern\csfml.cbproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="extern\zlib.cbproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="extern\pl_mpeg.cbproj">
-            <Dependencies/>
-        </Projects>
-        <Projects Include="PSFML\PSFML.cbproj">
-            <Dependencies/>
-        </Projects>
         <Projects Include="..\examples\testbed\Testbed.dproj">
             <Dependencies/>
         </Projects>
@@ -29,51 +14,6 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="sfml">
-        <MSBuild Projects="extern\sfml.cbproj"/>
-    </Target>
-    <Target Name="sfml:Clean">
-        <MSBuild Projects="extern\sfml.cbproj" Targets="Clean"/>
-    </Target>
-    <Target Name="sfml:Make">
-        <MSBuild Projects="extern\sfml.cbproj" Targets="Make"/>
-    </Target>
-    <Target Name="csfml">
-        <MSBuild Projects="extern\csfml.cbproj"/>
-    </Target>
-    <Target Name="csfml:Clean">
-        <MSBuild Projects="extern\csfml.cbproj" Targets="Clean"/>
-    </Target>
-    <Target Name="csfml:Make">
-        <MSBuild Projects="extern\csfml.cbproj" Targets="Make"/>
-    </Target>
-    <Target Name="zlib">
-        <MSBuild Projects="extern\zlib.cbproj"/>
-    </Target>
-    <Target Name="zlib:Clean">
-        <MSBuild Projects="extern\zlib.cbproj" Targets="Clean"/>
-    </Target>
-    <Target Name="zlib:Make">
-        <MSBuild Projects="extern\zlib.cbproj" Targets="Make"/>
-    </Target>
-    <Target Name="pl_mpeg">
-        <MSBuild Projects="extern\pl_mpeg.cbproj"/>
-    </Target>
-    <Target Name="pl_mpeg:Clean">
-        <MSBuild Projects="extern\pl_mpeg.cbproj" Targets="Clean"/>
-    </Target>
-    <Target Name="pl_mpeg:Make">
-        <MSBuild Projects="extern\pl_mpeg.cbproj" Targets="Make"/>
-    </Target>
-    <Target Name="PSFML">
-        <MSBuild Projects="PSFML\PSFML.cbproj"/>
-    </Target>
-    <Target Name="PSFML:Clean">
-        <MSBuild Projects="PSFML\PSFML.cbproj" Targets="Clean"/>
-    </Target>
-    <Target Name="PSFML:Make">
-        <MSBuild Projects="PSFML\PSFML.cbproj" Targets="Make"/>
-    </Target>
     <Target Name="Testbed">
         <MSBuild Projects="..\examples\testbed\Testbed.dproj"/>
     </Target>
@@ -84,13 +24,13 @@
         <MSBuild Projects="..\examples\testbed\Testbed.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="sfml;csfml;zlib;pl_mpeg;PSFML;Testbed"/>
+        <CallTarget Targets="Testbed"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="sfml:Clean;csfml:Clean;zlib:Clean;pl_mpeg:Clean;PSFML:Clean;Testbed:Clean"/>
+        <CallTarget Targets="Testbed:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="sfml:Make;csfml:Make;zlib:Make;pl_mpeg:Make;PSFML:Make;Testbed:Make"/>
+        <CallTarget Targets="Testbed:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
